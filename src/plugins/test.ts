@@ -3,6 +3,7 @@ import { createPlugin } from '@/core/types'
 const testPlugin = createPlugin({
   id: 'test-plugin',
   name: 'Test plugin',
+  description: 'desc',
   options: {
     opt1: {
       type: 'text',
