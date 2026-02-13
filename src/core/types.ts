@@ -42,6 +42,7 @@ export type PluginConfig<T extends Record<string, SubOptionSchema>> = {
 export interface PluginDef<T extends Record<string, SubOptionSchema>> {
   id: string
   name: string
+  description: string
   options: T
 
   generate: (config: PluginConfig<T>) => string
