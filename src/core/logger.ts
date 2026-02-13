@@ -14,12 +14,12 @@ const ANSI = {
 
 const CSS = {
   grey: 'color: #808080;',
-  cyan: 'color: #00ffff;',
+  cyan: 'color: #16A084;',
   reset: '',
-  brightBlue: 'color: #5c5cff; font-weight: bold;',
-  green: 'color: #00ff00',
-  orange: 'color: #ffa500;',
-  red: 'color: #ff0000;',
+  brightBlue: 'color: #3DAEE9; font-weight: bold;',
+  green: 'color: #11D116;  font-weight: bold;',
+  orange: 'color: #F67400;  font-weight: bold;',
+  red: 'color: #ED1515;  font-weight: bold;',
 } as const
 
 const LogLevelMap: Record<LogLevel, { label: string; color: keyof typeof ANSI }> = {
