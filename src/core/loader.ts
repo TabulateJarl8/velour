@@ -13,6 +13,40 @@ export class PluginLoader {
    * @type {Map<string, GenericPlugin>}
    */
   private plugins: Map<string, GenericPlugin> = new Map<string, GenericPlugin>()
+  private discoveryProvider: PluginDiscoveryProvider
+
+  /**
+   * Creates an instance of PluginLoader with the default vite provider.
+   *
+   * @constructor
+   */
+  constructor()
+  /**
+   * Creates an instance of PluginLoader with a specified discovery provider.
+   *
+   * @constructor
+   * @param {PluginDiscoveryProvider} provider
+   */
+  constructor(discoveryProvider: PluginDiscoveryProvider)
+
+  /**
+   * Creates an instance of PluginLoader.
+   *
+   * @constructor
+   * @param {PluginDiscoveryProvider} provider optionally provide a specific plugin discovery provider
+   */
+  constructor(discoveryProvider?: PluginDiscoveryProvider) {
+    if (discoveryProvider) {
+      this.discoveryProvider = discoveryProvider
+    }else {
+      this.discoveryProvider = async () => {
+        if (typeof import.meta.glob !== 'function') {
+          throw new Error('Default PluginLoader constructor requires Vite, please use a custom provider for node environments')
+        }
+        return import.meta.glob('../plugins/*.ts') as Record<string, () => Promise<PluginModule>>
+      }
+    }
+  }
 
   /**
    * Load the plugins from the `src/plugins` folder
@@ -21,7 +55,7 @@ export class PluginLoader {
    * @returns {Promise<Map<string, GenericPlugin>>} a promise to a map of the loaded plugins
    */
   async loadPlugins(): Promise<Map<string, GenericPlugin>> {
-    const modules = import.meta.glob('../plugins/*.ts')
+    const modules = await this.discoveryProvider()
 
     // iterate over each module and attempt to load it
     for (const path in modules) {
@@ -58,3 +92,10 @@ export class PluginLoader {
     return Array.from(this.plugins.values())
   }
 }
+
+/**
+ * Description placeholder
+ *
+ * @typedef {PluginDiscoveryProvider}
+ */
+export type PluginDiscoveryProvider = () => Promise<Record<string, () => Promise<PluginModule>>>
