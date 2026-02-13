@@ -3,6 +3,7 @@ import { PluginDiscoveryProvider, PluginLoader } from '../src/core/loader'
 import path from 'path'
 import fs from 'fs/promises'
 import { PluginModule } from '../src/core/types'
+import { logger } from '../src/core/logger'
 
 const nodeProvider: PluginDiscoveryProvider = async () => {
   const fs = await import('fs/promises')
@@ -21,7 +22,7 @@ const nodeProvider: PluginDiscoveryProvider = async () => {
 
 async function generate() {
   const loader = new PluginLoader(nodeProvider)
-  const existingPlugins = await loader.loadPlugins()
+  const existingPlugins = await loader.loadPlugins(true)
   const pluginList = Array.from(existingPlugins.values())
 
   const id = await input({
@@ -36,7 +37,9 @@ async function generate() {
   const name = await input({
     message: 'Plugin Name (e.g. My Plugin): ',
     validate: (val) => {
-      const exists = pluginList.some((p) => p.name.toLowerCase() === val.toLowerCase())
+      const exists = pluginList.some(
+        (p) => p.name.trim().toLowerCase() === val.trim().toLowerCase(),
+      )
       if (exists) return `A plugin named ${val} already exists`
       return true
     },
@@ -47,7 +50,7 @@ async function generate() {
   const file = `
 import { createPlugin } from '../core/types'
 
-export default createPlugin({
+const plugin = createPlugin({
   id: '${id}',
   name: '${name}',
   description: '${description}',
@@ -56,13 +59,20 @@ export default createPlugin({
     return \`# (${name}) script output here\`
   }
 })
+
+export default plugin
+
+declare module '../core/registry' {
+  interface PluginRegistry {
+    '${id}': import('@/core/types').RegisterPlugin<typeof plugin>
+  }
+}
 `
 
   const filePath = path.join(process.cwd(), 'src/plugins', `${id}.ts`)
   await fs.writeFile(filePath, file.trim())
 
-  console.log(`[Velour] Successfully generated plugin: src/plugins/${id}.ts`)
-
+  logger.success(`Successfully generated plugin: src/plugins/${id}.ts`)
 }
 
-generate().catch(console.error)
+generate().catch(logger.error)

@@ -14,7 +14,7 @@
     "lint:oxlint": "oxlint . --fix",
     "lint:eslint": "eslint . --fix --cache",
     "format": "prettier --write --experimental-cli src/",
-    "gen:plugin": "tsx scripts/generate-plugin.ts"
+    "gen:plugin": "tsx --tsconfig tsconfig.app.json scripts/generate-plugin.ts"
   },
   "dependencies": {
     "vue": "^3.5.27"
