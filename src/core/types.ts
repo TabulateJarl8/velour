@@ -29,35 +29,22 @@ interface TextSubOption extends BaseSubOption<'text'> {
 
 export type SubOptionSchema = CheckboxSubOption | NumberSubOption | TextSubOption
 
-export interface FeatureSchema {
-  label: string
-  description: string
-  subOptions?: Record<string, SubOptionSchema>
+// // the typescript type engine will bend to my will and become rust whether it wants to or not
+
+type SubOptionsConfig<T extends Record<string, SubOptionSchema>> = {
+  [K in keyof T]?: SubOptionTypeMap[T[K]['type']]
 }
 
-// the typescript type engine will bend to my will and become rust whether it wants to or not
+export type PluginConfig<T extends Record<string, SubOptionSchema>> = {
+  enabled: boolean
+} & SubOptionsConfig<T>
 
-type InferSubValue<T extends SubOptionSchema> = SubOptionTypeMap[T['type']]
-
-type InferSubOptions<T extends Record<string, SubOptionSchema>> = {
-  [K in keyof T]: InferSubValue<T[K]>
-}
-
-type InferFeatureConfig<T extends FeatureSchema> =
-  T['subOptions'] extends Record<string, SubOptionSchema>
-    ? { enabled: boolean } & InferSubOptions<T['subOptions']>
-    : { enabled: boolean }
-
-export type InferPluginConfig<T extends Record<string, FeatureSchema>> = {
-  [K in keyof T]: InferFeatureConfig<T[K]>
-}
-
-export interface PluginDef<T extends Record<string, FeatureSchema>> {
+export interface PluginDef<T extends Record<string, SubOptionSchema>> {
   id: string
   name: string
   options: T
 
-  generate: (config: InferPluginConfig<T>) => string
+  generate: (config: PluginConfig<T>) => string
 }
 
 /**
@@ -67,7 +54,7 @@ export interface PluginDef<T extends Record<string, FeatureSchema>> {
  *
  * @export
  */
-export type GenericPlugin = PluginDef<Record<string, FeatureSchema>>
+export type GenericPlugin = PluginDef<Record<string, SubOptionSchema>>
 
 /**
  * Interface describing a loaded module that may be a Velour plugin
@@ -79,15 +66,17 @@ export interface PluginModule {
   default?: GenericPlugin
 }
 
+export type RegisterPlugin<T> = T extends PluginDef<infer S> ? PluginConfig<S> : never
+
 /**
  * Constructor function to appease the TypeScript compiler
  *
  * @export
- * @template {Record<string, FeatureSchema>} T the plugin config schema
+ * @template {Record<string, SubOptionSchema>} T the plugin suboption's with their config schema
  * @param {PluginDef<T>} plugin the plugin definition
  * @returns {PluginDef<T>} the same plugin defintion
  */
-export function createPlugin<T extends Record<string, FeatureSchema>>(
+export function createPlugin<T extends Record<string, SubOptionSchema>>(
   plugin: PluginDef<T>,
 ): PluginDef<T> {
   return plugin
