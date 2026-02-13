@@ -1,4 +1,5 @@
-@plugin "daisyui";
+@import 'tailwindcss';
+@plugin 'daisyui';
 @plugin "daisyui/theme" {
   name: 'velour';
   default: false;
