@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import type { UpdateOptionFn } from '@/composables/usePluginModel'
-import type { ConcretePluginConfig, NumberSubOption } from '@/core/types'
+import type { NumberSubOption } from '@/core/types'
 
-const model = defineModel<ConcretePluginConfig>({ required: true })
+const model = defineModel<number>({ required: true })
 defineProps<{
   opt: NumberSubOption
-  optionKey: keyof ConcretePluginConfig
-  onUpdate: UpdateOptionFn
 }>()
 </script>
 
@@ -19,11 +16,10 @@ defineProps<{
       type="number"
       required
       class="input input-sm"
-      :value="model[optionKey]"
+      v-model="model"
       :placeholder="opt['placeholder']"
       :min="opt['min']"
       :max="opt['max']"
-      @change="(e) => onUpdate(optionKey, (e.target as HTMLInputElement).value)"
     />
     <span class="label-text opacity-80">{{ opt.description }}</span>
   </label>

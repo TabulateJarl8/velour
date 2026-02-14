@@ -1,26 +1,19 @@
 <script setup lang="ts">
-import { usePluginModel } from '@/composables/usePluginModel'
 import type { ConcretePluginConfig, ConcretePluginDef } from '@/core/types'
 import CheckboxOption from './options/CheckboxOption.vue'
 import TextOption from './options/TextOption.vue'
 import NumberOption from './options/NumberOption.vue'
 
 const model = defineModel<ConcretePluginConfig>({ required: true })
-const { updateOption } = usePluginModel(model)
 
 defineProps<{
   plugin: ConcretePluginDef
 }>()
-
-function togglePlugin(e: Event) {
-  const isChecked = (e.target as HTMLInputElement).checked
-  updateOption('enabled', isChecked)
-}
 </script>
 
 <template>
   <div class="collapse border border-base-300 bg-base-100 rounded-box mb-4">
-    <input type="checkbox" :checked="model.enabled" @change="togglePlugin" />
+    <input type="checkbox" v-model="model.enabled" />
 
     <div class="collapse-title flex items-center gap-4">
       <input
@@ -40,24 +33,18 @@ function togglePlugin(e: Event) {
         <div v-for="(opt, key) in plugin.options" :key="key" class="form-control w-full max-w-md">
           <CheckboxOption
             v-if="opt.type === 'checkbox'"
-            v-model="model"
+            v-model="model[key as keyof ConcretePluginConfig] as boolean"
             :opt="opt"
-            :option-key="key"
-            :on-update="updateOption"
           />
           <TextOption
             v-if="opt.type === 'text'"
-            v-model="model"
+            v-model="model[key as keyof ConcretePluginConfig] as string"
             :opt="opt"
-            :option-key="key"
-            :on-update="updateOption"
           />
           <NumberOption
             v-if="opt.type === 'number'"
-            v-model="model"
+            v-model="model[key as keyof ConcretePluginConfig] as number"
             :opt="opt"
-            :option-key="key"
-            :on-update="updateOption"
           />
         </div>
       </div>

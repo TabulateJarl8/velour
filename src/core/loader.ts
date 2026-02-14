@@ -14,21 +14,15 @@ export class PluginLoader {
    * @type {Map<string, ConcretePluginDef>}
    */
   private plugins: Map<string, ConcretePluginDef> = new Map<string, ConcretePluginDef>()
-  private discoveryProvider: PluginDiscoveryProvider
 
   /**
-   * Creates an instance of PluginLoader with the default vite provider.
+   * A plugin discovery provider. Used for switching between vite loading and node loading of
+   * plugins. Defaults to vite loading
    *
-   * @class
+   * @private
+   * @type {PluginDiscoveryProvider}
    */
-  constructor()
-  /**
-   * Creates an instance of PluginLoader with a specified discovery provider.
-   *
-   * @class
-   * @param {PluginDiscoveryProvider} discoveryProvider
-   */
-  constructor(discoveryProvider: PluginDiscoveryProvider)
+  private discoveryProvider: PluginDiscoveryProvider
 
   /**
    * Creates an instance of PluginLoader.
@@ -94,9 +88,5 @@ export class PluginLoader {
   }
 }
 
-/**
- * Description placeholder
- *
- * @typedef {PluginDiscoveryProvider}
- */
+/** The type of the plugin discovery provider function */
 export type PluginDiscoveryProvider = () => Promise<Record<string, () => Promise<PluginModule>>>
