@@ -11,6 +11,21 @@ const testPlugin = createPlugin({
       description: 'sub1 desc',
       default: 'test',
     },
+    opt2: {
+      type: 'checkbox',
+      label: 'sub1',
+      description: 'sub1 desc',
+      default: false,
+    },
+    opt3: {
+      type: 'number',
+      label: 'sub1',
+      description: 'sub1 desc',
+      default: 3,
+      placeholder: 'number',
+      min: 4,
+      max: 7,
+    },
   },
   generate: function (_config): string {
     return `echo 'helloworld'`

@@ -3,7 +3,7 @@
  *
  * @interface SubOptionTypeMap
  */
-interface SubOptionTypeMap {
+export interface SubOptionTypeMap {
   /**
    * Checkboxes have two states - true (checked) and false (unchecked)
    *
@@ -44,7 +44,7 @@ type BaseSubOption<K extends SubOptionType> = {
  * @extends {BaseSubOption<'checkbox'>} Extends the base option fields with a type of checkbox
  * @interface CheckboxSubOption
  */
-interface CheckboxSubOption extends BaseSubOption<'checkbox'> {
+export interface CheckboxSubOption extends BaseSubOption<'checkbox'> {
   /**
    * Optional default value - checked (true) or unchecked (false)
    *
@@ -59,7 +59,7 @@ interface CheckboxSubOption extends BaseSubOption<'checkbox'> {
  * @extends {BaseSubOption<'number'>} Extends the base option fields with a type of number
  * @interface NumberSubOption
  */
-interface NumberSubOption extends BaseSubOption<'number'> {
+export interface NumberSubOption extends BaseSubOption<'number'> {
   /**
    * Optional minimum value
    *
@@ -72,6 +72,12 @@ interface NumberSubOption extends BaseSubOption<'number'> {
    * @type {number | null}
    */
   max?: number
+  /**
+   * Optional field placeholder
+   *
+   * @type {string | null}
+   */
+  placeholder?: string
   /**
    * Optional default value
    *
@@ -86,7 +92,7 @@ interface NumberSubOption extends BaseSubOption<'number'> {
  * @extends {BaseSubOption<'text'>} Extends the base option fields with a type of text
  * @interface TextSubOption
  */
-interface TextSubOption extends BaseSubOption<'text'> {
+export interface TextSubOption extends BaseSubOption<'text'> {
   /**
    * Optional field placeholder
    *
@@ -101,9 +107,7 @@ interface TextSubOption extends BaseSubOption<'text'> {
   default?: string
 }
 
-/**
- * Aggregate type for a generic "suboption" of some type
- */
+/** Aggregate type for a generic "suboption" of some type */
 export type SubOptionSchema = CheckboxSubOption | NumberSubOption | TextSubOption
 
 // the typescript type engine will bend to my will and become rust whether it wants to or not
@@ -165,19 +169,17 @@ export interface PluginDef<T extends Record<string, SubOptionSchema>> {
    * Provides a state of the filled-out config used to generate line(s) of a script
    *
    * @type {(config: PluginConfig<T>) => string}
-   * @returns {string} One or more lines of a bash script based on what the user selected in the plugin's
-   *   config
+   * @returns {string} One or more lines of a bash script based on what the user selected in the
+   *   plugin's config
    */
   generate: (config: PluginConfig<T>) => string
 }
 
-/**
- * Generic plugin definition
- *
- * This is to be used when you don't need to know the concrete type of the generic (for example, in
- * plugin loading)
- */
-export type GenericPlugin = PluginDef<Record<string, SubOptionSchema>>
+/** Concrete plugin definition type with the generic filled in */
+export type ConcretePluginDef = PluginDef<Record<string, SubOptionSchema>>
+
+/** Concrete plugin config type with the generic filled in */
+export type ConcretePluginConfig = PluginConfig<Record<string, SubOptionSchema>>
 
 /**
  * Interface describing a loaded module that may be a Velour plugin
@@ -188,9 +190,9 @@ export interface PluginModule {
   /**
    * A module's content from `export default ...`, if any
    *
-   * @type {GenericPlugin | null}
+   * @type {ConcretePluginDef | null}
    */
-  default?: GenericPlugin
+  default?: ConcretePluginDef
 }
 
 /**
@@ -199,7 +201,7 @@ export interface PluginModule {
  * It uses type inference to look at `PluginDef`, identify its specific options schema, and return
  * the appropriate `PluginConfig`
  *
- * @template T a type that should extend `PluginDef`
+ * @template T A type that should extend `PluginDef`
  * @returns {PluginConfig<S> | never} The configuration type for the plugin, or never if invalid
  */
 export type RegisterPlugin<T> = T extends PluginDef<infer S> ? PluginConfig<S> : never

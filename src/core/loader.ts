@@ -1,5 +1,5 @@
 import { logger } from './logger'
-import type { GenericPlugin, PluginModule } from './types'
+import type { ConcretePluginDef, PluginModule } from './types'
 
 /**
  * Class used to dynamically load plugins from `src/plugins` at compile time
@@ -11,9 +11,9 @@ export class PluginLoader {
    * A map of the loaded plugins
    *
    * @private
-   * @type {Map<string, GenericPlugin>}
+   * @type {Map<string, ConcretePluginDef>}
    */
-  private plugins: Map<string, GenericPlugin> = new Map<string, GenericPlugin>()
+  private plugins: Map<string, ConcretePluginDef> = new Map<string, ConcretePluginDef>()
   private discoveryProvider: PluginDiscoveryProvider
 
   /**
@@ -26,7 +26,7 @@ export class PluginLoader {
    * Creates an instance of PluginLoader with a specified discovery provider.
    *
    * @class
-   * @param {PluginDiscoveryProvider} provider
+   * @param {PluginDiscoveryProvider} discoveryProvider
    */
   constructor(discoveryProvider: PluginDiscoveryProvider)
 
@@ -34,19 +34,14 @@ export class PluginLoader {
    * Creates an instance of PluginLoader.
    *
    * @class
-   * @param {PluginDiscoveryProvider} provider Optionally provide a specific plugin discovery
-   *   provider
+   * @param {PluginDiscoveryProvider} discoveryProvider Optionally provide a specific plugin
+   *   discovery provider
    */
   constructor(discoveryProvider?: PluginDiscoveryProvider) {
     if (discoveryProvider) {
       this.discoveryProvider = discoveryProvider
     } else {
       this.discoveryProvider = async () => {
-        if (typeof import.meta.glob !== 'function') {
-          throw new Error(
-            'Default PluginLoader constructor requires Vite, please use a custom provider for node environments',
-          )
-        }
         return import.meta.glob('../plugins/*.ts') as Record<string, () => Promise<PluginModule>>
       }
     }
@@ -57,9 +52,9 @@ export class PluginLoader {
    *
    * @async
    * @param {boolean} [quiet=false] Whether or not to print console output. Default is `false`
-   * @returns {Promise<Map<string, GenericPlugin>>} A promise to a map of the loaded plugins
+   * @returns {Promise<Map<string, ConcretePluginDef>>} A promise to a map of the loaded plugins
    */
-  async loadPlugins(quiet: boolean = false): Promise<Map<string, GenericPlugin>> {
+  async loadPlugins(quiet: boolean = false): Promise<Map<string, ConcretePluginDef>> {
     const modules = await this.discoveryProvider()
 
     // iterate over each module and attempt to load it
@@ -83,18 +78,18 @@ export class PluginLoader {
    *
    * @private
    * @param {unknown} mod The module's exported content to check
-   * @returns {mod is GenericPlugin} Whether or not the module is a plugin
+   * @returns {mod is ConcretePluginDef} Whether or not the module is a plugin
    */
-  private isValidPlugin(mod: unknown): mod is GenericPlugin {
+  private isValidPlugin(mod: unknown): mod is ConcretePluginDef {
     return typeof mod === 'object' && mod !== null && 'id' in mod && 'generate' in mod
   }
 
   /**
    * Get an array of all the loaded plugins
    *
-   * @returns {GenericPlugin[]} The array of loaded plugins
+   * @returns {ConcretePluginDef[]} The array of loaded plugins
    */
-  getPlugins(): GenericPlugin[] {
+  getPlugins(): ConcretePluginDef[] {
     return Array.from(this.plugins.values())
   }
 }
