@@ -11,7 +11,7 @@ However, you may want to go about adding a new option. The following guide detai
 
 ## Introduce New Types
 
-In the file `src/core/types.ts`, the new option types must be added.
+In the file `src/core/types/options.ts`, the new option types must be added.
 
 - Add the option name and the corresponding TypeScript type to the `SubOptionTypeMap` interface:
   ```ts
