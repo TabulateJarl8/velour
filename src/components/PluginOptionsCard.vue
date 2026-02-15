@@ -3,6 +3,7 @@ import type { ConcretePluginConfig, ConcretePluginDef } from '@/core/types'
 import CheckboxOption from './options/CheckboxOption.vue'
 import TextOption from './options/TextOption.vue'
 import NumberOption from './options/NumberOption.vue'
+import RadioOption from './options/RadioOption.vue'
 
 const model = defineModel<ConcretePluginConfig>({ required: true })
 
@@ -44,6 +45,11 @@ defineProps<{
           <NumberOption
             v-if="opt.type === 'number'"
             v-model="model[key as keyof ConcretePluginConfig] as number"
+            :opt="opt"
+          />
+          <RadioOption
+            v-if="opt.type === 'radio'"
+            v-model="model[key as keyof ConcretePluginConfig] as string"
             :opt="opt"
           />
         </div>

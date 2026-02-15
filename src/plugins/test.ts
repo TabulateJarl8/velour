@@ -26,6 +26,16 @@ const testPlugin = createPlugin({
       min: 4,
       max: 7,
     },
+    opt4: {
+      type: 'radio',
+      label: 'sub1',
+      description: 'sub1 desc',
+      options: [
+        { label: 'rad1', value: 'rad1' },
+        { label: 'rad2', value: 'rad2' },
+        { label: 'rad3', value: 'rad3' },
+      ],
+    },
   },
   generate: function (_config): string {
     return `echo 'helloworld'`

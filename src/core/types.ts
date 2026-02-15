@@ -6,10 +6,20 @@ export interface SubOptionTypeMap {
   number: number
   /** Textbox inputs have a type of string */
   text: string
+  /** Radio buttons return the value of a selected option */
+  radio: string
 }
 
 /** Aggregate type representing types that suboptions can be (checkbox, number, etc) */
 type SubOptionType = keyof SubOptionTypeMap
+
+/** Defines what each radio button in a group will consist of */
+export type RadioOptionChoice = {
+  /** The human-readable label of the radio button */
+  label: string
+  /** The value passed to the config when this button is selected */
+  value: string
+}
 
 /**
  * Base fields that every option should have
@@ -20,6 +30,18 @@ type BaseSubOption<K extends SubOptionType> = {
   type: K
   label: string
   description: string
+}
+
+/**
+ * Radio button suboption schema definition
+ *
+ * @extends {BaseSubOption<'radio'>} Extends the base option fields with a type of radio
+ */
+export interface RadioSubOption extends BaseSubOption<'radio'> {
+  /** List of radio options */
+  options: RadioOptionChoice[]
+  /** Optional default value */
+  default?: string
 }
 
 /**
@@ -61,7 +83,7 @@ export interface TextSubOption extends BaseSubOption<'text'> {
 }
 
 /** Aggregate type for a generic "suboption" of some type */
-export type SubOptionSchema = CheckboxSubOption | NumberSubOption | TextSubOption
+export type SubOptionSchema = CheckboxSubOption | NumberSubOption | TextSubOption | RadioSubOption
 
 // the typescript type engine will bend to my will and become rust whether it wants to or not
 

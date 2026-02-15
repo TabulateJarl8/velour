@@ -29,6 +29,13 @@ const LogLevelMap: Record<LogLevel, { label: string; color: keyof typeof ANSI }>
   error: { label: 'ERROR', color: 'red' },
 }
 
+/**
+ * Log a message to the console with formatting
+ *
+ * @param level The log severity level
+ * @param msg The message to log
+ * @param args Any extra arguments
+ */
 function log(level: LogLevel, msg: string, args: unknown[]) {
   const now = new Date().toISOString()
   const config = LogLevelMap[level]
