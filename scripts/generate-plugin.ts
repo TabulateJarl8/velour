@@ -20,6 +20,7 @@ const nodeProvider: PluginDiscoveryProvider = async () => {
   return mods
 }
 
+/** Plugin generation entrypoint */
 async function generate() {
   const loader = new PluginLoader(nodeProvider)
   const existingPlugins = await loader.loadPlugins(true)
