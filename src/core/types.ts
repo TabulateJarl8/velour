@@ -1,26 +1,10 @@
-/**
- * Mapping between the plugin option types and the real type of their value.
- *
- * @interface SubOptionTypeMap
- */
+/** Mapping between the plugin option types and the real type of their value. */
 export interface SubOptionTypeMap {
-  /**
-   * Checkboxes have two states - true (checked) and false (unchecked)
-   *
-   * @type {boolean}
-   */
+  /** Checkboxes have two states - true (checked) and false (unchecked) */
   checkbox: boolean
-  /**
-   * Number inputs have a type of number
-   *
-   * @type {number}
-   */
+  /** Number inputs have a type of number */
   number: number
-  /**
-   * Textbox inputs have a type of string
-   *
-   * @type {string}
-   */
+  /** Textbox inputs have a type of string */
   text: string
 }
 
@@ -42,14 +26,9 @@ type BaseSubOption<K extends SubOptionType> = {
  * Checkbox suboption schema definition
  *
  * @extends {BaseSubOption<'checkbox'>} Extends the base option fields with a type of checkbox
- * @interface CheckboxSubOption
  */
 export interface CheckboxSubOption extends BaseSubOption<'checkbox'> {
-  /**
-   * Optional default value - checked (true) or unchecked (false)
-   *
-   * @type {boolean | null}
-   */
+  /** Optional default value - checked (true) or unchecked (false) */
   default?: boolean
 }
 
@@ -57,32 +36,15 @@ export interface CheckboxSubOption extends BaseSubOption<'checkbox'> {
  * Number suboption schema definition
  *
  * @extends {BaseSubOption<'number'>} Extends the base option fields with a type of number
- * @interface NumberSubOption
  */
 export interface NumberSubOption extends BaseSubOption<'number'> {
-  /**
-   * Optional minimum value
-   *
-   * @type {number | null}
-   */
+  /** Optional minimum value */
   min?: number
-  /**
-   * Optional maximum value
-   *
-   * @type {number | null}
-   */
+  /** Optional maximum value */
   max?: number
-  /**
-   * Optional field placeholder
-   *
-   * @type {string | null}
-   */
+  /** Optional field placeholder */
   placeholder?: string
-  /**
-   * Optional default value
-   *
-   * @type {number | null}
-   */
+  /** Optional default value */
   default?: number
 }
 
@@ -90,20 +52,11 @@ export interface NumberSubOption extends BaseSubOption<'number'> {
  * Text input suboption schema definition
  *
  * @extends {BaseSubOption<'text'>} Extends the base option fields with a type of text
- * @interface TextSubOption
  */
 export interface TextSubOption extends BaseSubOption<'text'> {
-  /**
-   * Optional field placeholder
-   *
-   * @type {string | null}
-   */
+  /** Optional field placeholder */
   placeholder?: string
-  /**
-   * Optional default value
-   *
-   * @type {string | null}
-   */
+  /** Optional default value */
   default?: string
 }
 
@@ -137,38 +90,20 @@ export type PluginConfig<T extends Record<string, SubOptionSchema>> = {
  * A full plugin definition interface
  *
  * @template {Record<string, SubOptionSchema>} T Map of suboptions, if any
- * @interface PluginDef
  */
 export interface PluginDef<T extends Record<string, SubOptionSchema>> {
-  /**
-   * The unique id of the plugin
-   *
-   * @type {string}
-   */
+  /** The unique id of the plugin */
   id: string
-  /**
-   * The plugin's human-readable name
-   *
-   * @type {string}
-   */
+  /** The plugin's human-readable name */
   name: string
-  /**
-   * The plugin's description/help
-   *
-   * @type {string}
-   */
+  /** The plugin's description/help */
   description: string
-  /**
-   * Map of any suboptions
-   *
-   * @type {T}
-   */
+  /** Map of any suboptions */
   options: T
 
   /**
    * Provides a state of the filled-out config used to generate line(s) of a script
    *
-   * @type {(config: PluginConfig<T>) => string}
    * @returns {string} One or more lines of a bash script based on what the user selected in the
    *   plugin's config
    */
@@ -181,17 +116,9 @@ export type ConcretePluginDef = PluginDef<Record<string, SubOptionSchema>>
 /** Concrete plugin config type with the generic filled in */
 export type ConcretePluginConfig = PluginConfig<Record<string, SubOptionSchema>>
 
-/**
- * Interface describing a loaded module that may be a Velour plugin
- *
- * @interface PluginModule
- */
+/** Interface describing a loaded module that may be a Velour plugin */
 export interface PluginModule {
-  /**
-   * A module's content from `export default ...`, if any
-   *
-   * @type {ConcretePluginDef | null}
-   */
+  /** A module's content from `export default ...`, if any */
   default?: ConcretePluginDef
 }
 
@@ -210,8 +137,8 @@ export type RegisterPlugin<T> = T extends PluginDef<infer S> ? PluginConfig<S> :
  * Constructor function to appease the TypeScript compiler
  *
  * @template {Record<string, SubOptionSchema>} T The plugin's map of suboptions, if any
- * @param {PluginDef<T>} plugin The plugin definition
- * @returns {PluginDef<T>} The same plugin definition
+ * @param plugin The plugin definition
+ * @returns The same plugin definition
  */
 export function createPlugin<T extends Record<string, SubOptionSchema>>(
   plugin: PluginDef<T>,

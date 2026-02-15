@@ -4,6 +4,7 @@ import pluginVue from 'eslint-plugin-vue'
 import pluginVitest from '@vitest/eslint-plugin'
 import pluginOxlint from 'eslint-plugin-oxlint'
 import skipFormatting from 'eslint-config-prettier/flat'
+import pluginJsdoc from 'eslint-plugin-jsdoc'
 
 // To allow more languages other than `ts` in `.vue` files, uncomment the following lines:
 // import { configureVueProject } from '@vue/eslint-config-typescript'
@@ -27,6 +28,23 @@ export default defineConfigWithVueTs(
   },
 
   ...pluginOxlint.buildFromOxlintConfigFile('.oxlintrc.json'),
+
+  {
+    ...pluginJsdoc.configs['flat/recommended-typescript'],
+    files: ['**/*.{ts,mts,js}'],
+    rules: {
+      ...pluginJsdoc.configs['flat/recommended-typescript'].rules,
+      'jsdoc/tag-lines': ['warn', 'any', { startLines: 1 }],
+      'jsdoc/require-jsdoc': ['warn', { enableFixer: false }],
+    },
+    settings: {
+      jsdoc: {
+        tagNamePreference: {
+          augments: 'extends',
+        },
+      },
+    },
+  },
 
   skipFormatting,
 )

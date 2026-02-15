@@ -1,35 +1,21 @@
 import { logger } from './logger'
 import type { ConcretePluginDef, PluginModule } from './types'
 
-/**
- * Class used to dynamically load plugins from `src/plugins` at compile time
- *
- * @class PluginLoader
- */
+/** Class used to dynamically load plugins from `src/plugins` at compile time */
 export class PluginLoader {
-  /**
-   * A map of the loaded plugins
-   *
-   * @private
-   * @type {Map<string, ConcretePluginDef>}
-   */
+  /** A map of the loaded plugins */
   private plugins: Map<string, ConcretePluginDef> = new Map<string, ConcretePluginDef>()
 
   /**
    * A plugin discovery provider. Used for switching between vite loading and node loading of
    * plugins. Defaults to vite loading
-   *
-   * @private
-   * @type {PluginDiscoveryProvider}
    */
   private discoveryProvider: PluginDiscoveryProvider
 
   /**
    * Creates an instance of PluginLoader.
    *
-   * @class
-   * @param {PluginDiscoveryProvider} discoveryProvider Optionally provide a specific plugin
-   *   discovery provider
+   * @param discoveryProvider Optionally provide a specific plugin discovery provider
    */
   constructor(discoveryProvider?: PluginDiscoveryProvider) {
     if (discoveryProvider) {
@@ -45,8 +31,8 @@ export class PluginLoader {
    * Load the plugins from the `src/plugins` folder
    *
    * @async
-   * @param {boolean} [quiet=false] Whether or not to print console output. Default is `false`
-   * @returns {Promise<Map<string, ConcretePluginDef>>} A promise to a map of the loaded plugins
+   * @param [quiet] Whether or not to print console output. Default is `false`
+   * @returns A promise to a map of the loaded plugins
    */
   async loadPlugins(quiet: boolean = false): Promise<Map<string, ConcretePluginDef>> {
     const modules = await this.discoveryProvider()
@@ -70,9 +56,8 @@ export class PluginLoader {
   /**
    * Helper function for checking if a given loaded module is a valid application plugin
    *
-   * @private
-   * @param {unknown} mod The module's exported content to check
-   * @returns {mod is ConcretePluginDef} Whether or not the module is a plugin
+   * @param mod The module's exported content to check
+   * @returns Whether or not the module is a plugin
    */
   private isValidPlugin(mod: unknown): mod is ConcretePluginDef {
     return typeof mod === 'object' && mod !== null && 'id' in mod && 'generate' in mod
@@ -81,7 +66,7 @@ export class PluginLoader {
   /**
    * Get an array of all the loaded plugins
    *
-   * @returns {ConcretePluginDef[]} The array of loaded plugins
+   * @returns The array of loaded plugins
    */
   getPlugins(): ConcretePluginDef[] {
     return Array.from(this.plugins.values())
