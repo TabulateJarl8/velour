@@ -1,11 +1,11 @@
 import { createAppPlugin } from '@/core/types'
 
 const plugin = createAppPlugin(
-  'Google Chrome',
-  'The web browser from Google.',
+  'Microsoft Edge',
+  'The web browser from Microsoft.',
   {
-    dnf: 'google-chrome-stable',
-    flatpak: 'com.google.Chrome',
+    dnf: 'microsoft-edge-stable',
+    flatpak: 'com.microsoft.Edge',
   },
   {
     category: 'Additional Applications',
@@ -13,9 +13,9 @@ const plugin = createAppPlugin(
     dnfDependencies: ['install-dnf-plugins-core'],
     dnfPreInstall: `
 if command -v dnf4 &>/dev/null; then
-  dnf4 config-manager --set-enabled google-chrome
+  dnf4 config-manager --add-repo https://packages.microsoft.com/yumrepos/edge
 else
-  dnf config-manager setopt google-chrome.enabled=1
+  dnf config-manager addrepo --from-repofile=https://packages.microsoft.com/yumrepos/edge
 fi
   `,
   },
@@ -25,6 +25,6 @@ export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-google-chrome': import('@/core/types').RegisterPlugin<typeof plugin>
+    'install-app-microsoft-edge': import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }
