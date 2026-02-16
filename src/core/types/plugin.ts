@@ -50,7 +50,9 @@ interface BasePluginDef<T extends Record<string, SubOptionSchema>> {
    * @returns {string} One or more lines of a bash script based on what the user selected in the
    *   plugin's config
    */
-  generate: (config: PluginConfig<T>) => string | { packages: string[] }
+  generate: (
+    config: PluginConfig<T>,
+  ) => string | { systemPackages: string[]; flatpakPackages: string[] }
 }
 
 /**
@@ -112,24 +114,56 @@ export function createPlugin<T extends Record<string, SubOptionSchema>>(
   return plugin
 }
 
+// https://stackoverflow.com/a/48244432/11591238
+/** At least one item in the object must be set */
+type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U]
+
 /**
  * Create an application installation plugin for an app in the "Essential Applications" category
  *
  * @param appName The dnf package name of the app
  * @param description The description of the app
+ * @param sources Object of sources from where you can get the package
+ * @param sources.dnf The package name from the fedora repos
+ * @param sources.flatpak The package name from flathub
+ * @param requiresRPMFusion Whether or not this package requires RPM fusion
  * @returns A PluginDef for installing the application
  */
 export function createEssentialAppPlugin<T extends Record<string, SubOptionSchema>>(
   appName: string,
   description: string,
+  sources: AtLeastOne<{
+    dnf: string
+    flatpak: string
+  }>,
+  requiresRPMFusion: boolean = false,
 ): PluginDef<T> {
   return {
     id: `install-app-${appName}`,
     name: appName,
     description,
     progressMessage: '',
-    options: {},
+    options:
+      sources.dnf && sources.flatpak
+        ? {
+            source: {
+              type: 'radio',
+              options: [
+                { label: 'DNF', value: sources.dnf },
+                { label: 'Flatpak', value: sources.flatpak },
+              ],
+              default: 'DNF',
+            },
+          }
+        : {},
     category: 'Essential Applications',
-    generate: (_config) => ({ packages: [appName] }),
+    dependencies: [
+      requiresRPMFusion ? 'enable-rpmfusion' : '',
+      sources.flatpak ? 'remove-fedora-flatpak-repos' : '',
+    ],
+    generate: (_config) => ({
+      systemPackages: [sources.dnf ?? ''],
+      flatpakPackages: [sources.flatpak ?? ''],
+    }),
   } as PluginDef<T>
 }

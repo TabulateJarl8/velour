@@ -1,16 +1,15 @@
+import { createEssentialAppPlugin } from '@/core/types'
 
-    import { createEssentialAppPlugin } from '@/core/types'
+const plugin = createEssentialAppPlugin(
+  'git',
+  'Distributed version control system for tracking changes in source code and collaboration',
+  { dnf: 'git' },
+)
 
-    const plugin = createEssentialAppPlugin(
-      'git',
-      'Distributed version control system for tracking changes in source code and collaboration',
-    )
+export default plugin
 
-    export default plugin
-
-    declare module '@/core/registry' {
-      interface PluginRegistry {
-        'install-app-git': import('@/core/types').RegisterPlugin<typeof plugin>
-      }
-    }
-    
+declare module '@/core/registry' {
+  interface PluginRegistry {
+    'install-app-git': import('@/core/types').RegisterPlugin<typeof plugin>
+  }
+}
