@@ -77,6 +77,8 @@ export interface NumberSubOption extends BaseSubOption<'number'> {
  * @extends {BaseSubOption<'text'>} Extends the base option fields with a type of text
  */
 export interface TextSubOption extends BaseSubOption<'text'> {
+  /** Whether or not this field is required */
+  required: boolean
   /** Optional field placeholder */
   placeholder?: string
   /** Optional default value */
