@@ -1,8 +1,8 @@
 import type { Category, CategoryHeadings } from './categories'
-// the typescript type engine will bend to my will and become rust whether it wants to or not
-
 import type { PluginRegistry } from '../registry'
 import type { SubOptionSchema, SubOptionTypeMap } from './options'
+
+// the typescript type engine will bend to my will and become rust whether it wants to or not
 
 /**
  * Type inference helper that maps each option's type to its corresponding TS type
@@ -11,7 +11,7 @@ import type { SubOptionSchema, SubOptionTypeMap } from './options'
  *   suboption schema
  */
 type SubOptionsConfig<T extends Record<string, SubOptionSchema>> = {
-  [K in keyof T]?: SubOptionTypeMap[T[K]['type']]
+  [K in keyof T]: SubOptionTypeMap[T[K]['type']]
 }
 
 /**

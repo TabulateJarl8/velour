@@ -31,6 +31,8 @@ type BaseSubOption<K extends SubOptionType> = {
   type: K
   /** The label for the suboption */
   label: string
+  /** An optional description for the suboption */
+  description?: string
 }
 
 /**
