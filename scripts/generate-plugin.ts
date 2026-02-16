@@ -32,6 +32,7 @@ async function generate() {
 
   const id = await input({
     message: 'Plugin ID (e.g. my-plugin): ',
+    required: true,
     validate: (val) => {
       if (existingPlugins.has(val)) return `The ID ${val} is taken`
       if (!/^[a-z0-9-]+$/.test(val)) return 'ID must be lowercase, numbers, or dashes'
@@ -42,6 +43,7 @@ async function generate() {
   const name = escape(
     await input({
       message: 'Plugin Name (e.g. My Plugin): ',
+      required: true,
       validate: (val) => {
         const exists = pluginList.some(
           (p) => p.name.trim().toLowerCase() === val.trim().toLowerCase(),
@@ -52,7 +54,18 @@ async function generate() {
     }),
   )
 
-  const description = escape(await input({ message: 'Description: ' }))
+  const description = escape(await input({ message: 'Description: ', required: true }))
+
+  const progressMessage = escape(
+    await input({
+      message: 'Progress message (like "Setting hostname..."): ',
+      required: true,
+      validate: (val) => {
+        if (!val.endsWith('...')) return 'Please end the message with ...'
+        return true
+      },
+    }),
+  )
 
   const options = Object.values(Categories).map((o) => ({
     value: o,
@@ -85,6 +98,7 @@ const plugin = createPlugin({
   id: '${id}',
   name: '${name}',
   description: '${description}',
+  progressMessage: '${progressMessage}',
   options: {},
   category: '${category}',
   ${heading ? `heading: '${heading}',` : ''}

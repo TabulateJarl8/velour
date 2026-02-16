@@ -27,9 +27,10 @@ export type RadioOptionChoice = {
  * @template {SubOptionType} K The possible types a suboption can be (checkbox, number, etc)
  */
 type BaseSubOption<K extends SubOptionType> = {
+  /** The type of the suboption */
   type: K
+  /** The label for the suboption */
   label: string
-  description: string
 }
 
 /**

@@ -37,6 +37,8 @@ interface BasePluginDef<T extends Record<string, SubOptionSchema>> {
   name: string
   /** The plugin's description/help */
   description: string
+  /** Progress message to display right before the plugin is run */
+  progressMessage: string
   /** Map of any suboptions */
   options: T
   /** Optional list of plugin ids this plugin requires */
