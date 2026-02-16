@@ -8,9 +8,9 @@ const plugin = createPlugin({
   options: {},
   category: 'System Configuration',
 
-  generate: (_config) => {
-    return `dnf install -y @virtualization`
-  },
+  generate: (_config) => ({
+    systemPackages: ['@virtualization'],
+  }),
 })
 
 export default plugin

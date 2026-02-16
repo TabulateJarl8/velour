@@ -9,9 +9,9 @@ const plugin = createPlugin({
   options: {},
   category: 'System Configuration',
   dependencies: ['enable-rpmfusion'],
-  generate: (_config) => {
-    return `dnf -y install intel-media-driver`
-  },
+  generate: (_config) => ({
+    systemPackages: ['intel-media-driver'],
+  }),
 })
 
 export default plugin

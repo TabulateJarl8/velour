@@ -52,7 +52,7 @@ interface BasePluginDef<T extends Record<string, SubOptionSchema>> {
    */
   generate: (
     config: PluginConfig<T>,
-  ) => string | { systemPackages: string[]; flatpakPackages: string[] }
+  ) => string | { systemPackages?: string[]; flatpakPackages?: string[] }
 }
 
 /**
