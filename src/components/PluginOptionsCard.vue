@@ -35,7 +35,7 @@ defineProps<{
       </div>
     </div>
 
-    <div class="collapse-content bg-base-200/50">
+    <div v-if="Object.keys(plugin.options).length !== 0" class="collapse-content bg-base-200/50">
       <div class="py-4 flex flex-col gap-4">
         <div v-for="(opt, key) in plugin.options" :key="key" class="form-control w-full max-w-md">
           <component
