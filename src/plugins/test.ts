@@ -35,6 +35,7 @@ const testPlugin = createPlugin({
         { label: 'rad2', value: 'rad2' },
         { label: 'rad3', value: 'rad3' },
       ],
+      default: 'rad1',
     },
   },
   generate: function (_config): string {

@@ -40,8 +40,8 @@ type BaseSubOption<K extends SubOptionType> = {
 export interface RadioSubOption extends BaseSubOption<'radio'> {
   /** List of radio options */
   options: RadioOptionChoice[]
-  /** Optional default value */
-  default?: string
+  /** Required default value */
+  default: string
 }
 
 /**
