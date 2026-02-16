@@ -6,6 +6,12 @@ import NumberOption from './options/NumberOption.vue'
 import RadioOption from './options/RadioOption.vue'
 
 const model = defineModel<ConcretePluginConfig>({ required: true })
+const componentMap: Record<string, unknown> = {
+  checkbox: CheckboxOption,
+  text: TextOption,
+  number: NumberOption,
+  radio: RadioOption,
+}
 
 defineProps<{
   plugin: ConcretePluginDef
@@ -32,24 +38,9 @@ defineProps<{
     <div class="collapse-content bg-base-200/50">
       <div class="py-4 flex flex-col gap-4">
         <div v-for="(opt, key) in plugin.options" :key="key" class="form-control w-full max-w-md">
-          <CheckboxOption
-            v-if="opt.type === 'checkbox'"
-            v-model="model[key as keyof ConcretePluginConfig] as boolean"
-            :opt="opt"
-          />
-          <TextOption
-            v-if="opt.type === 'text'"
-            v-model="model[key as keyof ConcretePluginConfig] as string"
-            :opt="opt"
-          />
-          <NumberOption
-            v-if="opt.type === 'number'"
-            v-model="model[key as keyof ConcretePluginConfig] as number"
-            :opt="opt"
-          />
-          <RadioOption
-            v-if="opt.type === 'radio'"
-            v-model="model[key as keyof ConcretePluginConfig] as string"
+          <component
+            :is="componentMap[opt.type]"
+            v-model="model[key as keyof ConcretePluginConfig]!"
             :opt="opt"
           />
         </div>
