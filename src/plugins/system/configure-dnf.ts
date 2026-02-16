@@ -1,4 +1,4 @@
-import { createPlugin } from '../core/types'
+import { createPlugin } from '@/core/types'
 
 const plugin = createPlugin({
   id: 'configure-dnf',
@@ -43,7 +43,7 @@ const plugin = createPlugin({
 
 export default plugin
 
-declare module '../core/registry' {
+declare module '@/core/registry' {
   interface PluginRegistry {
     'configure-dnf': import('@/core/types').RegisterPlugin<typeof plugin>
   }

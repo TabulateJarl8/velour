@@ -22,7 +22,7 @@ export class PluginLoader {
       this.discoveryProvider = discoveryProvider
     } else {
       this.discoveryProvider = async () => {
-        return import.meta.glob('../plugins/*.ts') as Record<string, () => Promise<PluginModule>>
+        return import.meta.glob('../plugins/**/*.ts') as Record<string, () => Promise<PluginModule>>
       }
     }
   }

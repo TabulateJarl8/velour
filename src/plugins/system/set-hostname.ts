@@ -1,4 +1,4 @@
-import { createPlugin } from '../core/types'
+import { createPlugin } from '@/core/types'
 
 const plugin = createPlugin({
   id: 'set-hostname',
@@ -21,7 +21,7 @@ const plugin = createPlugin({
 
 export default plugin
 
-declare module '../core/registry' {
+declare module '@/core/registry' {
   interface PluginRegistry {
     'set-hostname': import('@/core/types').RegisterPlugin<typeof plugin>
   }

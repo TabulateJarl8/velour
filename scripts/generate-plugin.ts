@@ -9,7 +9,7 @@ const nodeProvider: PluginDiscoveryProvider = async () => {
   const fs = await import('fs/promises')
   const path = await import('path')
   const dir = path.join(process.cwd(), 'src/plugins')
-  const files = await fs.readdir(dir)
+  const files = await fs.readdir(dir, { recursive: true })
 
   const mods: Record<string, () => Promise<PluginModule>> = {}
   for (const file of files) {
@@ -92,7 +92,7 @@ async function generate() {
   }
 
   const file = `
-import { createPlugin } from '../core/types'
+import { createPlugin } from '@/core/types'
 
 const plugin = createPlugin({
   id: '${id}',
@@ -109,7 +109,7 @@ const plugin = createPlugin({
 
 export default plugin
 
-declare module '../core/registry' {
+declare module '@/core/registry' {
   interface PluginRegistry {
     '${id}': import('@/core/types').RegisterPlugin<typeof plugin>
   }
