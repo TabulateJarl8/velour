@@ -50,7 +50,7 @@ interface BasePluginDef<T extends Record<string, SubOptionSchema>> {
    * @returns {string} One or more lines of a bash script based on what the user selected in the
    *   plugin's config
    */
-  generate: (config: PluginConfig<T>) => string
+  generate: (config: PluginConfig<T>) => string | { packages: string[] }
 }
 
 /**
@@ -110,4 +110,26 @@ export function createPlugin<T extends Record<string, SubOptionSchema>>(
   plugin: PluginDef<T>,
 ): PluginDef<T> {
   return plugin
+}
+
+/**
+ * Create an application installation plugin for an app in the "Essential Applications" category
+ *
+ * @param appName The dnf package name of the app
+ * @param description The description of the app
+ * @returns A PluginDef for installing the application
+ */
+export function createEssentialAppPlugin<T extends Record<string, SubOptionSchema>>(
+  appName: string,
+  description: string,
+): PluginDef<T> {
+  return {
+    id: `install-app-${appName}`,
+    name: appName,
+    description,
+    progressMessage: '',
+    options: {},
+    category: 'Essential Applications',
+    generate: (_config) => ({ packages: [appName] }),
+  } as PluginDef<T>
 }
