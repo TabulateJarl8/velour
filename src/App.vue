@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import { PluginLoader } from './core/loader'
 import type { ConcretePluginConfig, ConcretePluginDef } from './core/types'
 import PluginOptionsCard from './components/PluginOptionsCard.vue'
+import { resolveEnabledPlugins, sortPlugins } from './core/dependencyResolver'
 
 const loader = new PluginLoader()
 const loadedPlugins = ref<ConcretePluginDef[]>([])
@@ -31,6 +32,13 @@ onMounted(async () => {
   configs.value = initConfigs
   isLoading.value = false
 })
+
+function test() {
+  const active = resolveEnabledPlugins(loadedPlugins.value, configs.value)
+  const sorted = sortPlugins(loadedPlugins.value)
+
+  console.log(active, sorted)
+}
 </script>
 
 <template>
@@ -61,6 +69,7 @@ onMounted(async () => {
             v-model="configs[plugin.id]!"
           />
         </template>
+        <button class="btn" @click="test">YAYYYY</button>
       </main>
     </div>
   </div>

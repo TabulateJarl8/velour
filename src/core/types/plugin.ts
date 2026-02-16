@@ -1,5 +1,6 @@
 // the typescript type engine will bend to my will and become rust whether it wants to or not
 
+import type { PluginRegistry } from '../registry'
 import type { SubOptionSchema, SubOptionTypeMap } from './options'
 
 /**
@@ -37,6 +38,8 @@ export interface PluginDef<T extends Record<string, SubOptionSchema>> {
   description: string
   /** Map of any suboptions */
   options: T
+  /** Optional list of plugin ids this plugin requires */
+  dependencies?: (keyof PluginRegistry)[]
 
   /**
    * Provides a state of the filled-out config used to generate line(s) of a script

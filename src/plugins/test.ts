@@ -38,6 +38,7 @@ const testPlugin = createPlugin({
       default: 'rad1',
     },
   },
+  dependencies: ['test2'],
   generate: function (_config): string {
     return `echo 'helloworld'`
   },
