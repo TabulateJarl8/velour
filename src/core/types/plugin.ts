@@ -1,3 +1,4 @@
+import type { Category, CategoryHeadings } from './categories'
 // the typescript type engine will bend to my will and become rust whether it wants to or not
 
 import type { PluginRegistry } from '../registry'
@@ -25,11 +26,11 @@ export type PluginConfig<T extends Record<string, SubOptionSchema>> = {
 } & SubOptionsConfig<T>
 
 /**
- * A full plugin definition interface
+ * Base properties of a full plugin definition interface
  *
  * @template {Record<string, SubOptionSchema>} T Map of suboptions, if any
  */
-export interface PluginDef<T extends Record<string, SubOptionSchema>> {
+interface BasePluginDef<T extends Record<string, SubOptionSchema>> {
   /** The unique id of the plugin */
   id: string
   /** The plugin's human-readable name */
@@ -49,6 +50,29 @@ export interface PluginDef<T extends Record<string, SubOptionSchema>> {
    */
   generate: (config: PluginConfig<T>) => string
 }
+
+/**
+ * Represents a full plugin definition
+ *
+ * @template {Record<string, SubOptionSchema>} T Map of suboptions, if any
+ */
+export type PluginDef<T extends Record<string, SubOptionSchema>> =
+  // iterate over keys of CategoryHeadings and make variants for each heading
+  | {
+      [K in keyof CategoryHeadings]: BasePluginDef<T> & {
+        /** The collapsible category that this plugin belongs to */
+        category: K
+        /** The heading within the category to place this plugin under */
+        heading: CategoryHeadings[K]
+      }
+    }[keyof CategoryHeadings]
+  // Categories without headings
+  | (BasePluginDef<T> & {
+      /** The collapsible category that this plugin belongs to */
+      category: Exclude<Category, keyof CategoryHeadings>
+      /** Categories that don't support headings should never have one */
+      heading?: never
+    })
 
 /** Concrete plugin definition type with the generic filled in */
 export type ConcretePluginDef = PluginDef<Record<string, SubOptionSchema>>

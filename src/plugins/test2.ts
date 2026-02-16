@@ -6,6 +6,8 @@ const plugin = createPlugin({
   description: 'no',
   options: {},
   dependencies: ['test-plugin'],
+  category: 'Additional Applications',
+  heading: 'File Sharing & Downloading',
   generate: (_config) => {
     return `# (cool plugin) script output here`
   },

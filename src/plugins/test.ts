@@ -1,4 +1,4 @@
-import { createPlugin } from '@/core/types'
+import { Categories, createPlugin } from '@/core/types'
 
 const testPlugin = createPlugin({
   id: 'test-plugin',
@@ -38,6 +38,7 @@ const testPlugin = createPlugin({
       default: 'rad1',
     },
   },
+  category: Categories.System,
   dependencies: ['test2'],
   generate: function (_config): string {
     return `echo 'helloworld'`
