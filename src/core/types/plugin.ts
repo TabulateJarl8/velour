@@ -123,6 +123,7 @@ type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U]
 type AppOptions<C extends Category> = {
   requiresRPMFusion?: boolean
   dnfPreInstall?: string
+  dependencies?: (keyof PluginRegistry)[]
 } & (C extends keyof CategoryHeadings
   ? { category: C; heading: CategoryHeadings[C] }
   : { category: C; heading?: never })
@@ -147,7 +148,7 @@ export function createAppPlugin<T extends Record<string, SubOptionSchema>, C ext
   }>,
   options: AppOptions<C>,
 ): PluginDef<T> {
-  const { category, heading, requiresRPMFusion = false, dnfPreInstall } = options
+  const { category, heading, requiresRPMFusion = false, dnfPreInstall, dependencies } = options
 
   return {
     id: `install-app-${appName.toLowerCase().replace(/\s+/g, '-')}`,
@@ -164,6 +165,7 @@ export function createAppPlugin<T extends Record<string, SubOptionSchema>, C ext
                 { label: 'Flatpak', value: 'flatpak' },
               ],
               default: 'dnf',
+              label: `Choose ${appName} installation type:`,
             },
           }
         : {},
@@ -172,6 +174,7 @@ export function createAppPlugin<T extends Record<string, SubOptionSchema>, C ext
     dependencies: [
       ...(requiresRPMFusion ? ['enable-rpmfusion'] : []),
       ...(sources.flatpak ? ['remove-fedora-flatpak-repos'] : []),
+      ...(dependencies ? dependencies : []),
     ].filter(Boolean),
     generate: (config) => {
       const flatpak = !sources.dnf || config.source === 'flatpak'

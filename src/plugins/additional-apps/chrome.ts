@@ -10,6 +10,7 @@ const plugin = createAppPlugin(
   {
     category: 'Additional Applications',
     heading: 'Internet & Communication',
+    dependencies: ['install-dnf-plugins-core'],
     dnfPreInstall: `
 if command -v dnf4 &>/dev/null; then
   dnf4 config-manager --set-enabled google-chrome

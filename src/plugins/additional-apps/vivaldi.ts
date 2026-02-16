@@ -1,0 +1,37 @@
+import { createPlugin } from '@/core/types'
+
+const plugin = createPlugin({
+  id: 'install-app-vivaldi',
+  name: 'Vivaldi',
+  description:
+    'Feature-rich, customizable web browser with built-in productivity tools and privacy features',
+  progressMessage: 'Installing Vivaldi...',
+  options: {
+    source: {
+      type: 'radio',
+      default: 'dnf',
+      label: 'Choose Vivaldi installation type:',
+      options: [
+        { label: 'DNF', value: 'dnf' },
+        { label: 'Flatpak', value: 'flatpak' },
+      ],
+    },
+  },
+  category: 'Additional Applications',
+  heading: 'Internet & Communication',
+  generate: (_config) => {
+    return `
+      wget "https://downloads.vivaldi.com/stable/vivaldi-stable-7.8.3925.66-1.x86_64.rpm"
+      dnf install --nogpgcheck -y ./vivaldi*.rpm
+      rm -f vivaldi*.rpm
+    `
+  },
+})
+
+export default plugin
+
+declare module '@/core/registry' {
+  interface PluginRegistry {
+    'install-app-vivaldi': import('@/core/types').RegisterPlugin<typeof plugin>
+  }
+}
