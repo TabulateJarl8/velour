@@ -1,9 +1,10 @@
-import { createEssentialAppPlugin } from '@/core/types'
+import { createAppPlugin } from '@/core/types'
 
-const plugin = createEssentialAppPlugin(
+const plugin = createAppPlugin(
   'rsync',
   'Fast and versatile file copying tool for local and remote file synchronization',
   { dnf: 'rsync' },
+  { category: 'Essential Applications' },
 )
 
 export default plugin

@@ -1,9 +1,10 @@
-import { createEssentialAppPlugin } from '@/core/types'
+import { createAppPlugin } from '@/core/types'
 
-const plugin = createEssentialAppPlugin(
+const plugin = createAppPlugin(
   'wget',
   'Command-line utility for retrieving files using HTTP, HTTPS, and FTP protocols',
   { dnf: 'wget' },
+  { category: 'Essential Applications' },
 )
 
 export default plugin

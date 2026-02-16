@@ -1,9 +1,10 @@
-import { createEssentialAppPlugin } from '@/core/types'
+import { createAppPlugin } from '@/core/types'
 
-const plugin = createEssentialAppPlugin(
+const plugin = createAppPlugin(
   'htop',
   'Interactive process viewer and system monitor with a customizable interface',
   { dnf: 'htop' },
+  { category: 'Essential Applications' },
 )
 
 export default plugin

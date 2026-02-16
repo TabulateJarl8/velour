@@ -1,9 +1,10 @@
-import { createEssentialAppPlugin } from '@/core/types'
+import { createAppPlugin } from '@/core/types'
 
-const plugin = createEssentialAppPlugin(
+const plugin = createAppPlugin(
   'mc',
   'Midnight Commander: Versatile text-based file manager with dual pane interface',
   { dnf: 'mc' },
+  { category: 'Essential Applications' },
 )
 
 export default plugin

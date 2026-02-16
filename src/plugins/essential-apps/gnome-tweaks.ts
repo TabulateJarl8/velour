@@ -1,9 +1,10 @@
-import { createEssentialAppPlugin } from '@/core/types'
+import { createAppPlugin } from '@/core/types'
 
-const plugin = createEssentialAppPlugin(
+const plugin = createAppPlugin(
   'gnome-tweaks',
   'Advanced configuration tool for customizing GNOME desktop environment settings',
   { dnf: 'gnome-tweaks' },
+  { category: 'Essential Applications' },
 )
 
 export default plugin

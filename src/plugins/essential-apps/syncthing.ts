@@ -1,9 +1,10 @@
-import { createEssentialAppPlugin } from '@/core/types'
+import { createAppPlugin } from '@/core/types'
 
-const plugin = createEssentialAppPlugin(
+const plugin = createAppPlugin(
   'syncthing',
   'Continuous file synchronization program for sharing files between devices securely',
   { dnf: 'syncthing' },
+  { category: 'Essential Applications' },
 )
 
 export default plugin

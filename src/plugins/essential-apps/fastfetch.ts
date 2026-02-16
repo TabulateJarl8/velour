@@ -1,9 +1,10 @@
-import { createEssentialAppPlugin } from '@/core/types'
+import { createAppPlugin } from '@/core/types'
 
-const plugin = createEssentialAppPlugin(
+const plugin = createAppPlugin(
   'fastfetch',
   'Quick system information tool that displays OS, kernel, uptime, and more',
   { dnf: 'fastfetch' },
+  { category: 'Essential Applications' },
 )
 
 export default plugin

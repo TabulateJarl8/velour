@@ -1,9 +1,10 @@
-import { createEssentialAppPlugin } from '@/core/types'
+import { createAppPlugin } from '@/core/types'
 
-const plugin = createEssentialAppPlugin(
+const plugin = createAppPlugin(
   'ncdu',
   'NCurses-based disk usage analyzer for quickly finding large files and directories',
   { dnf: 'ncdu' },
+  { category: 'Essential Applications' },
 )
 
 export default plugin

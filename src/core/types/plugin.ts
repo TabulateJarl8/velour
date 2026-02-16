@@ -52,7 +52,9 @@ interface BasePluginDef<T extends Record<string, SubOptionSchema>> {
    */
   generate: (
     config: PluginConfig<T>,
-  ) => string | { systemPackages?: string[]; flatpakPackages?: string[] }
+  ) =>
+    | string
+    | { preInstallCommands?: string; systemPackages?: string[]; flatpakPackages?: string[] }
 }
 
 /**
@@ -118,6 +120,13 @@ export function createPlugin<T extends Record<string, SubOptionSchema>>(
 /** At least one item in the object must be set */
 type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U]
 
+type AppOptions<C extends Category> = {
+  requiresRPMFusion?: boolean
+  dnfPreInstall?: string
+} & (C extends keyof CategoryHeadings
+  ? { category: C; heading: CategoryHeadings[C] }
+  : { category: C; heading?: never })
+
 /**
  * Create an application installation plugin for an app in the "Essential Applications" category
  *
@@ -126,20 +135,22 @@ type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U]
  * @param sources Object of sources from where you can get the package
  * @param sources.dnf The package name from the fedora repos
  * @param sources.flatpak The package name from flathub
- * @param requiresRPMFusion Whether or not this package requires RPM fusion
+ * @param options Package configuration options
  * @returns A PluginDef for installing the application
  */
-export function createEssentialAppPlugin<T extends Record<string, SubOptionSchema>>(
+export function createAppPlugin<T extends Record<string, SubOptionSchema>, C extends Category>(
   appName: string,
   description: string,
   sources: AtLeastOne<{
     dnf: string
     flatpak: string
   }>,
-  requiresRPMFusion: boolean = false,
+  options: AppOptions<C>,
 ): PluginDef<T> {
+  const { category, heading, requiresRPMFusion = false, dnfPreInstall } = options
+
   return {
-    id: `install-app-${appName}`,
+    id: `install-app-${appName.toLowerCase().replace(/\s+/g, '-')}`,
     name: appName,
     description,
     progressMessage: '',
@@ -149,21 +160,27 @@ export function createEssentialAppPlugin<T extends Record<string, SubOptionSchem
             source: {
               type: 'radio',
               options: [
-                { label: 'DNF', value: sources.dnf },
-                { label: 'Flatpak', value: sources.flatpak },
+                { label: 'DNF', value: 'dnf' },
+                { label: 'Flatpak', value: 'flatpak' },
               ],
-              default: 'DNF',
+              default: 'dnf',
             },
           }
         : {},
-    category: 'Essential Applications',
+    category,
+    ...(heading ? { heading } : {}),
     dependencies: [
-      requiresRPMFusion ? 'enable-rpmfusion' : '',
-      sources.flatpak ? 'remove-fedora-flatpak-repos' : '',
-    ],
-    generate: (_config) => ({
-      systemPackages: [sources.dnf ?? ''],
-      flatpakPackages: [sources.flatpak ?? ''],
-    }),
+      ...(requiresRPMFusion ? ['enable-rpmfusion'] : []),
+      ...(sources.flatpak ? ['remove-fedora-flatpak-repos'] : []),
+    ].filter(Boolean),
+    generate: (config) => {
+      const flatpak = !sources.dnf || config.source === 'flatpak'
+
+      return {
+        ...(dnfPreInstall && !flatpak ? { dnfPreInstall } : {}),
+        systemPackages: !flatpak && sources.dnf ? [sources.dnf] : [],
+        flatpakPackages: flatpak && sources.flatpak ? [sources.flatpak] : [],
+      }
+    },
   } as PluginDef<T>
 }

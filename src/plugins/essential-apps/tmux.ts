@@ -1,9 +1,10 @@
-import { createEssentialAppPlugin } from '@/core/types'
+import { createAppPlugin } from '@/core/types'
 
-const plugin = createEssentialAppPlugin(
+const plugin = createAppPlugin(
   'tmux',
   'Terminal multiplexer for creating multiple terminal sessions within a single window',
   { dnf: 'tmux' },
+  { category: 'Essential Applications' },
 )
 
 export default plugin

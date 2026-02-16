@@ -1,9 +1,10 @@
-import { createEssentialAppPlugin } from '@/core/types'
+import { createAppPlugin } from '@/core/types'
 
-const plugin = createEssentialAppPlugin(
+const plugin = createAppPlugin(
   'tilix',
   'Tiling terminal emulator with advanced features like split panes and session management',
   { dnf: 'tilix' },
+  { category: 'Essential Applications' },
 )
 
 export default plugin

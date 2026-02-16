@@ -1,9 +1,10 @@
-import { createEssentialAppPlugin } from '@/core/types'
+import { createAppPlugin } from '@/core/types'
 
-const plugin = createEssentialAppPlugin(
+const plugin = createAppPlugin(
   'unzip',
   'Extraction utility for ZIP archives with support for various compression methods',
   { dnf: 'unzip' },
+  { category: 'Essential Applications' },
 )
 
 export default plugin

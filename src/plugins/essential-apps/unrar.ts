@@ -1,9 +1,10 @@
-import { createEssentialAppPlugin } from '@/core/types'
+import { createAppPlugin } from '@/core/types'
 
-const plugin = createEssentialAppPlugin(
+const plugin = createAppPlugin(
   'unrar',
   'Extraction utility for RAR archives, including support for password-protected files',
   { dnf: 'unrar' },
+  { category: 'Essential Applications' },
 )
 
 export default plugin

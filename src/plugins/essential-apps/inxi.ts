@@ -1,9 +1,10 @@
-import { createEssentialAppPlugin } from '@/core/types'
+import { createAppPlugin } from '@/core/types'
 
-const plugin = createEssentialAppPlugin(
+const plugin = createAppPlugin(
   'inxi',
   'Command-line system information tool for hardware, CPU, drivers, and more',
   { dnf: 'inxi' },
+  { category: 'Essential Applications' },
 )
 
 export default plugin

@@ -1,9 +1,10 @@
-import { createEssentialAppPlugin } from '@/core/types'
+import { createAppPlugin } from '@/core/types'
 
-const plugin = createEssentialAppPlugin(
+const plugin = createAppPlugin(
   'curl',
   'Command-line tool for transferring data using various protocols with extensive options',
   { dnf: 'curl' },
+  { category: 'Essential Applications' },
 )
 
 export default plugin
