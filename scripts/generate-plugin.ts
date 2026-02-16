@@ -30,6 +30,27 @@ async function generate() {
   const existingPlugins = await loader.loadPlugins(true)
   const pluginList = Array.from(existingPlugins.values())
 
+  const pluginsDir = path.join(process.cwd(), 'src/plugins')
+  const dirents = await fs.readdir(pluginsDir, { recursive: true, withFileTypes: true })
+
+  const subfolders = dirents
+    .filter((e) => e.isDirectory())
+    .map((e) =>
+      path
+        .join(e.parentPath, e.name)
+        .replace(pluginsDir, '')
+        .replace(/^[\\/]/, ''),
+    )
+
+  const folderChoices = [
+    { name: '(root) plugins/', value: '' },
+    ...subfolders.map((f) => ({ name: `plugins/${f}`, value: f })),
+  ]
+  const selectedFolder = await select({
+    message: 'Where should the plugin be created?',
+    choices: folderChoices,
+  })
+
   const id = await input({
     message: 'Plugin ID (e.g. my-plugin): ',
     required: true,
@@ -56,16 +77,13 @@ async function generate() {
 
   const description = escape(await input({ message: 'Description: ', required: true }))
 
-  const progressMessage = escape(
-    await input({
-      message: 'Progress message (like "Setting hostname..."): ',
-      required: true,
-      validate: (val) => {
-        if (!val.endsWith('...')) return 'Please end the message with ...'
-        return true
-      },
-    }),
-  )
+  const progressMessage =
+    escape(
+      await input({
+        message: 'Progress message (like "Setting hostname..."): ',
+        required: true,
+      }),
+    ).replace(/\.*$/, '') + '...'
 
   const options = Object.values(Categories).map((o) => ({
     value: o,
@@ -116,10 +134,11 @@ declare module '@/core/registry' {
 }
 `
 
-  const filePath = path.join(process.cwd(), 'src/plugins', `${id}.ts`)
+  const filePath = path.join(pluginsDir, selectedFolder, `${id}.ts`)
   await fs.writeFile(filePath, file.trim())
 
-  logger.success(`Successfully generated plugin: src/plugins/${id}.ts`)
+  const displayFile = path.join('src/plugins', selectedFolder, `${id}.ts`)
+  logger.success(`Successfully generated plugin: ${displayFile}`)
 }
 
 generate().catch(logger.error)
