@@ -1,8 +1,8 @@
-import { input } from '@inquirer/prompts'
+import { input, select } from '@inquirer/prompts'
 import { PluginDiscoveryProvider, PluginLoader } from '../src/core/loader'
 import path from 'path'
 import fs from 'fs/promises'
-import { PluginModule } from '../src/core/types'
+import { CategoryHeadingsData, PluginModule, Categories } from '../src/core/types'
 import { logger } from '../src/core/logger'
 
 const nodeProvider: PluginDiscoveryProvider = async () => {
@@ -20,6 +20,10 @@ const nodeProvider: PluginDiscoveryProvider = async () => {
   return mods
 }
 
+const escape = (str: string): string => {
+  return str.replace(/'/g, "\\'")
+}
+
 /** Plugin generation entrypoint */
 async function generate() {
   const loader = new PluginLoader(nodeProvider)
@@ -35,18 +39,44 @@ async function generate() {
     },
   })
 
-  const name = await input({
-    message: 'Plugin Name (e.g. My Plugin): ',
-    validate: (val) => {
-      const exists = pluginList.some(
-        (p) => p.name.trim().toLowerCase() === val.trim().toLowerCase(),
-      )
-      if (exists) return `A plugin named ${val} already exists`
-      return true
-    },
-  })
+  const name = escape(
+    await input({
+      message: 'Plugin Name (e.g. My Plugin): ',
+      validate: (val) => {
+        const exists = pluginList.some(
+          (p) => p.name.trim().toLowerCase() === val.trim().toLowerCase(),
+        )
+        if (exists) return `A plugin named ${val} already exists`
+        return true
+      },
+    }),
+  )
 
-  const description = await input({ message: 'Description: ' })
+  const description = escape(await input({ message: 'Description: ' }))
+
+  const options = Object.values(Categories).map((o) => ({
+    value: o,
+  }))
+  const category = escape(
+    await select({
+      message: 'Select a Category:',
+      choices: options,
+    }),
+  )
+
+  // get heading if the category needs it
+  let heading: string | undefined
+  if (category in CategoryHeadingsData) {
+    const key = category as keyof typeof CategoryHeadingsData
+    const headingOptions = CategoryHeadingsData[key].map((s) => ({ value: s }))
+
+    heading = escape(
+      await select({
+        message: 'Select a heading within the category:',
+        choices: headingOptions,
+      }),
+    )
+  }
 
   const file = `
 import { createPlugin } from '../core/types'
@@ -56,6 +86,8 @@ const plugin = createPlugin({
   name: '${name}',
   description: '${description}',
   options: {},
+  category: '${category}',
+  ${heading ? `heading: '${heading}',` : ''}
   generate: (config) => {
     return \`# (${name}) script output here\`
   }

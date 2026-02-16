@@ -8,6 +8,7 @@ const mockEmptyPlugin: ConcretePluginDef = {
   name: 'Mock Empty Testing Plugin',
   description: 'Mock Plugin',
   options: {},
+  category: 'Customization',
   generate: () => 'mock-empty',
 }
 
