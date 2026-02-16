@@ -19,12 +19,16 @@ const plugin = createPlugin({
   },
   category: 'Additional Applications',
   heading: 'Internet & Communication',
-  generate: (_config) => {
-    return `
+  generate: (config) => {
+    if (config.source === 'dnf') {
+      return `
       wget "https://downloads.vivaldi.com/stable/vivaldi-stable-7.8.3925.66-1.x86_64.rpm"
       dnf install --nogpgcheck -y ./vivaldi*.rpm
       rm -f vivaldi*.rpm
     `
+    } else {
+      return { flatpakPackages: ['com.vivaldi.Vivaldi'] }
+    }
   },
 })
 
