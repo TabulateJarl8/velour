@@ -23,7 +23,7 @@ const plugin = createPlugin({
   dependencies: ['remove-fedora-flatpak-repos'],
   generate: (config) => {
     if (config.source === 'flatpak') {
-      return 'flatpak install -y org.mozilla.firefox'
+      return 'flatpak install -y flathub org.mozilla.firefox'
     }
 
     return 'dnf install -y firefox'

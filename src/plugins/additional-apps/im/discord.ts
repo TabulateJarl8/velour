@@ -23,7 +23,7 @@ const plugin = createPlugin({
   dependencies: ['remove-fedora-flatpak-repos'],
   generate: (config) => {
     if (config.source === 'flatpak') {
-      return 'flatpak install -y com.discordapp.Discord'
+      return 'flatpak install -y flathub com.discordapp.Discord'
     }
 
     return 'dnf install -y discord'

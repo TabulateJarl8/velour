@@ -23,7 +23,7 @@ const plugin = createPlugin({
   dependencies: ['remove-fedora-flatpak-repos', 'install-dnf-plugins-core'],
   generate: (config) => {
     if (config.source === 'flatpak') {
-      return 'flatpak install -y com.google.Chrome'
+      return 'flatpak install -y flathub com.google.Chrome'
     }
 
     return `

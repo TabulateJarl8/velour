@@ -23,7 +23,7 @@ const plugin = createPlugin({
   dependencies: ['remove-fedora-flatpak-repos'],
   generate: (config) => {
     if (config.source === 'flatpak') {
-      return 'flatpak install -y io.gitlab.librewolf-community'
+      return 'flatpak install -y flathub io.gitlab.librewolf-community'
     }
 
     return `

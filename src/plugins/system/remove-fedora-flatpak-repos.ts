@@ -18,7 +18,6 @@ const plugin = createPlugin({
       flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
       flatpak repair
       flatpak update -v
-      flatpak install -y flathub
     `
   },
 })

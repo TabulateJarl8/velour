@@ -187,7 +187,7 @@ async function generateAppPlugin(meta: PluginMeta, category: PluginCategory): Pr
   if (dnfPackage && flatpakPackage) {
     generate = `
     if (config.source === 'flatpak') {
-      return 'flatpak install -y ${flatpakPackage}'
+      return 'flatpak install -y flathub ${flatpakPackage}'
     }
 
     return 'dnf install -y ${dnfPackage}'
@@ -195,7 +195,7 @@ async function generateAppPlugin(meta: PluginMeta, category: PluginCategory): Pr
   } else if (dnfPackage) {
     generate = `return 'dnf install -y ${dnfPackage}'`
   } else {
-    generate = `return 'flatpak install -y ${flatpakPackage}'`
+    generate = `return 'flatpak install -y flathub ${flatpakPackage}'`
   }
 
   return `

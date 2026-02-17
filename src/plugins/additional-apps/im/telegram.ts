@@ -23,7 +23,7 @@ const plugin = createPlugin({
   dependencies: ['remove-fedora-flatpak-repos'],
   generate: (config) => {
     if (config.source === 'flatpak') {
-      return 'flatpak install -y org.telegram.desktop'
+      return 'flatpak install -y flathub org.telegram.desktop'
     }
 
     return 'dnf install -y telegram-desktop'

@@ -12,7 +12,7 @@ const plugin = createPlugin({
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   generate: (_config) => {
-    return 'flatpak install -y app.zen_browser.zen'
+    return 'flatpak install -y flathub app.zen_browser.zen'
   },
 })
 

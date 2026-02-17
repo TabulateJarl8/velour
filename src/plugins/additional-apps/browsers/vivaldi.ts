@@ -29,7 +29,7 @@ const plugin = createPlugin({
       rm -f vivaldi*.rpm
     `
     } else {
-      return 'flatpak install -y com.vivaldi.Vivaldi'
+      return 'flatpak install -y flathub com.vivaldi.Vivaldi'
     }
   },
 })

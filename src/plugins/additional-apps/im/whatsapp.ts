@@ -12,7 +12,7 @@ const plugin = createPlugin({
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   generate: (_config) => {
-    return 'flatpak install -y com.ktechpit.whatsie'
+    return 'flatpak install -y flathub com.ktechpit.whatsie'
   },
 })
 

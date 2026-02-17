@@ -24,7 +24,7 @@ const plugin = createPlugin({
   dependencies: ['remove-fedora-flatpak-repos'],
   generate: (config) => {
     if (config.source === 'flatpak') {
-      return 'flatpak install -y org.chromium.Chromium'
+      return 'flatpak install -y flathub org.chromium.Chromium'
     }
 
     return 'dnf install -y chromium'

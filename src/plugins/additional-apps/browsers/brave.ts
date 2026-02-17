@@ -23,7 +23,7 @@ const plugin = createPlugin({
   dependencies: ['remove-fedora-flatpak-repos', 'install-dnf-plugins-core'],
   generate: (config) => {
     if (config.source === 'flatpak') {
-      return 'flatpak install -y com.brave.Browser'
+      return 'flatpak install -y flathub com.brave.Browser'
     }
 
     return `
