@@ -1,9 +1,31 @@
-import { input, select } from '@inquirer/prompts'
+import { input, select, confirm } from '@inquirer/prompts'
 import { PluginDiscoveryProvider, PluginLoader } from '../src/core/loader'
 import path from 'path'
 import fs from 'fs/promises'
-import { CategoryHeadingsData, PluginModule, Categories } from '../src/core/types'
+import {
+  CategoryHeadingsData,
+  PluginModule,
+  Categories,
+  ConcretePluginDef,
+} from '../src/core/types'
 import { logger } from '../src/core/logger'
+
+type PluginContext = {
+  existingPlugins: Map<string, ConcretePluginDef>
+  pluginsDir: string
+  folderChoices: { name: string; value: string }[]
+}
+
+type PluginMeta = {
+  id: string
+  name: string
+  description: string
+}
+
+type PluginCategory = {
+  category: string
+  heading?: string
+}
 
 const nodeProvider: PluginDiscoveryProvider = async () => {
   const fs = await import('fs/promises')
@@ -24,11 +46,9 @@ const escape = (str: string): string => {
   return str.replace(/'/g, "\\'")
 }
 
-/** Plugin generation entrypoint */
-async function generate() {
+async function getPluginContext(): Promise<PluginContext> {
   const loader = new PluginLoader(nodeProvider)
   const existingPlugins = await loader.loadPlugins(true)
-  const pluginList = Array.from(existingPlugins.values())
 
   const pluginsDir = path.join(process.cwd(), 'src/plugins')
   const dirents = await fs.readdir(pluginsDir, { recursive: true, withFileTypes: true })
@@ -46,20 +66,19 @@ async function generate() {
     { name: '(root) plugins/', value: '' },
     ...subfolders.map((f) => ({ name: `plugins/${f}`, value: f })),
   ]
-  const selectedFolder = await select({
-    message: 'Where should the plugin be created?',
-    choices: folderChoices,
-  })
 
-  const id = await input({
-    message: 'Plugin ID (e.g. my-plugin): ',
-    required: true,
-    validate: (val) => {
-      if (existingPlugins.has(val)) return `The ID ${val} is taken`
-      if (!/^[a-z0-9-]+$/.test(val)) return 'ID must be lowercase, numbers, or dashes'
-      return true
-    },
-  })
+  return { existingPlugins, pluginsDir, folderChoices }
+}
+
+async function promptLocation(context: PluginContext): Promise<string> {
+  return select({ message: 'Where should the plugin be created?', choices: context.folderChoices })
+}
+
+async function promptMetadata(
+  context: PluginContext,
+  pluginType: keyof typeof generators,
+): Promise<PluginMeta> {
+  const pluginList = Array.from(context.existingPlugins.values())
 
   const name = escape(
     await input({
@@ -75,16 +94,26 @@ async function generate() {
     }),
   )
 
+  const nameNormalized = name.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+  const idSuggestion = pluginType === 'app' ? `install-app-${nameNormalized}` : nameNormalized
+
+  const id = await input({
+    message: 'Plugin ID (e.g. my-plugin): ',
+    required: true,
+    default: idSuggestion,
+    validate: (val) => {
+      if (context.existingPlugins.has(val)) return `The ID ${val} is taken`
+      if (!/^[a-z0-9-]+$/.test(val)) return 'ID must be lowercase, numbers, or dashes'
+      return true
+    },
+  })
+
   const description = escape(await input({ message: 'Description: ', required: true }))
 
-  const progressMessage =
-    escape(
-      await input({
-        message: 'Progress message (like "Setting hostname..."): ',
-        required: true,
-      }),
-    ).replace(/\.*$/, '') + '...'
+  return { id, name, description }
+}
 
+async function promptCategory(): Promise<PluginCategory> {
   const options = Object.values(Categories).map((o) => ({
     value: o,
   }))
@@ -109,19 +138,90 @@ async function generate() {
     )
   }
 
-  const file = `
+  return { category, heading }
+}
+
+async function generateAppPlugin(meta: PluginMeta, category: PluginCategory): Promise<string> {
+  // get the source packages
+  let sourcesValid = false
+  let dnfPackage: string
+  let flatpakPackage: string
+  do {
+    dnfPackage = await input({ message: 'DNF Package Name (leave empty if none): ' })
+    flatpakPackage = await input({ message: 'Flatpak Package Name (leave empty if none): ' })
+
+    if (!dnfPackage.trim() && !flatpakPackage.trim()) {
+      logger.error('Please provide at least one package source')
+    } else {
+      sourcesValid = true
+    }
+  } while (!sourcesValid)
+
+  // check if we need RPM fusion
+  let rpmFusion = false
+  if (dnfPackage) {
+    rpmFusion = await confirm({ message: 'Does this package require RPM Fusion?', default: false })
+  }
+
+  let options = 'options: {},'
+  if (dnfPackage && flatpakPackage) {
+    options = `options: {
+    source: {
+      type: 'radio',
+      options: [
+        { label: 'DNF', value: 'dnf' },
+        { label: 'Flatpak', value: 'flatpak' },
+      ],
+      default: 'dnf',
+      label: 'Choose ${meta.name} installation type:',
+    },
+  },`
+  }
+
+  const deps = []
+  if (rpmFusion) deps.push("'enable-rpmfusion'")
+  if (flatpakPackage) deps.push("'remove-fedora-flatpak-repos'")
+  const depsArray = deps.length != 0 ? `dependencies: [${deps.join(', ')}],` : 'dependencies: [],'
+
+  let generate = ''
+  if (dnfPackage && flatpakPackage) {
+    generate = `
+    if (config.source === 'flatpak') {
+      return \`
+        flatpak install -y ${flatpakPackage}
+      \`
+    }
+
+    return \`
+      dnf install -y ${dnfPackage}
+    \`
+    `
+  } else if (dnfPackage) {
+    generate = `return \`
+      dnf install -y ${dnfPackage}
+    \``
+  } else {
+    generate = `return \`
+      flatpak install -y ${flatpakPackage}
+    \``
+  }
+
+  return `
 import { createPlugin } from '@/core/types'
 
+const PLUGIN_ID = '${meta.id}' as const
+
 const plugin = createPlugin({
-  id: '${id}',
-  name: '${name}',
-  description: '${description}',
-  progressMessage: '${progressMessage}',
-  options: {},
-  category: '${category}',
-  ${heading ? `heading: '${heading}',` : ''}
-  generate: (config) => {
-    return \`# (${name}) script output here\`
+  id: PLUGIN_ID,
+  name: '${meta.name}',
+  description: '${meta.description}',
+  progressMessage: 'Installing ${meta.name}...',
+  category: '${category.category}',
+  ${category.heading ? `heading: '${category.heading}'` : ''},
+  ${options}
+  ${depsArray}
+  generate: (${dnfPackage && flatpakPackage ? 'config' : '_config'}) => {
+    ${generate}
   }
 })
 
@@ -129,15 +229,76 @@ export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    '${id}': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
+  }
+}
+  `
+}
+
+async function generateGenericPlugin(meta: PluginMeta, category: PluginCategory): Promise<string> {
+  const progressMessage =
+    escape(
+      await input({
+        message: 'Progress message (like "Setting hostname..."): ',
+        required: true,
+      }),
+    ).replace(/\.*$/, '') + '...'
+
+  return `
+import { createPlugin } from '@/core/types'
+
+const PLUGIN_ID = '${meta.id}' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: '${meta.name}',
+  description: '${meta.description}',
+  progressMessage: '${progressMessage}',
+  options: {},
+  category: '${category.category}',
+  ${category.heading ? `heading: '${category.heading}',` : ''}
+  generate: (config) => {
+    return \`# (${meta.name}) script output here\`
+  }
+})
+
+export default plugin
+
+declare module '@/core/registry' {
+  interface PluginRegistry {
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }
 `
+}
 
-  const filePath = path.join(pluginsDir, selectedFolder, `${id}.ts`)
-  await fs.writeFile(filePath, file.trim())
+const generators = {
+  app: { name: 'App Installer (DNF/Flatpak)', fn: generateAppPlugin },
+  generic: { name: 'Generic Script', fn: generateGenericPlugin },
+}
 
-  const displayFile = path.join('src/plugins', selectedFolder, `${id}.ts`)
+/** Plugin generation entrypoint */
+async function generate() {
+  const template = await select({
+    message: 'What kind of plugin do you want to create?',
+    choices: Object.entries(generators).map(([key, val]) => ({
+      name: val.name,
+      value: key as keyof typeof generators,
+    })),
+  })
+
+  const context = await getPluginContext()
+  const selectedFolder = await promptLocation(context)
+
+  const meta = await promptMetadata(context, template)
+  const category = await promptCategory()
+
+  const content = await generators[template].fn(meta, category)
+
+  const filePath = path.join(context.pluginsDir, selectedFolder, `${meta.id}.ts`)
+  await fs.writeFile(filePath, content.trim())
+
+  const displayFile = path.join('src/plugins', selectedFolder, `${meta.id}.ts`)
   logger.success(`Successfully generated plugin: ${displayFile}`)
 }
 

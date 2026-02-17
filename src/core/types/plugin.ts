@@ -50,11 +50,7 @@ interface BasePluginDef<T extends Record<string, SubOptionSchema>> {
    * @returns {string} One or more lines of a bash script based on what the user selected in the
    *   plugin's config
    */
-  generate: (
-    config: PluginConfig<T>,
-  ) =>
-    | string
-    | { preInstallCommands?: string; systemPackages?: string[]; flatpakPackages?: string[] }
+  generate: (config: PluginConfig<T>) => string
 }
 
 /**
@@ -114,76 +110,4 @@ export function createPlugin<T extends Record<string, SubOptionSchema>>(
   plugin: PluginDef<T>,
 ): PluginDef<T> {
   return plugin
-}
-
-// https://stackoverflow.com/a/48244432/11591238
-/** At least one item in the object must be set */
-type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> & U[keyof U]
-
-type AppOptions<C extends Category> = {
-  requiresRPMFusion?: boolean
-  dnfPreInstall?: string
-  dnfDependencies?: (keyof PluginRegistry)[]
-} & (C extends keyof CategoryHeadings
-  ? { category: C; heading: CategoryHeadings[C] }
-  : { category: C; heading?: never })
-
-/**
- * Create an application installation plugin for an app in the "Essential Applications" category
- *
- * @param appName The dnf package name of the app
- * @param description The description of the app
- * @param sources Object of sources from where you can get the package
- * @param sources.dnf The package name from the fedora repos
- * @param sources.flatpak The package name from flathub
- * @param options Package configuration options
- * @returns A PluginDef for installing the application
- */
-export function createAppPlugin<T extends Record<string, SubOptionSchema>, C extends Category>(
-  appName: string,
-  description: string,
-  sources: AtLeastOne<{
-    dnf: string
-    flatpak: string
-  }>,
-  options: AppOptions<C>,
-): PluginDef<T> {
-  const { category, heading, requiresRPMFusion = false, dnfPreInstall, dnfDependencies } = options
-
-  return {
-    id: `install-app-${appName.toLowerCase().replace(/\s+/g, '-')}`,
-    name: appName,
-    description,
-    progressMessage: '',
-    options:
-      sources.dnf && sources.flatpak
-        ? {
-            source: {
-              type: 'radio',
-              options: [
-                { label: 'DNF', value: 'dnf' },
-                { label: 'Flatpak', value: 'flatpak' },
-              ],
-              default: 'dnf',
-              label: `Choose ${appName} installation type:`,
-            },
-          }
-        : {},
-    category,
-    ...(heading ? { heading } : {}),
-    dependencies: [
-      ...(requiresRPMFusion ? ['enable-rpmfusion'] : []),
-      ...(sources.flatpak ? ['remove-fedora-flatpak-repos'] : []),
-      ...(dnfDependencies && sources.dnf ? dnfDependencies : []),
-    ].filter(Boolean),
-    generate: (config) => {
-      const flatpak = !sources.dnf || config.source === 'flatpak'
-
-      return {
-        ...(dnfPreInstall && !flatpak ? { dnfPreInstall } : {}),
-        systemPackages: !flatpak && sources.dnf ? [sources.dnf] : [],
-        flatpakPackages: flatpak && sources.flatpak ? [sources.flatpak] : [],
-      }
-    },
-  } as PluginDef<T>
 }
