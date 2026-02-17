@@ -1,7 +1,9 @@
 import { createPlugin } from '@/core/types'
 
+const PLUGIN_ID = 'install-intel-codecs' as const
+
 const plugin = createPlugin({
-  id: 'install-intel-codecs',
+  id: PLUGIN_ID,
   name: 'Intel Codecs',
   description:
     'Install Hardware Accelerated Codecs for Intel integrated GPUs. This improves video playback and encoding performance on systems with Intel graphics.',
@@ -9,15 +11,13 @@ const plugin = createPlugin({
   options: {},
   category: 'System Configuration',
   dependencies: ['enable-rpmfusion'],
-  generate: (_config) => ({
-    systemPackages: ['intel-media-driver'],
-  }),
+  generate: (_config) => 'dnf install -y intel-media-driver',
 })
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-intel-codecs': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

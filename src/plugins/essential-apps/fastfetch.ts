@@ -1,16 +1,25 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'fastfetch',
-  'Quick system information tool that displays OS, kernel, uptime, and more',
-  { dnf: 'fastfetch' },
-  { category: 'Essential Applications' },
-)
+const PLUGIN_ID = 'install-app-fastfetch' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'fastfetch',
+  description: 'Quick system information tool that displays OS, kernel, uptime, and more',
+  progressMessage: 'Installing fastfetch...',
+  category: 'Essential Applications',
+
+  options: {},
+  dependencies: [],
+  generate: (_config) => {
+    return 'dnf install -y fastfetch'
+  },
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-fastfetch': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

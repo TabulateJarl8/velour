@@ -1,30 +1,47 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'Google Chrome',
-  'The web browser from Google.',
-  {
-    dnf: 'google-chrome-stable',
-    flatpak: 'com.google.Chrome',
+const PLUGIN_ID = 'install-app-google-chrome' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'Google Chrome',
+  description: 'The web browser from Google.',
+  progressMessage: 'Installing Google Chrome...',
+  category: 'Additional Applications',
+  heading: 'Internet & Communication',
+  options: {
+    source: {
+      type: 'radio',
+      options: [
+        { label: 'DNF', value: 'dnf' },
+        { label: 'Flatpak', value: 'flatpak' },
+      ],
+      default: 'dnf',
+      label: 'Choose Google Chrome installation type:',
+    },
   },
-  {
-    category: 'Additional Applications',
-    heading: 'Internet & Communication',
-    dnfDependencies: ['install-dnf-plugins-core'],
-    dnfPreInstall: `
-if command -v dnf4 &>/dev/null; then
-  dnf4 config-manager --set-enabled google-chrome
-else
-  dnf config-manager setopt google-chrome.enabled=1
-fi
-  `,
+  dependencies: ['remove-fedora-flatpak-repos', 'install-dnf-plugins-core'],
+  generate: (config) => {
+    if (config.source === 'flatpak') {
+      return 'flatpak install -y com.google.Chrome'
+    }
+
+    return `
+    if command -v dnf4 &>/dev/null; then
+      dnf4 config-manager --set-enabled google-chrome
+    else
+      dnf config-manager setopt google-chrome.enabled=1
+    fi
+
+    dnf install -y google-chrome-stable
+    `
   },
-)
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-google-chrome': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

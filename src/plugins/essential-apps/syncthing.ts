@@ -1,16 +1,25 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'syncthing',
-  'Continuous file synchronization program for sharing files between devices securely',
-  { dnf: 'syncthing' },
-  { category: 'Essential Applications' },
-)
+const PLUGIN_ID = 'install-app-syncthing' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'syncthing',
+  description: 'Continuous file synchronization program for sharing files between devices securely',
+  progressMessage: 'Installing syncthing...',
+  category: 'Essential Applications',
+
+  options: {},
+  dependencies: [],
+  generate: (_config) => {
+    return 'dnf install -y syncthing'
+  },
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-syncthing': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

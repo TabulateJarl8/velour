@@ -1,7 +1,9 @@
 import { createPlugin } from '@/core/types'
 
+const PLUGIN_ID = 'enable-dnf-autoupdate' as const
+
 const plugin = createPlugin({
-  id: 'enable-dnf-autoupdate',
+  id: PLUGIN_ID,
   name: 'Enable DNF Autoupdate',
   description: 'Enable and configure automatic system updates to enhance security and stability',
   progressMessage: 'Enabling DNF autoupdate...',
@@ -21,6 +23,6 @@ export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'enable-dnf-autoupdate': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

@@ -1,16 +1,26 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'btop',
-  'Resource monitor that shows usage and stats for processor, memory, disks, network and processes',
-  { dnf: 'btop' },
-  { category: 'Essential Applications' },
-)
+const PLUGIN_ID = 'install-app-btop' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'btop',
+  description:
+    'Resource monitor that shows usage and stats for processor, memory, disks, network and processes',
+  progressMessage: 'Installing btop...',
+  category: 'Essential Applications',
+
+  options: {},
+  dependencies: [],
+  generate: (_config) => {
+    return 'dnf install -y btop'
+  },
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-btop': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

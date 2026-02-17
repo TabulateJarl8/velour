@@ -1,7 +1,9 @@
 import { createPlugin } from '@/core/types'
 
+const PLUGIN_ID = 'update-firmware' as const
+
 const plugin = createPlugin({
-  id: 'update-firmware',
+  id: PLUGIN_ID,
   name: 'Update Firmware',
   description: 'Check and apply firmware updates to improve hardware compatibility and performance',
   progressMessage: 'Checking for firmware updates...',
@@ -21,6 +23,6 @@ export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'update-firmware': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

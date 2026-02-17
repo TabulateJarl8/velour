@@ -1,21 +1,25 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'Signal Desktop',
-  'A private messaging app with end-to-end encryption',
-  {
-    flatpak: 'org.signal.Signal',
+const PLUGIN_ID = 'install-app-signal-desktop' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'Signal Desktop',
+  description: 'A private messaging app with end-to-end encryption',
+  progressMessage: 'Installing Signal Desktop...',
+  category: 'Additional Applications',
+  heading: 'Internet & Communication',
+  options: {},
+  dependencies: ['remove-fedora-flatpak-repos'],
+  generate: (_config) => {
+    return 'flatpak install -y org.signal.Signal'
   },
-  {
-    category: 'Additional Applications',
-    heading: 'Internet & Communication',
-  },
-)
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-signal-desktop': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

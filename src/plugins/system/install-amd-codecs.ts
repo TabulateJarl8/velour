@@ -1,7 +1,9 @@
 import { createPlugin } from '@/core/types'
 
+const PLUGIN_ID = 'install-amd-codecs' as const
+
 const plugin = createPlugin({
-  id: 'install-amd-codecs',
+  id: PLUGIN_ID,
   name: 'AMD Codecs',
   description:
     'Install Hardware Accelerated Codecs for AMD GPUs. This improves video playback and encoding performance on systems with AMD graphics.',
@@ -21,6 +23,6 @@ export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-amd-codecs': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

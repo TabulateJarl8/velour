@@ -1,16 +1,25 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'ncdu',
-  'NCurses-based disk usage analyzer for quickly finding large files and directories',
-  { dnf: 'ncdu' },
-  { category: 'Essential Applications' },
-)
+const PLUGIN_ID = 'install-app-ncdu' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'ncdu',
+  description: 'NCurses-based disk usage analyzer for quickly finding large files and directories',
+  progressMessage: 'Installing ncdu...',
+  category: 'Essential Applications',
+
+  options: {},
+  dependencies: [],
+  generate: (_config) => {
+    return 'dnf install -y ncdu'
+  },
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-ncdu': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

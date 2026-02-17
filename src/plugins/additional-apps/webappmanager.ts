@@ -1,25 +1,30 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'WebAppManager',
-  'Run websites as if they were apps.',
-  {
-    dnf: 'webapp-manager',
-  },
-  {
-    category: 'Additional Applications',
-    heading: 'Internet & Communication',
-    dnfPreInstall: `
+const PLUGIN_ID = 'install-app-webappmanager' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'WebAppManager',
+  description: 'Run websites as if they were apps.',
+  progressMessage: 'Installing WebAppManager...',
+  category: 'Additional Applications',
+  heading: 'Internet & Communication',
+  options: {},
+  dependencies: [],
+  generate: (_config) => {
+    return `
     dnf copr enable risi/risiOS -y
     echo 'includepkgs=webapp-manager' | sudo tee -a /etc/yum.repos.d/_copr:copr.fedorainfracloud.org:risi:risiOS.repo
-    `,
+
+    dnf install -y webapp-manager
+    `
   },
-)
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-webappmanager': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

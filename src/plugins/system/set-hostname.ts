@@ -1,7 +1,9 @@
 import { createPlugin } from '@/core/types'
 
+const PLUGIN_ID = 'set-hostname' as const
+
 const plugin = createPlugin({
-  id: 'set-hostname',
+  id: PLUGIN_ID,
   name: 'Set Hostname',
   description: 'Set the system hostname to uniquely identify the machine on the network',
   progressMessage: 'Setting hostname...',
@@ -23,6 +25,6 @@ export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'set-hostname': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

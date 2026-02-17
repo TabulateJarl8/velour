@@ -1,21 +1,25 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'Opera',
-  'A fast, feature-rich web browser with a focus on user experience and security.',
-  {
-    flatpak: 'com.opera.Opera',
+const PLUGIN_ID = 'install-app-opera' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'Opera',
+  description: 'A fast, feature-rich web browser with a focus on user experience and security.',
+  progressMessage: 'Installing Opera...',
+  category: 'Additional Applications',
+  heading: 'Internet & Communication',
+  options: {},
+  dependencies: ['remove-fedora-flatpak-repos'],
+  generate: (_config) => {
+    return 'flatpak install -y com.opera.Opera'
   },
-  {
-    category: 'Additional Applications',
-    heading: 'Internet & Communication',
-  },
-)
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-opera': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

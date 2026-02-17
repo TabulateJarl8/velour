@@ -1,16 +1,25 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'gnome-tweaks',
-  'Advanced configuration tool for customizing GNOME desktop environment settings',
-  { dnf: 'gnome-tweaks' },
-  { category: 'Essential Applications' },
-)
+const PLUGIN_ID = 'install-app-gnome-tweaks' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'gnome-tweaks',
+  description: 'Advanced configuration tool for customizing GNOME desktop environment settings',
+  progressMessage: 'Installing gnome-tweaks...',
+  category: 'Essential Applications',
+
+  options: {},
+  dependencies: [],
+  generate: (_config) => {
+    return 'dnf install -y gnome-tweaks'
+  },
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-gnome-tweaks': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

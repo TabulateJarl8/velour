@@ -1,16 +1,26 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'tilix',
-  'Tiling terminal emulator with advanced features like split panes and session management',
-  { dnf: 'tilix' },
-  { category: 'Essential Applications' },
-)
+const PLUGIN_ID = 'install-app-tilix' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'tilix',
+  description:
+    'Tiling terminal emulator with advanced features like split panes and session management',
+  progressMessage: 'Installing tilix...',
+  category: 'Essential Applications',
+
+  options: {},
+  dependencies: [],
+  generate: (_config) => {
+    return 'dnf install -y tilix'
+  },
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-tilix': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

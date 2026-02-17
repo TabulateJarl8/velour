@@ -1,7 +1,9 @@
 import { createPlugin } from '@/core/types'
 
+const PLUGIN_ID = 'configure-dnf' as const
+
 const plugin = createPlugin({
-  id: 'configure-dnf',
+  id: PLUGIN_ID,
   name: 'Configure DNF',
   description: 'Optimize DNF package manager for faster downloads and efficient updates',
   progressMessage: 'Configuring DNF Package Manager...',
@@ -45,6 +47,6 @@ export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'configure-dnf': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

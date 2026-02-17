@@ -1,7 +1,9 @@
 import { createPlugin } from '@/core/types'
 
+const PLUGIN_ID = 'install-app-vivaldi' as const
+
 const plugin = createPlugin({
-  id: 'install-app-vivaldi',
+  id: PLUGIN_ID,
   name: 'Vivaldi',
   description:
     'Feature-rich, customizable web browser with built-in productivity tools and privacy features',
@@ -27,7 +29,7 @@ const plugin = createPlugin({
       rm -f vivaldi*.rpm
     `
     } else {
-      return { flatpakPackages: ['com.vivaldi.Vivaldi'] }
+      return 'flatpak install -y com.vivaldi.Vivaldi'
     }
   },
 })
@@ -36,6 +38,6 @@ export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-vivaldi': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

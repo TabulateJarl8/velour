@@ -1,21 +1,25 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'Betterbird',
-  'A fast, feature-rich email client with a focus on user experience and security.',
-  {
-    flatpak: 'eu.betterbird.Betterbird',
+const PLUGIN_ID = 'install-app-betterbird' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'Betterbird',
+  description: 'A fast, feature-rich email client with a focus on user experience and security.',
+  progressMessage: 'Installing Betterbird...',
+  category: 'Additional Applications',
+  heading: 'Internet & Communication',
+  options: {},
+  dependencies: ['remove-fedora-flatpak-repos'],
+  generate: (_config) => {
+    return 'flatpak install -y eu.betterbird.Betterbird'
   },
-  {
-    category: 'Additional Applications',
-    heading: 'Internet & Communication',
-  },
-)
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-betterbird': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

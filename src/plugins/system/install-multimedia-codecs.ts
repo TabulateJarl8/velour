@@ -1,7 +1,9 @@
 import { createPlugin } from '@/core/types'
 
+const PLUGIN_ID = 'install-multimedai-codecs' as const
+
 const plugin = createPlugin({
-  id: 'install-multimedia-codecs',
+  id: PLUGIN_ID,
   name: 'Multimedia Codecs',
   description: 'Install multimedia codecs to enhance multimedia capabilities',
   progressMessage: 'Installing multimedia codecs...',
@@ -21,6 +23,6 @@ export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-multimedia-codecs': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

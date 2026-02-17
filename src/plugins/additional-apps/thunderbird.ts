@@ -1,22 +1,39 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'Thunderbird',
-  'The email client from Mozilla.',
-  {
-    dnf: 'thunderbird',
-    flatpak: 'org.mozilla.Thunderbird',
+const PLUGIN_ID = 'install-app-thunderbird' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'Thunderbird',
+  description: 'The email client from Mozilla.',
+  progressMessage: 'Installing Thunderbird...',
+  category: 'Additional Applications',
+  heading: 'Internet & Communication',
+  options: {
+    source: {
+      type: 'radio',
+      options: [
+        { label: 'DNF', value: 'dnf' },
+        { label: 'Flatpak', value: 'flatpak' },
+      ],
+      default: 'dnf',
+      label: 'Choose Thunderbird installation type:',
+    },
   },
-  {
-    category: 'Additional Applications',
-    heading: 'Internet & Communication',
+  dependencies: ['remove-fedora-flatpak-repos'],
+  generate: (config) => {
+    if (config.source === 'flatpak') {
+      return 'flatpak install -y org.mozilla.Thunderbird'
+    }
+
+    return 'dnf install -y thunderbird'
   },
-)
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-thunderbird': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

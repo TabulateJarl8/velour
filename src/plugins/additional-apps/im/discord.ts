@@ -1,23 +1,39 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'Discord',
-  'A popular communication platform for gamers and communities',
-  {
-    dnf: 'discord',
-    flatpak: 'com.discordapp.Discord',
+const PLUGIN_ID = 'install-app-discord' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'Discord',
+  description: 'A popular communication platform for gamers and communities',
+  progressMessage: 'Installing Discord...',
+  category: 'Additional Applications',
+  heading: 'Internet & Communication',
+  options: {
+    source: {
+      type: 'radio',
+      options: [
+        { label: 'DNF', value: 'dnf' },
+        { label: 'Flatpak', value: 'flatpak' },
+      ],
+      default: 'dnf',
+      label: 'Choose Discord installation type:',
+    },
   },
-  {
-    category: 'Additional Applications',
-    heading: 'Internet & Communication',
-    dnfDependencies: ['enable-rpmfusion'],
+  dependencies: ['remove-fedora-flatpak-repos'],
+  generate: (config) => {
+    if (config.source === 'flatpak') {
+      return 'flatpak install -y com.discordapp.Discord'
+    }
+
+    return 'dnf install -y discord'
   },
-)
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-discord': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

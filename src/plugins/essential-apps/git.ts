@@ -1,16 +1,26 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'git',
-  'Distributed version control system for tracking changes in source code and collaboration',
-  { dnf: 'git' },
-  { category: 'Essential Applications' },
-)
+const PLUGIN_ID = 'install-app-git' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'git',
+  description:
+    'Distributed version control system for tracking changes in source code and collaboration',
+  progressMessage: 'Installing git...',
+  category: 'Essential Applications',
+
+  options: {},
+  dependencies: [],
+  generate: (_config) => {
+    return 'dnf install -y git'
+  },
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-git': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

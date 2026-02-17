@@ -1,21 +1,25 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'Zen Browser',
-  'A beautifully designed web browser, privacy-focused, and packed with features.',
-  {
-    flatpak: 'app.zen_browser.zen',
+const PLUGIN_ID = 'install-app-zen-browser' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'Zen Browser',
+  description: 'A beautifully designed web browser, privacy-focused, and packed with features.',
+  progressMessage: 'Installing Zen Browser...',
+  category: 'Additional Applications',
+  heading: 'Internet & Communication',
+  options: {},
+  dependencies: ['remove-fedora-flatpak-repos'],
+  generate: (_config) => {
+    return 'flatpak install -y app.zen_browser.zen'
   },
-  {
-    category: 'Additional Applications',
-    heading: 'Internet & Communication',
-  },
-)
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-zen-browser': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

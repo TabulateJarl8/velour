@@ -1,7 +1,9 @@
 import { createPlugin } from '@/core/types'
 
+const PLUGIN_ID = 'remove-fedora-flatpak-repos' as const
+
 const plugin = createPlugin({
-  id: 'remove-fedora-flatpak-repos',
+  id: PLUGIN_ID,
   name: 'Replace Fedora Flatpak Repo with Flathub',
   description:
     'Replace Fedora Flatpak Repo with Flathub for better package management and apps stability',
@@ -15,7 +17,8 @@ const plugin = createPlugin({
       flatpak remote-delete fedora --force || true
       flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
       flatpak repair
-      flatpak update
+      flatpak update -v
+      flatpak install -y flathub
     `
   },
 })
@@ -24,6 +27,6 @@ export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'remove-fedora-flatpak-repos': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

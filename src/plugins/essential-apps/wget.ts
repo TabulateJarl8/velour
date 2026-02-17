@@ -1,16 +1,25 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'wget',
-  'Command-line utility for retrieving files using HTTP, HTTPS, and FTP protocols',
-  { dnf: 'wget' },
-  { category: 'Essential Applications' },
-)
+const PLUGIN_ID = 'install-app-wget' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'wget',
+  description: 'Command-line utility for retrieving files using HTTP, HTTPS, and FTP protocols',
+  progressMessage: 'Installing wget...',
+  category: 'Essential Applications',
+
+  options: {},
+  dependencies: [],
+  generate: (_config) => {
+    return 'dnf install -y wget'
+  },
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-wget': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

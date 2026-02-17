@@ -1,7 +1,9 @@
 import { createPlugin } from '@/core/types'
 
+const PLUGIN_ID = 'enable-rpmfusion' as const
+
 const plugin = createPlugin({
-  id: 'enable-rpmfusion',
+  id: PLUGIN_ID,
   name: 'RPM Fusion Repositories',
   description: 'Enable RPM Fusion repositories to access additional software packages and codecs',
   progressMessage: 'Enabling RPM Fusion Repositories...',
@@ -21,6 +23,6 @@ export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'enable-rpmfusion': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

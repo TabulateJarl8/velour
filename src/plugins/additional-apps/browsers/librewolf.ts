@@ -1,24 +1,42 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'LibreWolf',
-  'A privacy-focused fork of Firefox, emphasizing security and user freedom.',
-  {
-    dnf: 'librewolf',
-    flatpak: 'io.gitlab.librewolf-community',
+const PLUGIN_ID = 'install-app-librewolf' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'LibreWolf',
+  description: 'A privacy-focused fork of Firefox, emphasizing security and user freedom.',
+  progressMessage: 'Installing LibreWolf...',
+  category: 'Additional Applications',
+  heading: 'Internet & Communication',
+  options: {
+    source: {
+      type: 'radio',
+      options: [
+        { label: 'DNF', value: 'dnf' },
+        { label: 'Flatpak', value: 'flatpak' },
+      ],
+      default: 'dnf',
+      label: 'Choose LibreWolf installation type:',
+    },
   },
-  {
-    category: 'Additional Applications',
-    heading: 'Internet & Communication',
-    dnfPreInstall:
-      'curl -fsSL https://repo.librewolf.net/librewolf.repo | pkexec tee /etc/yum.repos.d/librewolf.repo',
+  dependencies: ['remove-fedora-flatpak-repos'],
+  generate: (config) => {
+    if (config.source === 'flatpak') {
+      return 'flatpak install -y io.gitlab.librewolf-community'
+    }
+
+    return `
+      curl -fsSL https://repo.librewolf.net/librewolf.repo | pkexec tee /etc/yum.repos.d/librewolf.repo
+      dnf install -y librewolf
+    `
   },
-)
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-librewolf': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

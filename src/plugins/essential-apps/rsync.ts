@@ -1,16 +1,25 @@
-import { createAppPlugin } from '@/core/types'
+import { createPlugin } from '@/core/types'
 
-const plugin = createAppPlugin(
-  'rsync',
-  'Fast and versatile file copying tool for local and remote file synchronization',
-  { dnf: 'rsync' },
-  { category: 'Essential Applications' },
-)
+const PLUGIN_ID = 'install-app-rsync' as const
+
+const plugin = createPlugin({
+  id: PLUGIN_ID,
+  name: 'rsync',
+  description: 'Fast and versatile file copying tool for local and remote file synchronization',
+  progressMessage: 'Installing rsync...',
+  category: 'Essential Applications',
+
+  options: {},
+  dependencies: [],
+  generate: (_config) => {
+    return 'dnf install -y rsync'
+  },
+})
 
 export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-app-rsync': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }

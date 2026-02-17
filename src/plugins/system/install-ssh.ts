@@ -1,7 +1,9 @@
 import { createPlugin } from '@/core/types'
 
+const PLUGIN_ID = 'install-ssh' as const
+
 const plugin = createPlugin({
-  id: 'install-ssh',
+  id: PLUGIN_ID,
   name: 'Install and Enable SSH Server',
   description: 'Install and enable SSH server for secure remote access and file transfers',
   progressMessage: 'Installing and enabling SSH server...',
@@ -20,6 +22,6 @@ export default plugin
 
 declare module '@/core/registry' {
   interface PluginRegistry {
-    'install-ssh': import('@/core/types').RegisterPlugin<typeof plugin>
+    [PLUGIN_ID]: import('@/core/types').RegisterPlugin<typeof plugin>
   }
 }
