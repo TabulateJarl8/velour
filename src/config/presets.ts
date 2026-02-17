@@ -11,9 +11,8 @@ export const presets: Preset[] = [
   {
     name: 'pro-preset',
     config: {
-      'test-plugin': {
+      'install-app-mc': {
         enabled: true,
-        opt1: 'test',
       },
     },
   },
