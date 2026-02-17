@@ -22,14 +22,12 @@ const plugin = createPlugin({
   category: 'Additional Applications',
   heading: 'File Sharing & Downloading',
   generate: (config) => {
-    
     if (config.source === 'flatpak') {
       return 'flatpak install -y flathub org.qbittorrent.qBittorrent'
     }
 
     return 'dnf install -y qbittorrent'
-    
-  }
+  },
 })
 
 export default plugin

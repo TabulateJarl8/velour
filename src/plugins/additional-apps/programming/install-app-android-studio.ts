@@ -1,19 +1,18 @@
 import { createPlugin } from '@/core/types'
 
-const PLUGIN_ID = 'install-app-warp' as const
+const PLUGIN_ID = 'install-app-android-studio' as const
 
 const plugin = createPlugin({
   id: PLUGIN_ID,
-  name: 'Warp',
-  description:
-    'Securely send files via the internet or local network by exchanging a word-based code',
-  progressMessage: 'Installing Warp...',
+  name: 'Android Studio',
+  description: 'The official Integrated Development Environment (IDE) for Android app development',
+  progressMessage: 'Installing Android Studio...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',
-  heading: 'File Sharing & Downloading',
+  heading: 'Programming and DevOps',
   generate: (_config) => {
-    return 'flatpak install -y flathub app.drey.Warp'
+    return 'flatpak install -y flathub com.google.AndroidStudio'
   },
 })
 

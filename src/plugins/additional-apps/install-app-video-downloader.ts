@@ -13,7 +13,7 @@ const plugin = createPlugin({
   heading: 'File Sharing & Downloading',
   generate: (_config) => {
     return 'flatpak install -y flathub com.github.unrud.VideoDownloader'
-  }
+  },
 })
 
 export default plugin
