@@ -187,23 +187,15 @@ async function generateAppPlugin(meta: PluginMeta, category: PluginCategory): Pr
   if (dnfPackage && flatpakPackage) {
     generate = `
     if (config.source === 'flatpak') {
-      return \`
-        flatpak install -y ${flatpakPackage}
-      \`
+      return 'flatpak install -y ${flatpakPackage}'
     }
 
-    return \`
-      dnf install -y ${dnfPackage}
-    \`
+    return 'dnf install -y ${dnfPackage}'
     `
   } else if (dnfPackage) {
-    generate = `return \`
-      dnf install -y ${dnfPackage}
-    \``
+    generate = `return 'dnf install -y ${dnfPackage}'`
   } else {
-    generate = `return \`
-      flatpak install -y ${flatpakPackage}
-    \``
+    generate = `return 'flatpak install -y ${flatpakPackage}'`
   }
 
   return `
@@ -216,10 +208,10 @@ const plugin = createPlugin({
   name: '${meta.name}',
   description: '${meta.description}',
   progressMessage: 'Installing ${meta.name}...',
-  category: '${category.category}',
-  ${category.heading ? `heading: '${category.heading}'` : ''},
   ${options}
   ${depsArray}
+  category: '${category.category}',
+  ${category.heading ? `heading: '${category.heading}',` : ''}
   generate: (${dnfPackage && flatpakPackage ? 'config' : '_config'}) => {
     ${generate}
   }
