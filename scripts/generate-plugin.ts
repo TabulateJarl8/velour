@@ -148,7 +148,10 @@ async function generateAppPlugin(meta: PluginMeta, category: PluginCategory): Pr
   let flatpakPackage: string
   do {
     dnfPackage = await input({ message: 'DNF Package Name (leave empty if none): ' })
-    flatpakPackage = await input({ message: 'Flatpak Package Name (leave empty if none): ' })
+    flatpakPackage = await input({ message: 'Flatpak Package Name (leave empty if none): ', validate: (val) => {
+      if ((val.match(/\./g) || []).length < 2) return 'Flatpak package names require at least 2 dots'
+      return true
+    } })
 
     if (!dnfPackage.trim() && !flatpakPackage.trim()) {
       logger.error('Please provide at least one package source')
