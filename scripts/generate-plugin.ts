@@ -234,7 +234,8 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: '${meta.name}',
   description: '${meta.description}',
-  progressMessage: 'Installing ${meta.name}...',
+  preRunMessage: 'Installing ${meta.name}...',
+  postRunMessage: '${meta.name} installed successfully.'
   ${options}
   ${depsArray}
   category: '${category.category}',
@@ -255,10 +256,10 @@ declare module '@/core/registry' {
 }
 
 async function generateGenericPlugin(meta: PluginMeta, category: PluginCategory): Promise<string> {
-  const progressMessage =
+  const preRunMessage =
     escape(
       await input({
-        message: 'Progress message (like "Setting hostname..."): ',
+        message: 'Pre run message (like "Setting hostname..."): ',
         required: true,
       }),
     ).replace(/\.*$/, '') + '...'
@@ -272,7 +273,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: '${meta.name}',
   description: '${meta.description}',
-  progressMessage: '${progressMessage}',
+  preRunMessage: '${preRunMessage}',
   options: {},
   category: '${category.category}',
   ${category.heading ? `heading: '${category.heading}',` : ''}

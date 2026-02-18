@@ -9,7 +9,7 @@ const mockEmptyPlugin: ConcretePluginDef = {
   description: 'Mock Plugin',
   options: {},
   category: 'Customization',
-  progressMessage: 'Mocking the plugin...',
+  preRunMessage: 'Mocking the plugin...',
   generate: () => 'mock-empty',
 }
 
