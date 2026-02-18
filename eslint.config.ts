@@ -34,7 +34,7 @@ export default defineConfigWithVueTs(
     files: ['**/*.{ts,mts,js}'],
     rules: {
       ...pluginJsdoc.configs['flat/recommended-typescript'].rules,
-      'jsdoc/tag-lines': ['warn', 'any', { startLines: 1 }],
+      'jsdoc/tag-lines': ['warn', 'any', { startLines: 1, startLinesWithNoTags: 0 }],
       'jsdoc/require-jsdoc': ['warn', { enableFixer: false }],
     },
     settings: {
