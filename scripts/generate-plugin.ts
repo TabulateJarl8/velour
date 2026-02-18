@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/require-jsdoc */
 import { input, select, confirm } from '@inquirer/prompts'
 import { PluginDiscoveryProvider, PluginLoader } from '../src/core/loader'
 import path from 'path'
