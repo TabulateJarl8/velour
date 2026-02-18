@@ -87,27 +87,27 @@ const plugin = createPlugin({
 
     // TODO: test all of this
     return `
-      dnf install -y zsh git
-      chsh -s $(which zsh) $ACTUAL_USER
+dnf install -y zsh git
+chsh -s "$(which zsh)" "$ACTUAL_USER"
 
-      sudo -u $ACTUAL_USER bash << EOF
-        HOME_DIR="$ACTUAL_HOME"
-        ZSH_CUSTOM="$HOME_DIR/.oh-my-zsh/custom"
-        RUNZSH=no sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+sudo -u "$ACTUAL_USER" bash << 'EOF'
+  HOME_DIR="$ACTUAL_HOME"
+  ZSH_CUSTOM="$HOME_DIR/.oh-my-zsh/custom"
+  RUNZSH=no sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
-        declare -A plugins
-        plugins=(${repoArray})
+  declare -A plugins
+  plugins=(${repoArray})
 
-        for plugin in "\${!plugins[@]}"; do
-          if [ ! -d "$ZSH_CUSTOM/plugins/$plugin" ]; then
-            echo "Installing $plugin..."
-            git clone --depth 1 "\${plugins[$plugin]}" "$ZSH_CUSTOM/plugins/$plugin"
-          fi
-        done
+  for plugin in "\${!plugins[@]}"; do
+    if [ ! -d "$ZSH_CUSTOM/plugins/$plugin" ]; then
+      echo "Installing $plugin..."
+      git clone --depth 1 "\${plugins[$plugin]}" "$ZSH_CUSTOM/plugins/$plugin"
+    fi
+  done
 
-        sed -i 's/^plugins=(.*)/plugins=(${pluginsString})/' "$HOME_DIR/.zshrc"
-        sed -i 's/^ZSH_THEME=".*"/ZSH_THEME="jonathan"/' "$HOME_DIR/.zshrc"
-      EOF
+  sed -i 's/^plugins=(.*)/plugins=(${pluginsString})/' "$HOME_DIR/.zshrc"
+  sed -i 's/^ZSH_THEME=".*"/ZSH_THEME="jonathan"/' "$HOME_DIR/.zshrc"
+EOF
     `
   },
 })

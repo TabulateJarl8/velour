@@ -15,7 +15,7 @@ const plugin = createPlugin({
     return `
       wget https://dl.waveterm.dev/releases-w2/waveterm-linux-x86_64-0.14.0.rpm
       dnf install -y ./waveterm-linux-x86_64-0.14.0.rpm
-      rm -f ./waveterm-linux-x86_64-0.14.0.rpm"
+      rm -f ./waveterm-linux-x86_64-0.14.0.rpm
     `
   },
 })

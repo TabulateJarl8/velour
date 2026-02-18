@@ -24,8 +24,8 @@ const plugin = createPlugin({
       systemctl enable --now docker
       systemctl enable --now containerd
       groupadd docker
-      usermod -aG docker $ACTUAL_USER
-      rm -rf $ACTUAL_HOME/.docker
+      usermod -aG docker "$ACTUAL_USER"
+      rm -rf "$ACTUAL_HOME/.docker"
       echo "Docker installed successfully. Please log out and back in for the group changes to take effect."
     `
   },
