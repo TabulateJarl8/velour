@@ -20,6 +20,15 @@ const plugin = createPlugin({
   },
   category: 'Customization',
 
+  alerts: (config) => {
+    if (config.installType === 'windows')
+      return {
+        type: 'warning',
+        message:
+          "This method requires a valid Windows license. Please ensure you comply with Microsoft's licensing terms.",
+      }
+  },
+
   generate: (config) => {
     if (config.installType === 'core') {
       return `
@@ -27,7 +36,6 @@ const plugin = createPlugin({
         rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
       `
     } else if (config.installType === 'windows') {
-      // TODO: this needs licensing warning
       return `
         dnf install -y wget cabextract xorg-x11-font-utils fontconfig
         wget -O /tmp/winfonts.zip https://mktr.sbs/fonts

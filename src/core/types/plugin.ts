@@ -4,6 +4,14 @@ import type { SubOptionSchema, SubOptionTypeMap } from './options'
 
 // the typescript type engine will bend to my will and become rust whether it wants to or not
 
+/** Defines an alert that should be shown on the plugin if a certain condition is satisfied */
+export interface PluginAlert {
+  /** The type of the alert */
+  type: 'info' | 'success' | 'warning' | 'error'
+  /** The alert message */
+  message: string
+}
+
 /**
  * Type inference helper that maps each option's type to its corresponding TS type
  *
@@ -45,10 +53,21 @@ interface BasePluginDef<T extends Record<string, SubOptionSchema>> {
   dependencies?: (keyof PluginRegistry)[]
 
   /**
+   * Optional function for defining a set of alerts based on the current config.
+   *
+   * Useful for licensing warnings and other similar things.
+   *
+   * @param config The plugin's current config
+   * @returns The alert the plugin should show
+   */
+  alerts?: (config: PluginConfig<T>) => PluginAlert | undefined
+
+  /**
    * Provides a state of the filled-out config used to generate line(s) of a script
    *
-   * @returns {string} One or more lines of a bash script based on what the user selected in the
-   *   plugin's config
+   * @param config The plugin's current config
+   * @returns One or more lines of a bash script based on what the user selected in the plugin's
+   *   config
    */
   generate: (config: PluginConfig<T>) => string
 }
