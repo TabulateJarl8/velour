@@ -1,5 +1,9 @@
 @import 'tailwindcss';
-@plugin 'daisyui';
+@plugin 'daisyui' {
+  /* See following: */
+  /* https://github.com/saadeghi/daisyui/issues/3882 */
+  exclude: properties;
+}
 @plugin "daisyui/theme" {
   name: 'velour';
   default: false;
