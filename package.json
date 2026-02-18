@@ -30,6 +30,7 @@
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.8.1",
+    "autoprefixer": "^10.4.24",
     "commander": "^14.0.3",
     "daisyui": "^5.5.18",
     "eslint": "^9.39.2",
