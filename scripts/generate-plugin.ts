@@ -9,6 +9,14 @@ import {
   ConcretePluginDef,
 } from '../src/core/types'
 import { logger } from '../src/core/logger'
+import { program } from 'commander'
+
+type CLIArgs = {
+  template?: 'app' | 'generic'
+  location?: string
+  category?: string
+  heading?: string
+}
 
 type PluginContext = {
   existingPlugins: Map<string, ConcretePluginDef>
@@ -26,6 +34,15 @@ type PluginCategory = {
   category: string
   heading?: string
 }
+
+program
+  .option('-t, --template <type>', 'Plugin template (app or generic)')
+  .option('-c, --category <cat>', 'Category')
+  .option('--heading <head>', 'Sub-category heading')
+  .option('-l, --location <path>', 'Target subfolder')
+  .parse(process.argv)
+
+const args = program.opts() as CLIArgs
 
 const nodeProvider: PluginDiscoveryProvider = async () => {
   const fs = await import('fs/promises')
@@ -70,7 +87,8 @@ async function getPluginContext(): Promise<PluginContext> {
   return { existingPlugins, pluginsDir, folderChoices }
 }
 
-async function promptLocation(context: PluginContext): Promise<string> {
+async function promptLocation(context: PluginContext, cliValue?: string): Promise<string> {
+  if (cliValue !== undefined) return cliValue
   return select({ message: 'Where should the plugin be created?', choices: context.folderChoices })
 }
 
@@ -117,16 +135,18 @@ async function promptCategory(): Promise<PluginCategory> {
   const options = Object.values(Categories).map((o) => ({
     value: o,
   }))
-  const category = escape(
-    await select({
-      message: 'Select a Category:',
-      choices: options,
-    }),
-  )
+  const category =
+    args.category ||
+    escape(
+      await select({
+        message: 'Select a Category:',
+        choices: options,
+      }),
+    )
 
   // get heading if the category needs it
-  let heading: string | undefined
-  if (category in CategoryHeadingsData) {
+  let heading = args.heading
+  if (!heading && category in CategoryHeadingsData) {
     const key = category as keyof typeof CategoryHeadingsData
     const headingOptions = CategoryHeadingsData[key].map((s) => ({ value: s }))
 
@@ -148,10 +168,14 @@ async function generateAppPlugin(meta: PluginMeta, category: PluginCategory): Pr
   let flatpakPackage: string
   do {
     dnfPackage = await input({ message: 'DNF Package Name (leave empty if none): ' })
-    flatpakPackage = await input({ message: 'Flatpak Package Name (leave empty if none): ', validate: (val) => {
-      if ((val.match(/\./g) || []).length < 2) return 'Flatpak package names require at least 2 dots'
-      return true
-    } })
+    flatpakPackage = await input({
+      message: 'Flatpak Package Name (leave empty if none): ',
+      validate: (val) => {
+        if ((val.match(/\./g) || []).length < 2)
+          return 'Flatpak package names require at least 2 dots'
+        return true
+      },
+    })
 
     if (!dnfPackage.trim() && !flatpakPackage.trim()) {
       logger.error('Please provide at least one package source')
@@ -274,16 +298,18 @@ const generators = {
 
 /** Plugin generation entrypoint */
 async function generate() {
-  const template = await select({
-    message: 'What kind of plugin do you want to create?',
-    choices: Object.entries(generators).map(([key, val]) => ({
-      name: val.name,
-      value: key as keyof typeof generators,
-    })),
-  })
+  const template =
+    args.template ||
+    (await select({
+      message: 'What kind of plugin do you want to create?',
+      choices: Object.entries(generators).map(([key, val]) => ({
+        name: val.name,
+        value: key as keyof typeof generators,
+      })),
+    }))
 
   const context = await getPluginContext()
-  const selectedFolder = await promptLocation(context)
+  const selectedFolder = await promptLocation(context, args.location)
 
   const meta = await promptMetadata(context, template)
   const category = await promptCategory()
