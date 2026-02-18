@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'GitHub Desktop',
   description: 'A powerful desktop client for GitHub',
-  progressMessage: 'Installing GitHub Desktop...',
+  preRunMessage: 'Installing GitHub Desktop...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

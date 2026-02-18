@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'NoMachine',
   description:
     'A remote desktop software, that enables fast and secure access to your remote PC or desktop computer',
-  progressMessage: 'Installing NoMachine...',
+  preRunMessage: 'Installing NoMachine...',
   options: {},
   category: 'Additional Applications',
   heading: 'Remote Networking',

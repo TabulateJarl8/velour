@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'Wave Terminal',
   description:
     'An open-source terminal with superpowers, integrating file previews, file editing, AI, web browsing, and workspace organization',
-  progressMessage: 'Installing Wave Terminal...',
+  preRunMessage: 'Installing Wave Terminal...',
   options: {},
   category: 'Additional Applications',
   heading: 'Programming and DevOps',

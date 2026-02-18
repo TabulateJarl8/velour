@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Mullvad VPN',
   description: 'A VPN client, that provides a secure and private connection to the internet',
-  progressMessage: 'Installing Mullvad VPN...',
+  preRunMessage: 'Installing Mullvad VPN...',
   options: {},
   category: 'Additional Applications',
   heading: 'Remote Networking',

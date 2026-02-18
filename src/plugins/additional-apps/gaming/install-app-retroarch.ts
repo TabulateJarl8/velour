@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'RetroArch',
   description: 'Enables you to run classic games on a wide range of computers and consoles',
-  progressMessage: 'Installing RetroArch...',
+  preRunMessage: 'Installing RetroArch...',
   options: {
     source: {
       type: 'radio',

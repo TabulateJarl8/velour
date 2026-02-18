@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Opera',
   description: 'A fast, feature-rich web browser with a focus on user experience and security.',
-  progressMessage: 'Installing Opera...',
+  preRunMessage: 'Installing Opera...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {},

@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'OBS Studio',
   description: 'Free and open source software for video capturing, recording, and live streaming.',
-  progressMessage: 'Installing OBS Studio...',
+  preRunMessage: 'Installing OBS Studio...',
   options: {
     source: {
       type: 'radio',

@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'unrar',
   description:
     'Extraction utility for RAR archives, including support for password-protected files',
-  progressMessage: 'Installing unrar...',
+  preRunMessage: 'Installing unrar...',
   category: 'Essential Applications',
 
   options: {},

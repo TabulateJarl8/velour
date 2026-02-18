@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Element',
   description: 'A secure, open-source Matrix client',
-  progressMessage: 'Installing Element...',
+  preRunMessage: 'Installing Element...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {},

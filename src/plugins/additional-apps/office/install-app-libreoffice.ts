@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'LibreOffice',
   description:
     'A powerful office suite. Its clean interface and feature-rich tools help you unleash your creativity and enhance your productivity',
-  progressMessage: 'Installing LibreOffice...',
+  preRunMessage: 'Installing LibreOffice...',
   options: {
     source: {
       type: 'radio',

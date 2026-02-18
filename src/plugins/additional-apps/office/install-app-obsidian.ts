@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Obsidian',
   description: 'A note-taking app with a focus on privacy and security',
-  progressMessage: 'Installing Obsidian...',
+  preRunMessage: 'Installing Obsidian...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'Steam',
   description:
     'A software distribution service with an online store, automated installation, automatic updates, achievements, SteamCloud synchronized savegame and screenshot functionality, and many social features',
-  progressMessage: 'Installing Steam...',
+  preRunMessage: 'Installing Steam...',
   options: {
     source: {
       type: 'radio',

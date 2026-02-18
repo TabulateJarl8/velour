@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'Tailscale',
   description:
     'Tailscale is a mesh VPN (Virtual Private Network) service that streamlines connecting devices and services securely across different networks',
-  progressMessage: 'Installing Tailscale...',
+  preRunMessage: 'Installing Tailscale...',
   options: {},
   category: 'Additional Applications',
   heading: 'Remote Networking',

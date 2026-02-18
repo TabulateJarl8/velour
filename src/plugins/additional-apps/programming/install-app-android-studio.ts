@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Android Studio',
   description: 'The official Integrated Development Environment (IDE) for Android app development',
-  progressMessage: 'Installing Android Studio...',
+  preRunMessage: 'Installing Android Studio...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

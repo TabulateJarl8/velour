@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Signal Desktop',
   description: 'A private messaging app with end-to-end encryption',
-  progressMessage: 'Installing Signal Desktop...',
+  preRunMessage: 'Installing Signal Desktop...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {},

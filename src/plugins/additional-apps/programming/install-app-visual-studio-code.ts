@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Visual Studio Code',
   description: 'A powerful source code editor',
-  progressMessage: 'Installing Visual Studio Code...',
+  preRunMessage: 'Installing Visual Studio Code...',
   options: {},
   dependencies: [],
   category: 'Additional Applications',

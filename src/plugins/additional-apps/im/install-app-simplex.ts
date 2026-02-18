@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'SimpleX',
   description: 'A secure, private messaging app with end-to-end encryption',
-  progressMessage: 'Installing SimpleX...',
+  preRunMessage: 'Installing SimpleX...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {},

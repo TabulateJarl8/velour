@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Decoder',
   description: 'Fancy yet simple QR Codes scanner and generator.',
-  progressMessage: 'Installing Decoder...',
+  preRunMessage: 'Installing Decoder...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

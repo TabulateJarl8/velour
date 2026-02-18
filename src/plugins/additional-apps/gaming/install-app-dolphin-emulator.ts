@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Dolphin',
   description: 'An emulator for two recent Nintendo video game consoles: the GameCube and the Wii',
-  progressMessage: 'Installing Dolphin...',
+  preRunMessage: 'Installing Dolphin...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

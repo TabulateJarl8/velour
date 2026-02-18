@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'DuckStation',
   description: 'An simulator/emulator of the Sony PlayStation(TM) console',
-  progressMessage: 'Installing DuckStation...',
+  preRunMessage: 'Installing DuckStation...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

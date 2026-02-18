@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'git',
   description:
     'Distributed version control system for tracking changes in source code and collaboration',
-  progressMessage: 'Installing git...',
+  preRunMessage: 'Installing git...',
   category: 'Essential Applications',
 
   options: {},

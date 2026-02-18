@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Blender',
   description: 'A free and open source 3D creation suite.',
-  progressMessage: 'Installing Blender...',
+  preRunMessage: 'Installing Blender...',
   options: {
     source: {
       type: 'radio',

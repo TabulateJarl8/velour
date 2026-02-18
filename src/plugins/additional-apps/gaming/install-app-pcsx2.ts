@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'PCSX2',
   description: 'A free and open-source PlayStation 2 emulator',
-  progressMessage: 'Installing PCSX2...',
+  preRunMessage: 'Installing PCSX2...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

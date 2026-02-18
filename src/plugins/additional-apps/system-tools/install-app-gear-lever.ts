@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Gear Lever',
   description: 'An utility to manage AppImages with ease!',
-  progressMessage: 'Installing Gear Lever...',
+  preRunMessage: 'Installing Gear Lever...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

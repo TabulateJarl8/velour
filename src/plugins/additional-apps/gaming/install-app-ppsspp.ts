@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'PPSSPP',
   description: 'A PSP emulator that can run games in full HD resolution',
-  progressMessage: 'Installing PPSSPP...',
+  preRunMessage: 'Installing PPSSPP...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

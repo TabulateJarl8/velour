@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'LibreWolf',
   description: 'A privacy-focused fork of Firefox, emphasizing security and user freedom.',
-  progressMessage: 'Installing LibreWolf...',
+  preRunMessage: 'Installing LibreWolf...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {

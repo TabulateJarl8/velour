@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'gnome-tweaks',
   description: 'Advanced configuration tool for customizing GNOME desktop environment settings',
-  progressMessage: 'Installing gnome-tweaks...',
+  preRunMessage: 'Installing gnome-tweaks...',
   category: 'Essential Applications',
 
   options: {},

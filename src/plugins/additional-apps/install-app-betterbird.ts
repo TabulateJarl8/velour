@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Betterbird',
   description: 'A fast, feature-rich email client with a focus on user experience and security.',
-  progressMessage: 'Installing Betterbird...',
+  preRunMessage: 'Installing Betterbird...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {},

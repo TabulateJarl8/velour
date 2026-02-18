@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Mission Center',
   description: 'Monitor your CPU, Memory, Disk, Network and GPU usage',
-  progressMessage: 'Installing Mission Center...',
+  preRunMessage: 'Installing Mission Center...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

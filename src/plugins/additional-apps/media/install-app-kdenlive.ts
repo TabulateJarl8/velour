@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Kdenlive',
   description: 'A video editing application with support for many audio and video formats',
-  progressMessage: 'Installing Kdenlive...',
+  preRunMessage: 'Installing Kdenlive...',
   options: {
     source: {
       type: 'radio',

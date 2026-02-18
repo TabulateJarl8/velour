@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'PeaZip',
   description:
     'A free file archiver utility, based on Open Source technologies of 7-Zip, p7zip, Brotli, FreeArc, PAQ, Zstandard, and PEA projects',
-  progressMessage: 'Installing PeaZip...',
+  preRunMessage: 'Installing PeaZip...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

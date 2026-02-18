@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'wget',
   description: 'Command-line utility for retrieving files using HTTP, HTTPS, and FTP protocols',
-  progressMessage: 'Installing wget...',
+  preRunMessage: 'Installing wget...',
   category: 'Essential Applications',
 
   options: {},

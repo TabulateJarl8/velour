@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'RPM Fusion Repositories',
   description: 'Enable RPM Fusion repositories to access additional software packages and codecs',
-  progressMessage: 'Enabling RPM Fusion Repositories...',
+  preRunMessage: 'Enabling RPM Fusion Repositories...',
   options: {},
   category: 'System Configuration',
 

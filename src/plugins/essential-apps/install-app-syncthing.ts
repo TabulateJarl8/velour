@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'syncthing',
   description: 'Continuous file synchronization program for sharing files between devices securely',
-  progressMessage: 'Installing syncthing...',
+  preRunMessage: 'Installing syncthing...',
   category: 'Essential Applications',
 
   options: {},

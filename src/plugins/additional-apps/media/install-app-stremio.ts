@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Stremio',
   description: 'A media center with a focus on privacy and security',
-  progressMessage: 'Installing Stremio...',
+  preRunMessage: 'Installing Stremio...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Video Downloader',
   description: 'Download videos from websites with an easy-to-use interface',
-  progressMessage: 'Installing Video Downloader...',
+  preRunMessage: 'Installing Video Downloader...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

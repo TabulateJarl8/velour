@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'ncdu',
   description: 'NCurses-based disk usage analyzer for quickly finding large files and directories',
-  progressMessage: 'Installing ncdu...',
+  preRunMessage: 'Installing ncdu...',
   category: 'Essential Applications',
 
   options: {},

@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Deja Dup',
   description: 'A GNOME archive manager',
-  progressMessage: 'Installing Deja Dup...',
+  preRunMessage: 'Installing Deja Dup...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

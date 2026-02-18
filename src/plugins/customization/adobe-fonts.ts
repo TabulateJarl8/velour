@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Adobe Fonts',
   description: 'Install Adobe fonts collection',
-  progressMessage: 'Installing Adobe Fonts...',
+  preRunMessage: 'Installing Adobe Fonts...',
   options: {},
   category: 'Customization',
 

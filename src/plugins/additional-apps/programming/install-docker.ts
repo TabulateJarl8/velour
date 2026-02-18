@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Docker',
   description: 'A platform for building, shipping, and running applications in containers',
-  progressMessage: 'Installing Docker...',
+  preRunMessage: 'Installing Docker...',
   options: {},
   category: 'Additional Applications',
   heading: 'Programming and DevOps',

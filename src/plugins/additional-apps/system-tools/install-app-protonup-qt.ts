@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'ProtonUp-Qt',
   description:
     'Install and manage Wine- and Proton-based compatibility tools for Steam and Lutris with this graphical user interface',
-  progressMessage: 'Installing ProtonUp-Qt...',
+  preRunMessage: 'Installing ProtonUp-Qt...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

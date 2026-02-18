@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Microsoft Fonts',
   description: 'Install Microsoft Windows fonts',
-  progressMessage: 'Installing MS fonts...',
+  preRunMessage: 'Installing MS fonts...',
   options: {
     installType: {
       type: 'radio',

@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Podman',
   description: 'A tool for managing containers and pods',
-  progressMessage: 'Installing Podman...',
+  preRunMessage: 'Installing Podman...',
   options: {},
   dependencies: [],
   category: 'Additional Applications',

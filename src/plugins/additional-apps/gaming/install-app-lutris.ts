@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Lutris',
   description: 'Helps you install and play video games from all eras and from most gaming systems',
-  progressMessage: 'Installing Lutris...',
+  preRunMessage: 'Installing Lutris...',
   options: {
     source: {
       type: 'radio',

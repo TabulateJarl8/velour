@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'Protontricks',
   description:
     'A wrapper script that allows you to easily run Winetricks commands for Steam Play/Proton games',
-  progressMessage: 'Installing Protontricks...',
+  preRunMessage: 'Installing Protontricks...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

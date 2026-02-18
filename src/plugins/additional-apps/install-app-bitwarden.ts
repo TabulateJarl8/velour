@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Bitwarden',
   description: 'A secure and free password manager for all of your devices',
-  progressMessage: 'Installing Bitwarden...',
+  preRunMessage: 'Installing Bitwarden...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

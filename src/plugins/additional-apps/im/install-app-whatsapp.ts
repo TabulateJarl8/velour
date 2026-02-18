@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Whatsie',
   description: 'Feature rich WhatsApp web client based on Qt WebEngine',
-  progressMessage: 'Installing Whatsie...',
+  preRunMessage: 'Installing Whatsie...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {},

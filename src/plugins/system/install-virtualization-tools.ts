@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Virtualization Tools',
   description: 'Install virtualization tools to enable virtual machines and containerization',
-  progressMessage: 'Installing virtualization tools...',
+  preRunMessage: 'Installing virtualization tools...',
   options: {},
   category: 'System Configuration',
 

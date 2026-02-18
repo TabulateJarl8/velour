@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Krita',
   description: 'A full-featured digital art studio.',
-  progressMessage: 'Installing Krita...',
+  preRunMessage: 'Installing Krita...',
   options: {
     source: {
       type: 'radio',

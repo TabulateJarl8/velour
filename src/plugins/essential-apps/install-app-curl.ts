@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'curl',
   description:
     'Command-line tool for transferring data using various protocols with extensive options',
-  progressMessage: 'Installing curl...',
+  preRunMessage: 'Installing curl...',
   category: 'Essential Applications',
 
   options: {},

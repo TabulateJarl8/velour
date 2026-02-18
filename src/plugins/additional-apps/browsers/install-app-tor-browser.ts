@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Tor Browser',
   description: 'Real private browsing without tracking, surveillance, or censorship',
-  progressMessage: 'Installing Tor Browser...',
+  preRunMessage: 'Installing Tor Browser...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {},

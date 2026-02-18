@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Pika Backup',
   description: 'A simple backup tool for Linux',
-  progressMessage: 'Installing Pika Backup...',
+  preRunMessage: 'Installing Pika Backup...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

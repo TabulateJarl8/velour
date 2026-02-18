@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'xemu',
   description:
     'A free and open-source application that emulates the original Microsoft Xbox game console',
-  progressMessage: 'Installing xemu...',
+  preRunMessage: 'Installing xemu...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

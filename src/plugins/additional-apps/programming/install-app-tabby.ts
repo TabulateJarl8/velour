@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Tabby',
   description: 'A terminal for a more modern age',
-  progressMessage: 'Installing Tabby...',
+  preRunMessage: 'Installing Tabby...',
   options: {},
   category: 'Additional Applications',
   heading: 'Programming and DevOps',

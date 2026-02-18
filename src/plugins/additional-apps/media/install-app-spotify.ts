@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Spotify',
   description: 'A music streaming service with a focus on privacy and security',
-  progressMessage: 'Installing Spotify...',
+  preRunMessage: 'Installing Spotify...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'tilix',
   description:
     'Tiling terminal emulator with advanced features like split panes and session management',
-  progressMessage: 'Installing tilix...',
+  preRunMessage: 'Installing tilix...',
   category: 'Essential Applications',
 
   options: {},

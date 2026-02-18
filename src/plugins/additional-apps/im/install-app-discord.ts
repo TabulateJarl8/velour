@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Discord',
   description: 'A popular communication platform for gamers and communities',
-  progressMessage: 'Installing Discord...',
+  preRunMessage: 'Installing Discord...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {

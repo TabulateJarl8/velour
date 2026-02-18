@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Install DNF Plugins',
   description: 'Install various DNF plugins',
-  progressMessage: 'Installing dnf-plugins-core...',
+  preRunMessage: 'Installing dnf-plugins-core...',
   options: {},
   category: 'System Configuration',
 

@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'RustDesk',
   description:
     'A remote desktop software, that enables fast and secure access to your remote PC or desktop computer',
-  progressMessage: 'Installing RustDesk...',
+  preRunMessage: 'Installing RustDesk...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

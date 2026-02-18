@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Miniconda',
   description: 'Install Miniconda Python distribution',
-  progressMessage: 'Installing Miniconda...',
+  preRunMessage: 'Installing Miniconda...',
   options: {},
   category: 'Additional Applications',
   heading: 'Programming and DevOps',

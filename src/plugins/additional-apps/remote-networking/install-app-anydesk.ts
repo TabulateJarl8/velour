@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'AnyDesk',
   description:
     'Ensures secure and reliable remote desktop connections for IT professionals and on-the-go individuals alike',
-  progressMessage: 'Installing AnyDesk...',
+  preRunMessage: 'Installing AnyDesk...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

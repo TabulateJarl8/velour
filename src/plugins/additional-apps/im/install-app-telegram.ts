@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Telegram Desktop',
   description: 'A messaging app with a focus on speed and security',
-  progressMessage: 'Installing Telegram Desktop...',
+  preRunMessage: 'Installing Telegram Desktop...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {

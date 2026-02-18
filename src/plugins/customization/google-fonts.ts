@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Google Fonts',
   description: 'Install Google fonts collection',
-  progressMessage: 'Installing Google Fonts...',
+  preRunMessage: 'Installing Google Fonts...',
   options: {},
   category: 'Customization',
 

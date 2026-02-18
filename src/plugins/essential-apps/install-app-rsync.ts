@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'rsync',
   description: 'Fast and versatile file copying tool for local and remote file synchronization',
-  progressMessage: 'Installing rsync...',
+  preRunMessage: 'Installing rsync...',
   category: 'Essential Applications',
 
   options: {},

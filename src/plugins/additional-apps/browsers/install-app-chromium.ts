@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'Chromium',
   description:
     'An open-source browser project that aims to build a safer, faster, and more stable way to experience the web.',
-  progressMessage: 'Installing Chromium...',
+  preRunMessage: 'Installing Chromium...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {

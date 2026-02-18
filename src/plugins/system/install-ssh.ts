@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Install and Enable SSH Server',
   description: 'Install and enable SSH server for secure remote access and file transfers',
-  progressMessage: 'Installing and enabling SSH server...',
+  preRunMessage: 'Installing and enabling SSH server...',
   options: {},
   category: 'System Configuration',
 

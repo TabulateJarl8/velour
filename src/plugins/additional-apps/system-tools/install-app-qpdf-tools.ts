@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Qpdf Tools',
   description: 'A Qt interface for Ghostscript and QPDF',
-  progressMessage: 'Installing Qpdf Tools...',
+  preRunMessage: 'Installing Qpdf Tools...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

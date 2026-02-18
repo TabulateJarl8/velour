@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'NetPeek',
   description:
     'A simple network scanner that helps you discover active devices on your local network',
-  progressMessage: 'Installing NetPeek...',
+  preRunMessage: 'Installing NetPeek...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

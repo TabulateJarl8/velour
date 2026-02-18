@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Extension Manager',
   description: 'A utility for browsing and installing GNOME Shell Extensions',
-  progressMessage: 'Installing Extension Manager...',
+  preRunMessage: 'Installing Extension Manager...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'btop',
   description:
     'Resource monitor that shows usage and stats for processor, memory, disks, network and processes',
-  progressMessage: 'Installing btop...',
+  preRunMessage: 'Installing btop...',
   category: 'Essential Applications',
 
   options: {},

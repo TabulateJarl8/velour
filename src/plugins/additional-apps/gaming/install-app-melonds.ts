@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'melonDS',
   description: 'Aims at providing fast and accurate Nintendo DS emulation',
-  progressMessage: 'Installing melonDS...',
+  preRunMessage: 'Installing melonDS...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

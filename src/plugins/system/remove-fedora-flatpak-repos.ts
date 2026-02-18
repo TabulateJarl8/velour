@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'Replace Fedora Flatpak Repo with Flathub',
   description:
     'Replace Fedora Flatpak Repo with Flathub for better package management and apps stability',
-  progressMessage: 'Replacing Fedora Flatpak Repo with Flathub...',
+  preRunMessage: 'Replacing Fedora Flatpak Repo with Flathub...',
   options: {},
   category: 'System Configuration',
 

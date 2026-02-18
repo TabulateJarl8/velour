@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Firefox',
   description: 'Fast, private & safe web browser.',
-  progressMessage: 'Installing Firefox...',
+  preRunMessage: 'Installing Firefox...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {

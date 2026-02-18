@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'qBittorrent',
   description: 'Aims to provide an open-source software alternative to µTorrent.',
-  progressMessage: 'Installing qBittorrent...',
+  preRunMessage: 'Installing qBittorrent...',
   options: {
     source: {
       type: 'radio',

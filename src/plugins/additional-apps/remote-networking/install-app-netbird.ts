@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'NetBird',
   description:
     'NetBird is an open-source mesh VPN that simplifies secure, peer-to-peer networking using WireGuard and Zero Trust principles.',
-  progressMessage: 'Installing NetBird...',
+  preRunMessage: 'Installing NetBird...',
   options: {},
   category: 'Additional Applications',
   heading: 'Remote Networking',

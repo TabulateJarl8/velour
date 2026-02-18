@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Zsh and Oh My Zsh',
   description: 'Install Zsh shell and Oh My Zsh framework',
-  progressMessage: 'Installing Zsh and Oh My Zsh...',
+  preRunMessage: 'Installing Zsh and Oh My Zsh...',
   options: {
     zshAutosuggestions: {
       type: 'checkbox',

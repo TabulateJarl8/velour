@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'WebAppManager',
   description: 'Run websites as if they were apps.',
-  progressMessage: 'Installing WebAppManager...',
+  preRunMessage: 'Installing WebAppManager...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {},

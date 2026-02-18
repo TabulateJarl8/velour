@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Set Hostname',
   description: 'Set the system hostname to uniquely identify the machine on the network',
-  progressMessage: 'Setting hostname...',
+  preRunMessage: 'Setting hostname...',
   options: {
     hostname: {
       type: 'text',

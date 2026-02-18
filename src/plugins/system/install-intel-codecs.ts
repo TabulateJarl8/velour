@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'Intel Codecs',
   description:
     'Install Hardware Accelerated Codecs for Intel integrated GPUs. This improves video playback and encoding performance on systems with Intel graphics.',
-  progressMessage: 'Installing Intel Hardware Accelerated Codecs...',
+  preRunMessage: 'Installing Intel Hardware Accelerated Codecs...',
   options: {},
   category: 'System Configuration',
   dependencies: ['enable-rpmfusion'],

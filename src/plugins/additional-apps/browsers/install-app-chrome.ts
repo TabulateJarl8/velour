@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Google Chrome',
   description: 'The web browser from Google.',
-  progressMessage: 'Installing Google Chrome...',
+  preRunMessage: 'Installing Google Chrome...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {

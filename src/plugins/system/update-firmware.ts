@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Update Firmware',
   description: 'Check and apply firmware updates to improve hardware compatibility and performance',
-  progressMessage: 'Checking for firmware updates...',
+  preRunMessage: 'Checking for firmware updates...',
   options: {},
   category: 'System Configuration',
 

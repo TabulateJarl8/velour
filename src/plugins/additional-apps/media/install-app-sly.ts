@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'Sly',
   description:
     'A friendly image editor that requires no internet connection or preexisting expertise',
-  progressMessage: 'Installing Sly...',
+  preRunMessage: 'Installing Sly...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

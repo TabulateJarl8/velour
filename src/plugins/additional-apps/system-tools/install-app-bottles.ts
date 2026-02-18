@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Bottles',
   description: 'Lets you run Windows software on Linux, such as applications and games.',
-  progressMessage: 'Installing Bottles...',
+  preRunMessage: 'Installing Bottles...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

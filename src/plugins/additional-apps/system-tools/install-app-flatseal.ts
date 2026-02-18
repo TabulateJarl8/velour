@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'Flatseal',
   description:
     'A graphical utility to review and modify permissions from your Flatpak applications',
-  progressMessage: 'Installing Flatseal...',
+  preRunMessage: 'Installing Flatseal...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

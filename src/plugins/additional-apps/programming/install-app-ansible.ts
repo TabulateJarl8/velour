@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Ansible',
   description: 'A powerful automation tool for IT',
-  progressMessage: 'Installing Ansible...',
+  preRunMessage: 'Installing Ansible...',
   options: {},
   dependencies: [],
   category: 'Additional Applications',

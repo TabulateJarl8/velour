@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'inxi',
   description: 'Command-line system information tool for hardware, CPU, drivers, and more',
-  progressMessage: 'Installing inxi...',
+  preRunMessage: 'Installing inxi...',
   category: 'Essential Applications',
 
   options: {},

@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'unzip',
   description: 'Extraction utility for ZIP archives with support for various compression methods',
-  progressMessage: 'Installing unzip...',
+  preRunMessage: 'Installing unzip...',
   category: 'Essential Applications',
 
   options: {},

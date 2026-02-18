@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'OnionShare',
   description:
     'An anonymous file sharing tool that uses the Tor network to securely transfer files',
-  progressMessage: 'Installing OnionShare...',
+  preRunMessage: 'Installing OnionShare...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

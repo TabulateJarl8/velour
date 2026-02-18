@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'Remmina',
   description:
     'A remote-desktop client written in GTK, to use other desktops remotely, from a tiny screen or large monitors',
-  progressMessage: 'Installing Remmina...',
+  preRunMessage: 'Installing Remmina...',
   options: {
     source: {
       type: 'radio',

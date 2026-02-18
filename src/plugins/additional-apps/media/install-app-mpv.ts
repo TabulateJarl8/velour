@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'MPV',
   description:
     'A free, open source, and cross-platform media player with a minimal GUI and advanced features',
-  progressMessage: 'Installing MPV...',
+  preRunMessage: 'Installing MPV...',
   options: {
     source: {
       type: 'radio',

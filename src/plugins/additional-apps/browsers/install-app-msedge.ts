@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Microsoft Edge',
   description: 'The web browser from Microsoft.',
-  progressMessage: 'Installing Microsoft Edge...',
+  preRunMessage: 'Installing Microsoft Edge...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {

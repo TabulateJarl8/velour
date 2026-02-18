@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'VSCodium',
   description: 'A free and open-source distribution of VSCode',
-  progressMessage: 'Installing VSCodium...',
+  preRunMessage: 'Installing VSCodium...',
   options: {},
   dependencies: [],
   category: 'Additional Applications',

@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Zen Browser',
   description: 'A beautifully designed web browser, privacy-focused, and packed with features.',
-  progressMessage: 'Installing Zen Browser...',
+  preRunMessage: 'Installing Zen Browser...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {},

@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'Vivaldi',
   description:
     'Feature-rich, customizable web browser with built-in productivity tools and privacy features',
-  progressMessage: 'Installing Vivaldi...',
+  preRunMessage: 'Installing Vivaldi...',
   options: {
     source: {
       type: 'radio',

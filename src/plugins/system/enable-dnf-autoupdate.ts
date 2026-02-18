@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Enable DNF Autoupdate',
   description: 'Enable and configure automatic system updates to enhance security and stability',
-  progressMessage: 'Enabling DNF autoupdate...',
+  preRunMessage: 'Enabling DNF autoupdate...',
   options: {},
   category: 'System Configuration',
 

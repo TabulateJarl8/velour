@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Thunderbird',
   description: 'The email client from Mozilla.',
-  progressMessage: 'Installing Thunderbird...',
+  preRunMessage: 'Installing Thunderbird...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {

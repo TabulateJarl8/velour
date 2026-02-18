@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Dialect',
   description: 'A translation app for GNOME supporting multiple services',
-  progressMessage: 'Installing Dialect...',
+  preRunMessage: 'Installing Dialect...',
   options: {
     source: {
       type: 'radio',

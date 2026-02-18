@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'ZeroTier',
   description:
     'A secure network overlay that allows you to manage all of your network resources as if they were on the same LAN',
-  progressMessage: 'Installing ZeroTier...',
+  preRunMessage: 'Installing ZeroTier...',
   options: {},
   category: 'Additional Applications',
   heading: 'Remote Networking',

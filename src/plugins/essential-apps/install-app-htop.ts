@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'htop',
   description: 'Interactive process viewer and system monitor with a customizable interface',
-  progressMessage: 'Installing htop...',
+  preRunMessage: 'Installing htop...',
   category: 'Essential Applications',
 
   options: {},

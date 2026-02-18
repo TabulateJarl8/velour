@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'KeePassXC',
   description: 'A free, open-source, and easy-to-use password manager',
-  progressMessage: 'Installing KeePassXC...',
+  preRunMessage: 'Installing KeePassXC...',
   options: {},
   dependencies: [],
   category: 'Additional Applications',

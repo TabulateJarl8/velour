@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'VeraCrypt',
   description: 'A free and open-source encryption software',
-  progressMessage: 'Installing VeraCrypt...',
+  preRunMessage: 'Installing VeraCrypt...',
   options: {},
   category: 'Additional Applications',
   heading: 'Programming and DevOps',

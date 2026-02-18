@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'OnlyOffice',
   description:
     'Create, view and edit text documents, spreadsheets and presentations of any size and complexity',
-  progressMessage: 'Installing OnlyOffice...',
+  preRunMessage: 'Installing OnlyOffice...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

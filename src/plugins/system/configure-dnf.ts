@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Configure DNF',
   description: 'Optimize DNF package manager for faster downloads and efficient updates',
-  progressMessage: 'Configuring DNF Package Manager...',
+  preRunMessage: 'Configuring DNF Package Manager...',
   options: {
     maxParallelDownloads: {
       type: 'number',

@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Multimedia Codecs',
   description: 'Install multimedia codecs to enhance multimedia capabilities',
-  progressMessage: 'Installing multimedia codecs...',
+  preRunMessage: 'Installing multimedia codecs...',
   options: {},
   category: 'System Configuration',
 

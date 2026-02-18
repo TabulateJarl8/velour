@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'fastfetch',
   description: 'Quick system information tool that displays OS, kernel, uptime, and more',
-  progressMessage: 'Installing fastfetch...',
+  preRunMessage: 'Installing fastfetch...',
   category: 'Essential Applications',
 
   options: {},

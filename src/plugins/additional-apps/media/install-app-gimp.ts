@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'GIMP',
   description:
     'A freely distributed program for such tasks as photo retouching, image composition and image authoring',
-  progressMessage: 'Installing GIMP...',
+  preRunMessage: 'Installing GIMP...',
   options: {
     source: {
       type: 'radio',

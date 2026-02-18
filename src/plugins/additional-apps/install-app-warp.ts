@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'Warp',
   description:
     'Securely send files via the internet or local network by exchanging a word-based code',
-  progressMessage: 'Installing Warp...',
+  preRunMessage: 'Installing Warp...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

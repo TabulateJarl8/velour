@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'VLC',
   description: 'A media player with a focus on privacy and security',
-  progressMessage: 'Installing VLC...',
+  preRunMessage: 'Installing VLC...',
   options: {
     source: {
       type: 'radio',

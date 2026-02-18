@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Inkscape',
   description: 'A Free and open source vector graphics editor',
-  progressMessage: 'Installing Inkscape...',
+  preRunMessage: 'Installing Inkscape...',
   options: {
     source: {
       type: 'radio',

@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Proton VPN',
   description: 'A VPN client, that provides a secure and private connection to the internet',
-  progressMessage: 'Installing Proton VPN...',
+  preRunMessage: 'Installing Proton VPN...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

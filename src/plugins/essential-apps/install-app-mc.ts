@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'mc',
   description: 'Midnight Commander: Versatile text-based file manager with dual pane interface',
-  progressMessage: 'Installing mc...',
+  preRunMessage: 'Installing mc...',
   category: 'Essential Applications',
 
   options: {},

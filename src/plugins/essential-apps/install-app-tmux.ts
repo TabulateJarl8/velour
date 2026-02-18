@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'tmux',
   description:
     'Terminal multiplexer for creating multiple terminal sessions within a single window',
-  progressMessage: 'Installing tmux...',
+  preRunMessage: 'Installing tmux...',
   category: 'Essential Applications',
 
   options: {},

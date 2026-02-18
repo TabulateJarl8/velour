@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Logseq',
   description: 'A knowledge management tool with a focus on privacy and security',
-  progressMessage: 'Installing Logseq...',
+  preRunMessage: 'Installing Logseq...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

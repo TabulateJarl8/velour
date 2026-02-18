@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'FreeTube',
   description: 'An open source desktop YouTube player built with privacy in mind.',
-  progressMessage: 'Installing FreeTube...',
+  preRunMessage: 'Installing FreeTube...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

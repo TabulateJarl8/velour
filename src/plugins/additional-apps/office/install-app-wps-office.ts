@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'WPS Office',
   description:
     'A powerful office suite, which is able to process word file, produce wonderful slides, and analyze data as well',
-  progressMessage: 'Installing WPS Office...',
+  preRunMessage: 'Installing WPS Office...',
   options: {},
   dependencies: ['remove-fedora-flatpak-repos'],
   category: 'Additional Applications',

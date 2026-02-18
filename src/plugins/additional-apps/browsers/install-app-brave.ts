@@ -6,7 +6,7 @@ const plugin = createPlugin({
   id: PLUGIN_ID,
   name: 'Brave',
   description: 'Privacy-focused web browser.',
-  progressMessage: 'Installing Brave...',
+  preRunMessage: 'Installing Brave...',
   category: 'Additional Applications',
   heading: 'Internet & Communication',
   options: {

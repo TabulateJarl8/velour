@@ -7,7 +7,7 @@ const plugin = createPlugin({
   name: 'AMD Codecs',
   description:
     'Install Hardware Accelerated Codecs for AMD GPUs. This improves video playback and encoding performance on systems with AMD graphics.',
-  progressMessage: 'Installing AMD Hardware Accelerated Codecs...',
+  preRunMessage: 'Installing AMD Hardware Accelerated Codecs...',
   options: {},
   category: 'System Configuration',
   dependencies: ['enable-rpmfusion'],
