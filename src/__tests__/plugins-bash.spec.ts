@@ -36,22 +36,28 @@ expect.extend({
   },
 })
 
-function getPossibleConfigValues(suboptions: SubOptionSchema): any[] {
-  switch (suboptions.type) {
+/**
+ * Given a suboption, generate the possible variants of it
+ *
+ * @param suboption The suboption
+ * @returns A list of all the variants of the suboption to test
+ */
+function getPossibleSuboptionVariants(suboption: SubOptionSchema): any[] {
+  switch (suboption.type) {
     case 'checkbox':
       // checkbox is true or false
       return [true, false]
     case 'radio':
       // every radio option selected once
-      return suboptions.options.map((opt) => opt.value)
+      return suboption.options.map((opt) => opt.value)
     case 'text':
-      if (suboptions.default) return [suboptions.default]
+      if (suboption.default) return [suboption.default]
       return ['test_string']
     case 'number':
       const possible: number[] = []
-      if (suboptions.default !== undefined) possible.push(suboptions.default)
-      if (suboptions.min !== undefined) possible.push(suboptions.min)
-      if (suboptions.max !== undefined) possible.push(suboptions.max)
+      if (suboption.default !== undefined) possible.push(suboption.default)
+      if (suboption.min !== undefined) possible.push(suboption.min)
+      if (suboption.max !== undefined) possible.push(suboption.max)
 
       // fallback
       if (possible.length === 0) possible.push(10)
@@ -60,6 +66,12 @@ function getPossibleConfigValues(suboptions: SubOptionSchema): any[] {
   }
 }
 
+/**
+ * Generate all possible permutations of a plugin config.
+ *
+ * @param options The plugin's options
+ * @returns An array of every possible permutation of the options
+ */
 function generatePermutations(options: Record<string, SubOptionSchema>): Record<string, any>[] {
   const keys = Object.keys(options)
 
@@ -67,7 +79,7 @@ function generatePermutations(options: Record<string, SubOptionSchema>): Record<
 
   const key = keys[0]!
   const remaining = keys.slice(1)
-  const possible = getPossibleConfigValues(options[key]!)
+  const possible = getPossibleSuboptionVariants(options[key]!)
   const remainingPermutations = generatePermutations(
     Object.fromEntries(remaining.map((k) => [k, options[k]!])),
   )
