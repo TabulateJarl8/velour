@@ -1,40 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PluginLoader } from '@/core/loader'
 import type { SubOptionSchema } from '@/core/types'
-import { spawnSync } from 'node:child_process'
 import { describe, expect, it } from 'vitest'
-import { shellcheck } from 'shellcheck'
-import { config as shellcheckConfig } from 'shellcheck/build/configs/config.js'
-
-interface CustomMatchers<R = unknown> {
-  toBeValidBash: () => R
-}
-
-declare module 'vitest' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-  interface Matchers<T = any> extends CustomMatchers<T> {}
-}
-
-expect.extend({
-  toBeValidBash(content: string) {
-    const result = spawnSync(shellcheckConfig.bin, ['-s', 'bash', '-'], {
-      input: content,
-      encoding: 'utf-8',
-    })
-
-    if (result.status === 0) {
-      return {
-        message: () => 'expected script not to be valid bash',
-        pass: true,
-      }
-    } else {
-      return {
-        message: () => `expected script to be valid bash:\n${result.stdout}`,
-        pass: false,
-      }
-    }
-  },
-})
 
 /**
  * Given a suboption, generate the possible variants of it
@@ -99,9 +66,6 @@ describe('Plugin Bash Validity', async () => {
   const loader = new PluginLoader()
   const pluginMap = await loader.loadPlugins(true)
   const plugins = Array.from(pluginMap.values())
-
-  // download shellcheck
-  await shellcheck({ args: ['--version'] })
 
   plugins.forEach((plugin) => {
     describe(`Plugin: ${plugin.id}`, () => {

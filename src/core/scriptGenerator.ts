@@ -1,11 +1,12 @@
 import { resolveEnabledPlugins, sortPlugins } from './dependencyResolver'
 import type { ConcretePluginConfig, ConcretePluginDef } from './types'
+import scriptTemplate from './script_template.sh?raw'
 
 /**
  * Function to fix indentation of a plugin's generated bash snippet.
  *
- * @param snippet the bash snippet to fix
- * @returns a properly indented snippet
+ * @param snippet The bash snippet to fix
+ * @returns A properly indented snippet
  */
 function formatBash(snippet: string): string {
   // find each leading whitespace before the first non-whitespace character on every line
@@ -13,7 +14,7 @@ function formatBash(snippet: string): string {
   if (!match) return snippet.trim()
 
   // find smallest indentation level across every line
-  const minIndent = Math.min(...match.map(line => line.length))
+  const minIndent = Math.min(...match.map((line) => line.length))
 
   // remove minIndent amount of whitespace from the beginning of each line
   // TODO: is this the best way to accomplish formatting? it kind of feels hacky
@@ -40,13 +41,11 @@ export function generateScript(
 
   const pluginSnippets: string[] = []
 
-  let scriptPreamble = '#!/usr/bin/env bash\n\nset -e'
-
   for (const plugin of sortedPlugins) {
     // dependency plugins are not enabled in the UI, so we override it here
     const enabledConfig = configs[plugin.id] || {}
     const config = { ...enabledConfig, enabled: true }
-    let snippet = ""
+    let snippet = ''
 
     snippet += `# --- [Plugin] ${plugin.name} ---\n`
 
@@ -65,6 +64,6 @@ export function generateScript(
     pluginSnippets.push(snippet)
   }
 
-  const finalScript = scriptPreamble + '\n\n' + pluginSnippets.join('\n\n')
+  const finalScript = scriptTemplate.replace('# {{script_body}}', pluginSnippets.join('\n\n'))
   return finalScript.trim()
 }
