@@ -11,6 +11,7 @@ const loader = new PluginLoader()
 const loadedPlugins = ref<ConcretePluginDef[]>([])
 const isLoading = ref(true)
 const configs = ref<Record<string, ConcretePluginConfig>>({})
+const quietMode = ref(false)
 
 const highlightedScriptHtml = ref('')
 let highlighter: Highlighter | null = null
@@ -45,7 +46,7 @@ const generatedScript = computed(() => {
   if (isLoading.value) {
     return '# Loading plugins...'
   }
-  return buildPluginScripts(loadedPlugins.value, configs.value, false)
+  return buildPluginScripts(loadedPlugins.value, configs.value, quietMode.value)
 })
 
 watch(
@@ -164,14 +165,42 @@ watch(
             <span class="text-base-content/70">Loading plugins...</span>
           </div>
 
-          <template v-else>
+          <div v-else>
+            <div class="card bg-base-200 mb-6 shadow-sm">
+              <div class="card-body">
+                <h3 class="card-title text-sm font-bold opacity-70">Script Output Mode</h3>
+                <div class="flex flex-col gap-2 mt-2">
+                  <label class="label cursor-pointer justify-start gap-4">
+                    <input
+                      type="radio"
+                      class="radio radio-primary"
+                      :checked="!quietMode"
+                      @change="quietMode = false"
+                    />
+                    <span class="label-text font-medium">Verbose</span>
+                  </label>
+                  <label class="label cursor-pointer justify-start gap-4">
+                    <input
+                      type="radio"
+                      class="radio radio-primary"
+                      :checked="quietMode"
+                      @change="quietMode = true"
+                    />
+                    <span class="label-text font-medium">Quiet</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
             <PluginOptionsCard
               v-for="plugin in loadedPlugins"
               :key="plugin.id"
               :plugin="plugin"
               v-model="configs[plugin.id]!"
             />
-          </template>
+          </div>
         </div>
       </div>
     </div>
