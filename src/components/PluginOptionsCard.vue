@@ -19,7 +19,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="collapse border border-base-300 bg-base-100 rounded-box mb-4">
+  <div class="border-base-300 bg-base-100 rounded-box collapse mb-4 border">
     <input type="checkbox" v-model="model.enabled" />
 
     <div class="collapse-title flex items-center gap-4">
@@ -30,13 +30,13 @@ defineProps<{
         tabindex="-1"
       />
       <div>
-        <h3 class="font-bold text-lg leading-tight">{{ plugin.name }}</h3>
+        <h3 class="text-lg leading-tight font-bold">{{ plugin.name }}</h3>
         <p class="text-sm opacity-70">{{ plugin.description }}</p>
       </div>
     </div>
 
     <div v-if="Object.keys(plugin.options).length !== 0" class="collapse-content bg-base-200/50">
-      <div class="py-4 flex flex-col gap-4">
+      <div class="flex flex-col gap-4 py-4">
         <div v-for="(opt, key) in plugin.options" :key="key" class="form-control w-full max-w-md">
           <component
             :is="componentMap[opt.type]"

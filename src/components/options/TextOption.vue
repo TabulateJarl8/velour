@@ -15,7 +15,7 @@ defineProps<{
     <input
       type="text"
       required
-      class="input input-sm"
+      class="input input-sm validator"
       v-model="model"
       :placeholder="opt['placeholder']"
     />
