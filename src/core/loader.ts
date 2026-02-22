@@ -22,7 +22,10 @@ export class PluginLoader {
       this.discoveryProvider = discoveryProvider
     } else {
       this.discoveryProvider = async () => {
-        return import.meta.glob('../plugins/**/*.ts') as Record<string, () => Promise<PluginModule>>
+        return import.meta.glob('../plugins/**/*.ts', { eager: true }) as Record<
+          string,
+          PluginModule
+        >
       }
     }
   }
@@ -39,7 +42,7 @@ export class PluginLoader {
 
     // iterate over each module and attempt to load it
     for (const path in modules) {
-      const module = (await modules[path]!()) as PluginModule
+      const module = modules[path] as PluginModule
       const plugin = module.default
 
       // if current module's exported default is a valid application plugin, add it to the map
@@ -74,4 +77,4 @@ export class PluginLoader {
 }
 
 /** The type of the plugin discovery provider function */
-export type PluginDiscoveryProvider = () => Promise<Record<string, () => Promise<PluginModule>>>
+export type PluginDiscoveryProvider = () => Promise<Record<string, PluginModule>>
