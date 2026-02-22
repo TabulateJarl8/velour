@@ -71,7 +71,7 @@ const plugin = createPlugin({
         if (repo) {
           plugins.push(repo.name)
           // ["name"]="url"
-          repoArray += `        ["${repo.name}"]="${repo.url}" `
+          repoArray += `["${repo.name}"]="${repo.url}" `
         }
       }
     })

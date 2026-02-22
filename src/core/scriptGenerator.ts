@@ -2,6 +2,26 @@ import { resolveEnabledPlugins, sortPlugins } from './dependencyResolver'
 import type { ConcretePluginConfig, ConcretePluginDef } from './types'
 
 /**
+ * Function to fix indentation of a plugin's generated bash snippet.
+ *
+ * @param snippet the bash snippet to fix
+ * @returns a properly indented snippet
+ */
+function formatBash(snippet: string): string {
+  // find each leading whitespace before the first non-whitespace character on every line
+  const match = snippet.match(/^[ \t]*(?=\S)/gm)
+  if (!match) return snippet.trim()
+
+  // find smallest indentation level across every line
+  const minIndent = Math.min(...match.map(line => line.length))
+
+  // remove minIndent amount of whitespace from the beginning of each line
+  // TODO: is this the best way to accomplish formatting? it kind of feels hacky
+  const regex = new RegExp(`^[ \\t]{${minIndent}}`, 'gm')
+  return snippet.replace(regex, '').trim()
+}
+
+/**
  * Generate the full script from the set of enabled plugins and their configs.
  *
  * @param plugins The full list of plugins
@@ -30,7 +50,7 @@ export function generateScript(
 
     snippet += `# --- [Plugin] ${plugin.name} ---\n`
 
-    const pluginScript = plugin.generate(config)
+    const pluginScript = formatBash(plugin.generate(config))
 
     // show verbose output in non-quiet mode
     if (!quietMode) {
