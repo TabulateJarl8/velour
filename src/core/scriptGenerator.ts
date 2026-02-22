@@ -1,6 +1,7 @@
 import { resolveEnabledPlugins, sortPlugins } from './dependencyResolver'
 import type { ConcretePluginConfig, ConcretePluginDef } from './types'
 import scriptTemplate from './script_template.sh?raw'
+import { version } from '../../package.json'
 
 /**
  * Function to fix indentation of a plugin's generated bash snippet.
@@ -85,6 +86,8 @@ export function generateFullScript(
 ): string {
   const pluginsBash = buildPluginScripts(plugins, configs, quietMode)
 
-  const finalScript = scriptTemplate.replace('# {{script_body}}', pluginsBash)
+  const finalScript = scriptTemplate
+    .replace('# {{script_body}}', pluginsBash)
+    .replace('__VELOUR_VERSION__', version)
   return finalScript.trim()
 }

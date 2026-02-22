@@ -65,6 +65,7 @@ ACTUAL_USER=$SUDO_USER
 ACTUAL_HOME=$(eval echo ~"$SUDO_USER")
 LOG_FILE="/var/log/fedora_things_to_do.log"
 INITIAL_DIR=$(pwd)
+VELOUR_VERSION="__VELOUR_VERSION__"
 
 # make shellcheck stop complaining about unused variables
 export ACTUAL_USER
@@ -125,6 +126,7 @@ echo "║   ░▀░░░▀▀▀░▀▀░░▀▀▀░▀░▀░▀�
 echo "║                                                                              ║"
 echo "╚══════════════════════════════════════════════════════════════════════════════╝"
 echo ""
+echo "Generated with Velour version $VELOUR_VERSION"
 echo "This script automates setup steps after a fresh Fedora installation"
 color_echo "blue" "https://github.com/TabulateJarl8/velour"
 echo ""

@@ -11,4 +11,9 @@ describe('Bash Script Template Validity', async () => {
     const scriptTemplate = await readFile(`${__dirname}/../script_template.sh`, 'utf-8')
     expect(scriptTemplate).toContain('# {{script_body}}')
   })
+
+  it('contains the version replacement string', async () => {
+    const scriptTemplate = await readFile(`${__dirname}/../script_template.sh`, 'utf-8')
+    expect(scriptTemplate).toContain('__VELOUR_VERSION__')
+  })
 })
