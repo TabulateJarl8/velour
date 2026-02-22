@@ -23,14 +23,17 @@ function formatBash(snippet: string): string {
 }
 
 /**
- * Generate the full script from the set of enabled plugins and their configs.
+ * Generates a single bash block from the enabled plugins and their configs.
+ *
+ * This does not contain the script preamble or footer.
  *
  * @param plugins The full list of plugins
  * @param configs The list of the plugin's configs
  * @param quietMode Whether or not this script should produce output
- * @returns The full script as a string
+ * @returns A string containing a bash script for all enabled plugins
+ * @see generateFullScript
  */
-export function generateScript(
+export function buildPluginScripts(
   plugins: ConcretePluginDef[],
   configs: Record<string, ConcretePluginConfig>,
   quietMode: boolean = false,
@@ -64,6 +67,24 @@ export function generateScript(
     pluginSnippets.push(snippet)
   }
 
-  const finalScript = scriptTemplate.replace('# {{script_body}}', pluginSnippets.join('\n\n'))
+  return pluginSnippets.join('\n\n').trim()
+}
+
+/**
+ * Generate the full script from the set of enabled plugins and their configs.
+ *
+ * @param plugins The full list of plugins
+ * @param configs The list of the plugin's configs
+ * @param quietMode Whether or not this script should produce output
+ * @returns The full script as a string
+ */
+export function generateFullScript(
+  plugins: ConcretePluginDef[],
+  configs: Record<string, ConcretePluginConfig>,
+  quietMode: boolean = false,
+): string {
+  const pluginsBash = buildPluginScripts(plugins, configs, quietMode)
+
+  const finalScript = scriptTemplate.replace('# {{script_body}}', pluginsBash)
   return finalScript.trim()
 }

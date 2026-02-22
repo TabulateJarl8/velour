@@ -3,7 +3,7 @@ import { onMounted, ref, computed, watch } from 'vue'
 import { PluginLoader } from './core/loader'
 import type { ConcretePluginConfig, ConcretePluginDef } from './core/types'
 import PluginOptionsCard from './components/PluginOptionsCard.vue'
-import { generateScript } from './core/scriptGenerator'
+import { buildPluginScripts } from './core/scriptGenerator'
 
 import { createHighlighter, type Highlighter } from 'shiki'
 
@@ -45,7 +45,7 @@ const generatedScript = computed(() => {
   if (isLoading.value) {
     return '# Loading plugins...'
   }
-  return generateScript(loadedPlugins.value, configs.value, false)
+  return buildPluginScripts(loadedPlugins.value, configs.value, false)
 })
 
 watch(
