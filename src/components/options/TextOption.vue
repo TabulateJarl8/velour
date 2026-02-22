@@ -17,7 +17,7 @@ defineProps<{
       required
       class="input input-sm validator"
       v-model="model"
-      :placeholder="opt['placeholder']"
+      :placeholder="opt.placeholder"
     />
     <span class="label-text opacity-80">{{ opt.description }}</span>
   </label>

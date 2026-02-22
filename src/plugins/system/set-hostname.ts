@@ -12,6 +12,7 @@ const plugin = createPlugin({
       type: 'text',
       label: 'Enter the new hostname:',
       required: true,
+      placeholder: 'e.g. fedora-desktop',
     },
   },
   category: 'System Configuration',
