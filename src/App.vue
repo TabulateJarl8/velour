@@ -34,15 +34,7 @@ onMounted(async () => {
 
   const initConfigs: Record<string, ConcretePluginConfig> = {}
   for (const plugin of loadedPlugins.value) {
-    const config: ConcretePluginConfig = { enabled: false }
-
-    for (const [key, schema] of Object.entries(plugin.options)) {
-      if (schema.default !== undefined) {
-        config[key] = schema.default
-      }
-    }
-
-    initConfigs[plugin.id] = config
+    initConfigs[plugin.id] = PluginLoader.initializePluginConfig(plugin)
   }
 
   configs.value = initConfigs

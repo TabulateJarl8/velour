@@ -89,3 +89,12 @@ export interface TextSubOption extends BaseSubOption<'text'> {
 
 /** Aggregate type for a generic "suboption" of some type */
 export type SubOptionSchema = CheckboxSubOption | NumberSubOption | TextSubOption | RadioSubOption
+
+/** Default input values for each defined input type */
+export const SUB_OPTION_DEFAULTS: SubOptionTypeMap = {
+  checkbox: false,
+  number: 0,
+  text: '',
+  // radios are required to provide a default so this doesn't really matter
+  radio: '',
+}

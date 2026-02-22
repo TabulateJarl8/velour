@@ -1,5 +1,10 @@
 import { logger } from './logger'
-import type { ConcretePluginDef, PluginModule } from './types'
+import {
+  SUB_OPTION_DEFAULTS,
+  type ConcretePluginConfig,
+  type ConcretePluginDef,
+  type PluginModule,
+} from './types'
 
 /** Class used to dynamically load plugins from `src/plugins` at compile time */
 export class PluginLoader {
@@ -73,6 +78,26 @@ export class PluginLoader {
    */
   getPlugins(): ConcretePluginDef[] {
     return Array.from(this.plugins.values())
+  }
+
+  /**
+   * Initialize a plugin's config with specified defaults from it's definition.
+   *
+   * @param plugin The plugin definition
+   * @returns The plugin's initial config
+   */
+  public static initializePluginConfig(plugin: ConcretePluginDef): ConcretePluginConfig {
+    const config: ConcretePluginConfig = { enabled: false }
+
+    for (const [key, schema] of Object.entries(plugin.options)) {
+      if (schema.default !== undefined) {
+        config[key] = schema.default
+      } else {
+        config[key] = SUB_OPTION_DEFAULTS[schema.type]
+      }
+    }
+
+    return config
   }
 }
 
