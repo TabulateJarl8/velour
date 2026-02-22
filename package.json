@@ -17,6 +17,8 @@
     "gen:plugin": "tsx --tsconfig tsconfig.app.json scripts/generate-plugin.ts"
   },
   "dependencies": {
+    "@shikijs/langs": "^3.22.0",
+    "@shikijs/themes": "^3.22.0",
     "shiki": "^3.22.0",
     "vue": "^3.5.27"
   },

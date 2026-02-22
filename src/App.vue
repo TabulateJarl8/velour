@@ -5,7 +5,10 @@ import type { ConcretePluginConfig, ConcretePluginDef } from './core/types'
 import PluginOptionsCard from './components/PluginOptionsCard.vue'
 import { buildPluginScripts } from './core/scriptGenerator'
 
-import { createHighlighter, type Highlighter } from 'shiki'
+// import { createHighlighter, type Highlighter } from 'shiki'
+import { createHighlighterCore, type HighlighterCore } from 'shiki/core'
+// import { createOnigurumaEngine } from 'shiki/engine/oniguruma'
+import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 
 const loader = new PluginLoader()
 const loadedPlugins = ref<ConcretePluginDef[]>([])
@@ -14,12 +17,16 @@ const configs = ref<Record<string, ConcretePluginConfig>>({})
 const quietMode = ref(false)
 
 const highlightedScriptHtml = ref('')
-let highlighter: Highlighter | null = null
+let highlighter: HighlighterCore | null = null
 
 onMounted(async () => {
-  highlighter = await createHighlighter({
-    themes: ['catppuccin-mocha'],
-    langs: ['bash'],
+  highlighter = await createHighlighterCore({
+    themes: [import('@shikijs/themes/catppuccin-mocha')],
+    langs: [import('@shikijs/langs/bash')],
+    // TODO: is JS regex engine always better than wasm one for the web?
+    // https://shiki.style/guide/best-performance#javascript-engine-and-pre-compiled-languages
+    // engine: createOnigurumaEngine(import('shiki/wasm')),
+    engine: createJavaScriptRegexEngine(),
   })
 
   await loader.loadPlugins()

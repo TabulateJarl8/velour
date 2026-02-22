@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@shikijs/langs':
+        specifier: ^3.22.0
+        version: 3.22.0
+      '@shikijs/themes':
+        specifier: ^3.22.0
+        version: 3.22.0
       shiki:
         specifier: ^3.22.0
         version: 3.22.0
