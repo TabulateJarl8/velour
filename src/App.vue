@@ -5,9 +5,7 @@ import type { ConcretePluginConfig, ConcretePluginDef } from './core/types'
 import PluginOptionsCard from './components/PluginOptionsCard.vue'
 import { buildPluginScripts } from './core/scriptGenerator'
 
-// import { createHighlighter, type Highlighter } from 'shiki'
 import { createHighlighterCore, type HighlighterCore } from 'shiki/core'
-// import { createOnigurumaEngine } from 'shiki/engine/oniguruma'
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 
 const loader = new PluginLoader()
@@ -66,7 +64,7 @@ watch(
 </script>
 
 <style scoped>
-/* hiki highlighting needs style overrides to work on the daisyui code block */
+/* shiki highlighting needs style overrides to work on the daisyui code block */
 :deep(.shiki) {
   background-color: transparent !important;
 }
