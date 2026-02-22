@@ -1,0 +1,10 @@
+
+semi = false
+singleQuote = true
+printWidth = 100
+plugins = [
+    "prettier-plugin-jsdoc",
+    # this doesnt work with jsdoc anymore, see the following issue:
+    # https://github.com/tailwindlabs/prettier-plugin-tailwindcss/issues/424
+    # "prettier-plugin-tailwindcss"
+]
