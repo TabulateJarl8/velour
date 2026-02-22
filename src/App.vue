@@ -42,7 +42,7 @@ onMounted(async () => {
 })
 
 const generatedScript = computed(() => {
-  if (isLoading.value || loadedPlugins.value.length === 0) {
+  if (isLoading.value) {
     return '# Loading plugins...'
   }
   return generateScript(loadedPlugins.value, configs.value, false)

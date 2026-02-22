@@ -2,19 +2,6 @@ import { resolveEnabledPlugins, sortPlugins } from './dependencyResolver'
 import type { ConcretePluginConfig, ConcretePluginDef } from './types'
 
 /**
- * Trim the start and end whitespace of each line in a text.
- *
- * @param text The text to trim
- * @returns The trimmed text
- */
-function trimEachLine(text: string): string {
-  return text
-    .split('\n')
-    .map((line) => line.trim())
-    .join('\n')
-}
-
-/**
  * Generate the full script from the set of enabled plugins and their configs.
  *
  * @param plugins The full list of plugins
@@ -31,28 +18,33 @@ export function generateScript(
   const activePlugins = plugins.filter((p) => activePluginIds.has(p.id))
   const sortedPlugins = sortPlugins(activePlugins)
 
-  let script = '#!/usr/bin/env bash\n\nset -e\n'
+  const pluginSnippets: string[] = []
+
+  let scriptPreamble = '#!/usr/bin/env bash\n\nset -e'
 
   for (const plugin of sortedPlugins) {
     // dependency plugins are not enabled in the UI, so we override it here
-    const enabledConfig = configs[plugin.id]
+    const enabledConfig = configs[plugin.id] || {}
     const config = { ...enabledConfig, enabled: true }
+    let snippet = ""
 
-    script += `# --- [Plugin] ${plugin.name} ---\n`
+    snippet += `# --- [Plugin] ${plugin.name} ---\n`
 
     const pluginScript = plugin.generate(config)
 
+    // show verbose output in non-quiet mode
     if (!quietMode) {
-      script += `
-        color_echo "yellow" "${plugin.preRunMessage}"
-        ${pluginScript}
-      `
-
-      if (plugin.postRunMessage) script += `color_echo "green" "${plugin.postRunMessage}"\n`
+      snippet += `color_echo "yellow" "${plugin.preRunMessage}"\n`
+      snippet += pluginScript.trim()
+      if (plugin.postRunMessage) snippet += `\ncolor_echo "green" "${plugin.postRunMessage}"`
     } else {
-      script += `{\n${pluginScript}\n}>/dev/null\n`
+      // dont show output in quiet mode
+      snippet += `{\n${pluginScript}\n}>/dev/null`
     }
+
+    pluginSnippets.push(snippet)
   }
 
-  return trimEachLine(script)
+  const finalScript = scriptPreamble + '\n\n' + pluginSnippets.join('\n\n')
+  return finalScript.trim()
 }
