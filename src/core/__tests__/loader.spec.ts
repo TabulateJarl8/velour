@@ -16,7 +16,7 @@ const mockEmptyPlugin: ConcretePluginDef = {
 describe('PluginLoader', () => {
   it('loads valid plugins', async () => {
     const mockProvider = vi.fn().mockResolvedValue({
-      '../plugins/test.ts': () => Promise.resolve({ default: mockEmptyPlugin }),
+      '../plugins/test.ts': { default: mockEmptyPlugin },
     })
     const loader = new PluginLoader(mockProvider)
 
@@ -28,7 +28,7 @@ describe('PluginLoader', () => {
 
   it('ignored invalid plugins', async () => {
     const mockProvider = vi.fn().mockResolvedValue({
-      '../plugins/bad.ts': () => Promise.resolve({ default: {} }),
+      '../plugins/bad.ts': { default: {} },
     })
     const loader = new PluginLoader(mockProvider)
 
