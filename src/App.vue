@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, computed, watch } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { PluginLoader } from './core/loader'
 import {
   Categories,
@@ -11,8 +11,8 @@ import {
 } from './core/types'
 import { buildPluginScripts } from './core/scriptGenerator'
 
-import { createHighlighterCore, type HighlighterCore } from 'shiki/core'
-import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
+import { useShiki } from './composables/useShiki'
+
 import ScriptPreview from './components/ScriptPreview.vue'
 import ConfigSidebar from './components/ConfigSidebar.vue'
 
@@ -21,9 +21,6 @@ const loadedPlugins = ref<ConcretePluginDef[]>([])
 const isLoading = ref(true)
 const pluginConfigs = ref<Record<string, ConcretePluginConfig>>({})
 const quietMode = ref(false)
-
-const highlightedScriptHtml = ref('')
-let highlighter: HighlighterCore | null = null
 
 export interface PluginGroup {
   heading: CategoryHeadings[keyof CategoryHeadings] | null
@@ -36,15 +33,6 @@ export interface CategoryGroup {
 }
 
 onMounted(async () => {
-  highlighter = await createHighlighterCore({
-    themes: [import('@shikijs/themes/catppuccin-mocha')],
-    langs: [import('@shikijs/langs/bash')],
-    // TODO: is JS regex engine always better than wasm one for the web?
-    // https://shiki.style/guide/best-performance#javascript-engine-and-pre-compiled-languages
-    // engine: createOnigurumaEngine(import('shiki/wasm')),
-    engine: createJavaScriptRegexEngine(),
-  })
-
   await loader.loadPlugins()
   loadedPlugins.value = loader.getPlugins()
 
@@ -63,6 +51,8 @@ const generatedScript = computed(() => {
   }
   return buildPluginScripts(loadedPlugins.value, pluginConfigs.value, quietMode.value)
 })
+
+const { highlightedScriptHtml } = useShiki(generatedScript)
 
 const categorizedPlugins = computed<CategoryGroup[]>(() => {
   // map each category to a list of associated plugins/headings
@@ -91,22 +81,6 @@ const categorizedPlugins = computed<CategoryGroup[]>(() => {
     }
   })
 })
-
-watch(
-  generatedScript,
-  (script) => {
-    if (highlighter) {
-      highlightedScriptHtml.value = highlighter.codeToHtml(script, {
-        lang: 'bash',
-        theme: 'catppuccin-mocha',
-      })
-    } else {
-      // fallback if highlighter isnt initialized for some reason
-      highlightedScriptHtml.value = `<pre><code>${script}</code></pre>`
-    }
-  },
-  { immediate: true },
-)
 </script>
 
 <template>
