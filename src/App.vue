@@ -117,7 +117,15 @@ watch(
           <div
             class="mockup-code bg-neutral text-neutral-content h-0 min-h-125 flex-1 overflow-y-auto shadow-xl"
           >
+            <div class="px-6 pt-2 pb-4 select-none opacity-40 font-mono text-sm">
+              # --- Script Preamble Ends Here (setup & utility functions) ---
+            </div>
+
             <div v-html="highlightedScriptHtml" class="px-6 text-sm"></div>
+
+            <div class="px-6 pt-4 pb-2 select-none opacity-40 font-mono text-sm">
+              # --- Script Footer Begins Here (cleanup) ---
+            </div>
           </div>
         </div>
       </main>
