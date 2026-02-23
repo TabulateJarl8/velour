@@ -114,6 +114,10 @@ const isSearching = computed(() => query.value.trim().length > 0)
             <input type="checkbox" :checked="isSearching ? true : undefined" />
             <div class="collapse-title text-xl font-bold">
               {{ category.name }}
+              <!-- TODO: can this be positioned better -->
+              <span v-if="isSearching" class="badge badge-primary badge-sm ml-2">
+                {{category.pluginGroups.reduce((acc, group) => acc + group.plugins.length, 0)}} matches
+              </span>
             </div>
             <div class="collapse-content bg-base-300">
               <div class="flex flex-col gap-2 pt-4">
