@@ -36,7 +36,7 @@ defineProps<{
     </div>
 
     <div v-if="Object.keys(plugin.options).length !== 0" class="collapse-content bg-base-200/50">
-      <div class="flex flex-col gap-4 py-4">
+      <div class="flex flex-col pt-4">
         <div v-for="(opt, key) in plugin.options" :key="key" class="form-control w-full max-w-md">
           <component
             :is="componentMap[opt.type]"

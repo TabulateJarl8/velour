@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { onMounted, ref, computed, watch } from 'vue'
 import { PluginLoader } from './core/loader'
-import type { ConcretePluginConfig, ConcretePluginDef } from './core/types'
+import {
+  Categories,
+  CategoryHeadingsData,
+  type ConcretePluginConfig,
+  type ConcretePluginDef,
+} from './core/types'
 import PluginOptionsCard from './components/PluginOptionsCard.vue'
 import { buildPluginScripts } from './core/scriptGenerator'
 
@@ -44,6 +49,34 @@ const generatedScript = computed(() => {
     return '# Loading plugins...'
   }
   return buildPluginScripts(loadedPlugins.value, configs.value, quietMode.value)
+})
+
+const categorizedPlugins = computed(() => {
+  // map each category to a list of associated plugins/headings
+  return Object.values(Categories).map((category) => {
+    const hasHeadings = category in CategoryHeadingsData
+    const pluginGroups = []
+
+    if (hasHeadings) {
+      // if current category has headings, iterate over each one and add list of
+      // plugins under that heading
+      for (const heading of CategoryHeadingsData[category as keyof typeof CategoryHeadingsData]) {
+        const plugins = loadedPlugins.value.filter(
+          (p) => p.category === category && p.heading === heading,
+        )
+        if (plugins.length > 0) pluginGroups.push({ heading, plugins })
+      }
+    } else {
+      // no headings; add all plugins from the category
+      const plugins = loadedPlugins.value.filter((p) => p.category === category)
+      if (plugins.length > 0) pluginGroups.push({ heading: null, plugins })
+    }
+
+    return {
+      name: category,
+      pluginGroups,
+    }
+  })
 })
 
 watch(
@@ -104,7 +137,7 @@ watch(
       </div>
 
       <!-- page content: show script -->
-      <!-- TODO: copy button -->
+      <!-- TODO: download button -->
       <main class="flex flex-1 flex-col overflow-y-auto p-6 lg:p-12">
         <div class="mx-auto flex h-full w-full max-w-6xl flex-col gap-6">
           <div class="flex items-center justify-between">
@@ -199,12 +232,39 @@ watch(
 
             <div class="divider"></div>
 
-            <PluginOptionsCard
-              v-for="plugin in loadedPlugins"
-              :key="plugin.id"
-              :plugin="plugin"
-              v-model="configs[plugin.id]!"
-            />
+            <div
+              v-for="category in categorizedPlugins"
+              :key="category.name"
+              class="collapse collapse-arrow bg-base-200 mb-4"
+            >
+              <input type="checkbox" />
+              <div class="collapse-title text-xl font-bold">
+                {{ category.name }}
+              </div>
+              <div class="collapse-content bg-base-300">
+                <div class="flex flex-col gap-2 pt-4">
+                  <template
+                    v-for="group in category.pluginGroups"
+                    :key="group.heading || 'default'"
+                  >
+                    <!-- TODO: can i style this text/border better -->
+                    <h4
+                      v-if="group.heading"
+                      class="border-neutral-500 text-base-content/80 mb-1 mt-2 first:mt-0 border-b pb-2 text-lg font-bold"
+                    >
+                      {{ group.heading }}
+                    </h4>
+
+                    <PluginOptionsCard
+                      v-for="plugin in group.plugins"
+                      :key="plugin.id"
+                      :plugin="plugin"
+                      v-model="configs[plugin.id]!"
+                    />
+                  </template>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
