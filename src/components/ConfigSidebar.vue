@@ -1,0 +1,117 @@
+<script lang="ts" setup>
+import type { CategoryGroup } from '@/App.vue'
+import PluginOptionsCard from './PluginOptionsCard.vue'
+import type { ConcretePluginConfig } from '@/core/types'
+
+defineProps<{ isLoading: boolean; categorizedPlugins: CategoryGroup[] }>()
+
+const quietMode = defineModel<boolean>('quietMode', { required: true })
+const pluginConfigs = defineModel<Record<string, ConcretePluginConfig>>('pluginConfigs', {
+  required: true,
+})
+</script>
+
+<template>
+  <!-- sidebar content -->
+  <div class="drawer-side h-full shadow-xl">
+    <!-- from daisyui: click outside of drawer content to close it on smaller screens where it doesn't fill the full viewport width -->
+    <label for="config-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+
+    <div class="bg-base-100 border-base-300 flex min-h-full w-full flex-col border-r sm:w-lg">
+      <!-- make the sticky header have a higher z index so that the content "scrolls" underneath it instead of on top of it -->
+      <header
+        class="border-base-300 bg-base-100 sticky top-0 z-10 flex items-center justify-between border-b p-6"
+      >
+        <div>
+          <h1 class="text-primary text-2xl font-black">Velour Script Configuration</h1>
+          <p class="mt-1 text-sm opacity-70">Browse and enable options and apps</p>
+        </div>
+
+        <div class="flex-none lg:hidden">
+          <label for="config-drawer" aria-label="close sidebar" class="btn btn-square btn-ghost">
+            <!-- TODO: is there a better icon than an X -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </label>
+        </div>
+      </header>
+
+      <div class="flex-1 overflow-y-auto p-4">
+        <!-- TODO: would this look better as a daisyui skeleton -->
+        <div v-if="isLoading" class="flex h-48 flex-col items-center justify-center gap-4">
+          <span class="loading loading-ring loading-lg text-primary"></span>
+          <span class="text-base-content/70">Loading plugins...</span>
+        </div>
+
+        <div v-else>
+          <div class="card bg-base-200 mb-6 shadow-sm">
+            <div class="card-body">
+              <h3 class="card-title text-sm font-bold opacity-70">Script Output Mode</h3>
+              <div class="flex flex-col gap-2 mt-2">
+                <label class="label cursor-pointer justify-start gap-4">
+                  <input
+                    type="radio"
+                    class="radio radio-primary"
+                    :checked="!quietMode"
+                    @change="quietMode = false"
+                  />
+                  <span class="label-text font-medium">Verbose</span>
+                </label>
+                <label class="label cursor-pointer justify-start gap-4">
+                  <input
+                    type="radio"
+                    class="radio radio-primary"
+                    :checked="quietMode"
+                    @change="quietMode = true"
+                  />
+                  <span class="label-text font-medium">Quiet</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div
+            v-for="category in categorizedPlugins"
+            :key="category.name"
+            class="collapse collapse-arrow bg-base-200 mb-4"
+          >
+            <input type="checkbox" />
+            <div class="collapse-title text-xl font-bold">
+              {{ category.name }}
+            </div>
+            <div class="collapse-content bg-base-300">
+              <div class="flex flex-col gap-2 pt-4">
+                <template v-for="group in category.pluginGroups" :key="group.heading || 'default'">
+                  <!-- TODO: can i style this text/border better -->
+                  <h4
+                    v-if="group.heading"
+                    class="border-neutral-500 text-base-content/80 mb-1 mt-2 first:mt-0 border-b pb-2 text-lg font-bold"
+                  >
+                    {{ group.heading }}
+                  </h4>
+
+                  <PluginOptionsCard
+                    v-for="plugin in group.plugins"
+                    :key="plugin.id"
+                    :plugin="plugin"
+                    v-model="pluginConfigs[plugin.id]!"
+                  />
+                </template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
