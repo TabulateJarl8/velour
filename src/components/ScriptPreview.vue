@@ -14,7 +14,7 @@ defineProps<{ highlightedScriptHtml: string }>()
 </style>
 
 <template>
-  <main class="flex flex-1 flex-col shrink=0 p-6 lg:p-12">
+  <main class="flex flex-1 flex-col shrink-0 p-6 lg:p-12">
     <div class="mx-auto flex h-full w-full max-w-6xl flex-col gap-6">
       <div class="flex items-center justify-between">
         <div>
