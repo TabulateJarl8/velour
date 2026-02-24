@@ -11,11 +11,11 @@ const { highlightedScriptHtml } = useShiki(generatedScript)
 
 <template>
   <!-- mostly stolen from https://daisyui.com/components/drawer/?lang=en#navbar-menu-for-desktop--sidebar-drawer-for-mobile -->
-  <div class="drawer lg:drawer-open h-dvh">
+  <div class="drawer lg:drawer-open h-dvh overflow-hidden">
     <input id="config-drawer" type="checkbox" class="drawer-toggle" />
 
     <!-- sidebar should take up the full screen height -->
-    <div class="drawer-content bg-base-200 flex flex-col">
+    <div class="drawer-content bg-base-200 flex flex-col h-full">
       <div class="navbar bg-base-100 w-full shadow-sm">
         <div class="flex-none lg:hidden">
           <label for="config-drawer" aria-label="open sidebar" class="btn btn-square btn-ghost">
