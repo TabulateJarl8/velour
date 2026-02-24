@@ -14,7 +14,7 @@ defineProps<{ highlightedScriptHtml: string }>()
 </style>
 
 <template>
-  <main class="flex flex-1 flex-col shrink-0 p-6 lg:p-12">
+  <main class="flex flex-1 flex-col p-6 lg:p-12">
     <div class="mx-auto flex h-full w-full max-w-6xl flex-col gap-6">
       <div class="flex items-center justify-between">
         <div>
@@ -24,7 +24,7 @@ defineProps<{ highlightedScriptHtml: string }>()
       </div>
 
       <div
-        class="mockup-code bg-neutral text-neutral-content shrink-0 max-h-[70vh] flex-1 flex flex-col shadow-xl"
+        class="mockup-code bg-neutral text-neutral-content max-h-[70vh] flex-1 flex flex-col shadow-xl"
       >
         <div class="overflow-y-auto flex-1 pb-4">
           <div class="px-6 pt-2 pb-4 select-none opacity-40 font-mono text-sm">
