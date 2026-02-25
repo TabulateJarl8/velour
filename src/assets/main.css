@@ -1,5 +1,6 @@
 @import './base.css';
 
+/* TODO: is this the best way to solve the ticker problem? its kind of sad withou them */
 @layer base {
   input[type='number']::-webkit-outer-spin-button,
   input[type='number']::-webkit-inner-spin-button,

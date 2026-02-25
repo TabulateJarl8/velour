@@ -69,6 +69,8 @@ export interface NumberSubOption extends BaseSubOption<'number'> {
   max?: number
   /** Optional field placeholder */
   placeholder?: string
+  /** Optional step value (e.g. 0.1, 0.001, 10, ...) */
+  step?: number
   /** Optional default value */
   default?: number
 }

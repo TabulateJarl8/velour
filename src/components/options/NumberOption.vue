@@ -32,6 +32,7 @@ const snapMinMax = () => {
       :placeholder="opt['placeholder']"
       :min="opt['min']"
       :max="opt['max']"
+      :step="opt['step']"
       @blur="snapMinMax"
     />
     <span class="label-text opacity-80">{{ opt.description }}</span>
