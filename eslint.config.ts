@@ -23,6 +23,13 @@ export default defineConfigWithVueTs(
   vueTsConfigs.recommended,
 
   {
+    files: ['**/*.{vue,ts,mts}'],
+    rules: {
+      '@typescript-eslint/switch-exhaustiveness-check': 'error',
+    },
+  },
+
+  {
     ...pluginVitest.configs.recommended,
     files: ['src/**/__tests__/*'],
   },

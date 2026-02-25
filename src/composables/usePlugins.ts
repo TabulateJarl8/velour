@@ -1,3 +1,4 @@
+import { resolveEnabledPlugins } from '@/core/dependencyResolver'
 import { PluginLoader } from '@/core/loader'
 import { buildPluginScripts } from '@/core/scriptGenerator'
 import {
@@ -37,6 +38,11 @@ export function usePlugins() {
     if (isLoading.value) {
       return '# Loading plugins...'
     }
+
+    // safety check even though the script is hidden
+    if (validationError.value) {
+      return '# Invalid options detected, please fix any missing/invalid options'
+    }
     return buildPluginScripts(loadedPlugins.value, pluginConfigs.value, quietMode.value)
   })
 
@@ -69,6 +75,50 @@ export function usePlugins() {
     })
   })
 
+  // check if any options are in an errored state (such as missing a required field)
+  const validationError = computed<string | null>(() => {
+    if (isLoading.value) return null
+
+    const selectedPluginIds = resolveEnabledPlugins(loadedPlugins.value, pluginConfigs.value)
+    const selectedPlugins = loadedPlugins.value.filter((p) => selectedPluginIds.has(p.id))
+
+    for (const plugin of selectedPlugins) {
+      const config = pluginConfigs.value[plugin.id]
+      if (!config) continue
+
+      for (const [key, opt] of Object.entries(plugin.options)) {
+        const val = config[key]
+
+        switch (opt.type) {
+          case 'number': {
+            if (val === undefined || val === null || String(val).trim() === '')
+              return `Plugin "${plugin.name}" has a missing or invalid numeric value for option: ${opt.label}`
+
+            const parsedNum = Number(val)
+            if (opt.min !== undefined && parsedNum < opt.min)
+              return `Plugin "${plugin.name}" requires a value of at least ${opt.min} for option: ${opt.label}`
+            if (opt.max !== undefined && parsedNum > opt.max)
+              return `Plugin "${plugin.name}" requires a value of at most ${opt.max} for option: ${opt.label}`
+
+            break
+          }
+          case 'text': {
+            if (val === undefined || val === null || String(val).trim() === '')
+              return `Plugin "${plugin.name}" is missing required input for option: ${opt.label}`
+
+            break
+          }
+          case 'radio':
+          case 'checkbox': {
+            break
+          }
+        }
+      }
+    }
+
+    return null
+  })
+
   // when mounted, load the plugins and init their configs
   onMounted(async () => {
     await loader.loadPlugins()
@@ -83,5 +133,12 @@ export function usePlugins() {
     isLoading.value = false
   })
 
-  return { isLoading, pluginConfigs, quietMode, categorizedPlugins, generatedScript }
+  return {
+    isLoading,
+    pluginConfigs,
+    quietMode,
+    categorizedPlugins,
+    generatedScript,
+    validationError,
+  }
 }

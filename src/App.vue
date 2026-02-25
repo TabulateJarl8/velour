@@ -5,7 +5,14 @@ import ScriptPreview from './components/ScriptPreview.vue'
 import ConfigSidebar from './components/ConfigSidebar.vue'
 import { usePlugins } from './composables/usePlugins'
 
-const { isLoading, pluginConfigs, quietMode, categorizedPlugins, generatedScript } = usePlugins()
+const {
+  isLoading,
+  pluginConfigs,
+  quietMode,
+  categorizedPlugins,
+  generatedScript,
+  validationError,
+} = usePlugins()
 const { highlightedScriptHtml } = useShiki(generatedScript)
 </script>
 
@@ -40,7 +47,10 @@ const { highlightedScriptHtml } = useShiki(generatedScript)
 
       <!-- page content: show script -->
       <!-- TODO: download button -->
-      <ScriptPreview :highlighted-script-html="highlightedScriptHtml" />
+      <ScriptPreview
+        :highlighted-script-html="highlightedScriptHtml"
+        :validation-error="validationError"
+      />
     </div>
 
     <ConfigSidebar
