@@ -12,6 +12,8 @@ const plugin = createPlugin({
       type: 'number',
       label: 'Max Parallel Downloads',
       min: 1,
+      // https://dnf.readthedocs.io/en/latest/conf_ref.html#integer-label
+      max: 20,
       description: 'Set maximum parallel downloads for faster downloads',
       default: 10,
     },
