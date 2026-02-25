@@ -2,9 +2,19 @@
 import type { NumberSubOption } from '@/core/types'
 
 const model = defineModel<number>({ required: true })
-defineProps<{
+const props = defineProps<{
   opt: NumberSubOption
 }>()
+
+const snapMinMax = () => {
+  if (model.value === undefined || model.value === null) return
+
+  if (props.opt.max !== undefined && model.value > props.opt.max) {
+    model.value = props.opt.max
+  } else if (props.opt.min !== undefined && model.value < props.opt.min) {
+    model.value = props.opt.min
+  }
+}
 </script>
 
 <template>
@@ -22,6 +32,7 @@ defineProps<{
       :placeholder="opt['placeholder']"
       :min="opt['min']"
       :max="opt['max']"
+      @blur="snapMinMax"
     />
     <span class="label-text opacity-80">{{ opt.description }}</span>
   </label>
