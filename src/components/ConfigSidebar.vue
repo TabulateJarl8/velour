@@ -77,7 +77,7 @@ const isSearching = computed(() => query.value.trim().length > 0)
         </div>
       </header>
 
-      <div class="flex-1 overflow-y-auto p-4">
+      <div class="flex-1 overflow-y-auto p-4 overflow-x-hidden">
         <!-- TODO: would this look better as a daisyui skeleton -->
         <div v-if="isLoading" class="flex h-48 flex-col items-center justify-center gap-4">
           <span class="loading loading-ring loading-lg text-primary"></span>
@@ -138,7 +138,10 @@ const isSearching = computed(() => query.value.trim().length > 0)
 
           <div class="divider"></div>
 
-          <div v-if="filteredSearchPlugins.length === 0" class="text-center py-10 opacity-50">
+          <div
+            v-if="filteredSearchPlugins.length === 0"
+            class="text-center py-10 opacity-50 break-all"
+          >
             No options found matching "{{ query }}"
           </div>
 
