@@ -23,37 +23,37 @@ defineProps<{ highlightedScriptHtml: string; validationError?: string | null }>(
         </div>
       </div>
 
-      <div v-if="validationError" class="alert alert-error">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6 shrink-0 stroke-current"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        <span><strong>Configuration Error:</strong> {{ validationError }}</span>
-      </div>
-
       <div
-        v-else
         class="mockup-code bg-neutral text-neutral-content max-h-[70vh] flex-1 flex flex-col shadow-xl"
       >
         <div class="overflow-y-auto flex-1 pb-4">
-          <div class="px-6 pt-2 pb-4 select-none opacity-40 font-mono text-sm">
-            # --- Script Preamble Ends Here (setup & utility functions) ---
+          <div v-if="validationError" class="alert alert-error alert-soft mx-10 mt-5">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 shrink-0 stroke-current"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span><strong>Configuration Error:</strong> {{ validationError }}</span>
           </div>
+          <template v-else>
+            <div class="px-6 pt-2 pb-4 select-none opacity-40 font-mono text-sm">
+              # --- Script Preamble Ends Here (setup & utility functions) ---
+            </div>
 
-          <div v-html="highlightedScriptHtml" class="px-6 text-sm"></div>
+            <div v-html="highlightedScriptHtml" class="px-6 text-sm"></div>
 
-          <div class="px-6 pt-4 pb-2 select-none opacity-40 font-mono text-sm">
-            # --- Script Footer Begins Here (cleanup) ---
-          </div>
+            <div class="px-6 pt-4 pb-2 select-none opacity-40 font-mono text-sm">
+              # --- Script Footer Begins Here (cleanup) ---
+            </div>
+          </template>
         </div>
       </div>
     </div>
