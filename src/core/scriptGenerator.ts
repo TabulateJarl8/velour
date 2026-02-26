@@ -31,12 +31,14 @@ function formatBash(snippet: string): string {
  * @param plugins The full list of plugins
  * @param configs The list of the plugin's configs
  * @param quietMode Whether or not this script should produce output
+ * @param validationErrors Any validation errors from the plugin configurations
  * @returns A string containing a bash script for all enabled plugins
  * @see generateFullScript
  */
 export function buildPluginScripts(
   plugins: ConcretePluginDef[],
   configs: Record<string, ConcretePluginConfig>,
+  validationErrors: Record<string, string>,
   quietMode: boolean = false,
 ): string {
   const activePluginIds = resolveEnabledPlugins(plugins, configs)
@@ -65,6 +67,11 @@ export function buildPluginScripts(
       snippet += `{\n${pluginScript}\n}>/dev/null`
     }
 
+    // if the plugin has errors, comment out that portion of the script
+    if (plugin.id in validationErrors) {
+      snippet = snippet.replace(/^/gm, '# ')
+    }
+
     pluginSnippets.push(snippet)
   }
 
@@ -77,14 +84,33 @@ export function buildPluginScripts(
  * @param plugins The full list of plugins
  * @param configs The list of the plugin's configs
  * @param quietMode Whether or not this script should produce output
+ * @param validationErrors Any validation errors from the plugin configurations
  * @returns The full script as a string
  */
 export function generateFullScript(
   plugins: ConcretePluginDef[],
   configs: Record<string, ConcretePluginConfig>,
+  validationErrors: Record<string, string>,
   quietMode: boolean = false,
 ): string {
-  const pluginsBash = buildPluginScripts(plugins, configs, quietMode)
+  let pluginsBash = buildPluginScripts(plugins, configs, validationErrors, quietMode)
+
+  const erroredPlugins = Object.keys(validationErrors)
+  if (erroredPlugins.length > 0) {
+    // prepend script body with warning
+    let warning =
+      'color_echo "orange" "WARNING: The following plugins had configuration errors and were excluded from the script:"'
+
+    for (const plugin of erroredPlugins) {
+      const name = plugins.find((p) => p.id === plugin)?.name || plugin
+      warning += `\necho " - ${name}"`
+    }
+
+    warning += '\nread -r -p "Press Enter to continue or CTRL+C to cancel..."\n\n'
+
+    // prepend to generated script
+    pluginsBash = warning + pluginsBash
+  }
 
   const finalScript = scriptTemplate
     .replace('# {{script_body}}', pluginsBash)

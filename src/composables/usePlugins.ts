@@ -39,11 +39,12 @@ export function usePlugins() {
       return '# Loading plugins...'
     }
 
-    // safety check even though the script is hidden
-    if (validationError.value) {
-      return '# Invalid options detected, please fix any missing/invalid options'
-    }
-    return buildPluginScripts(loadedPlugins.value, pluginConfigs.value, quietMode.value)
+    return buildPluginScripts(
+      loadedPlugins.value,
+      pluginConfigs.value,
+      validationErrors.value,
+      quietMode.value,
+    )
   })
 
   // plugins in their categories
@@ -76,9 +77,10 @@ export function usePlugins() {
   })
 
   // check if any options are in an errored state (such as missing a required field)
-  const validationError = computed<string | null>(() => {
-    if (isLoading.value) return null
+  const validationErrors = computed<Record<string, string>>(() => {
+    if (isLoading.value) return {}
 
+    const errors: Record<string, string> = {}
     const selectedPluginIds = resolveEnabledPlugins(loadedPlugins.value, pluginConfigs.value)
     const selectedPlugins = loadedPlugins.value.filter((p) => selectedPluginIds.has(p.id))
 
@@ -91,20 +93,33 @@ export function usePlugins() {
 
         switch (opt.type) {
           case 'number': {
-            if (val === undefined || val === null || String(val).trim() === '')
-              return `Plugin "${plugin.name}" has a missing or invalid numeric value for option: ${opt.label}`
+            if (val === undefined || val === null || String(val).trim() === '') {
+              errors[plugin.id] =
+                `Plugin "${plugin.name}" has a missing or invalid numeric value for option: ${opt.label}`
+              break
+            }
 
             const parsedNum = Number(val)
-            if (opt.min !== undefined && parsedNum < opt.min)
-              return `Plugin "${plugin.name}" requires a value of at least ${opt.min} for option: ${opt.label}`
-            if (opt.max !== undefined && parsedNum > opt.max)
-              return `Plugin "${plugin.name}" requires a value of at most ${opt.max} for option: ${opt.label}`
+            if (opt.min !== undefined && parsedNum < opt.min) {
+              errors[plugin.id] =
+                `Plugin "${plugin.name}" requires a value of at least ${opt.min} for option: ${opt.label}`
+              break
+            }
+
+            if (opt.max !== undefined && parsedNum > opt.max) {
+              errors[plugin.id] =
+                `Plugin "${plugin.name}" requires a value of at most ${opt.max} for option: ${opt.label}`
+              break
+            }
 
             break
           }
           case 'text': {
-            if (val === undefined || val === null || String(val).trim() === '')
-              return `Plugin "${plugin.name}" is missing required input for option: ${opt.label}`
+            if (val === undefined || val === null || String(val).trim() === '') {
+              errors[plugin.id] =
+                `Plugin "${plugin.name}" is missing required input for option: ${opt.label}`
+              break
+            }
 
             break
           }
@@ -116,7 +131,7 @@ export function usePlugins() {
       }
     }
 
-    return null
+    return errors
   })
 
   // when mounted, load the plugins and init their configs
@@ -139,6 +154,6 @@ export function usePlugins() {
     quietMode,
     categorizedPlugins,
     generatedScript,
-    validationError,
+    validationErrors,
   }
 }

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-defineProps<{ highlightedScriptHtml: string; validationError?: string | null }>()
+defineProps<{ highlightedScriptHtml: string; validationErrors?: Record<string, string> }>()
 </script>
 
 <style scoped>
@@ -27,23 +27,28 @@ defineProps<{ highlightedScriptHtml: string; validationError?: string | null }>(
         class="mockup-code bg-neutral text-neutral-content max-h-[70vh] flex-1 flex flex-col shadow-xl"
       >
         <div class="overflow-y-auto flex-1 pb-4">
-          <div v-if="validationError" class="alert alert-error alert-soft mx-10 mt-5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6 shrink-0 stroke-current"
-              fill="none"
-              viewBox="0 0 24 24"
+          <template v-if="validationErrors">
+            <div
+              v-for="(error, plugin) in validationErrors"
+              :key="plugin"
+              class="alert alert-error alert-soft mx-10 mb-3 mt-2"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <span><strong>Configuration Error:</strong> {{ validationError }}</span>
-          </div>
-          <template v-else>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 shrink-0 stroke-current"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span><strong>Configuration Error:</strong> {{ error }}</span>
+            </div>
+
             <div class="px-6 pt-2 pb-4 select-none opacity-40 font-mono text-sm">
               # --- Script Preamble Ends Here (setup & utility functions) ---
             </div>
