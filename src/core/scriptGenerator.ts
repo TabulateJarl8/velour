@@ -30,8 +30,8 @@ function formatBash(snippet: string): string {
  *
  * @param plugins The full list of plugins
  * @param configs The list of the plugin's configs
- * @param quietMode Whether or not this script should produce output
  * @param validationErrors Any validation errors from the plugin configurations
+ * @param quietMode Whether or not this script should produce output
  * @returns A string containing a bash script for all enabled plugins
  * @see generateFullScript
  */
@@ -83,8 +83,8 @@ export function buildPluginScripts(
  *
  * @param plugins The full list of plugins
  * @param configs The list of the plugin's configs
- * @param quietMode Whether or not this script should produce output
  * @param validationErrors Any validation errors from the plugin configurations
+ * @param quietMode Whether or not this script should produce output
  * @returns The full script as a string
  */
 export function generateFullScript(

@@ -34,15 +34,20 @@ const preventNonNumericInput = (event: KeyboardEvent) => {
 </script>
 
 <template>
-  <label class="label">
-    <span class="label-text font-semibold">{{ opt.label }}</span>
-  </label>
-  <label class="label cursor-pointer justify-start gap-4">
-    <!-- set the width to either the max length, placeholder length, or default to 3 -->
+  <label class="label cursor-pointer gap-3 items-center mt-2 w-full">
+    <div class="flex flex-col flex-1 hover:text-white transition-colors">
+      <span class="label-text font-semibold">{{ opt.label }}</span>
+      <span
+        v-if="opt.description"
+        class="label-text text-xs opacity-70 leading-4 whitespace-normal"
+      >
+        {{ opt.description }}
+      </span>
+    </div>
     <input
       type="number"
       required
-      class="input input-sm validator text-center"
+      class="input input-sm validator text-center shrink-0"
       :style="{ width: `${String(opt.max || opt.placeholder || 999).length + 5}ch` }"
       v-model="model"
       :placeholder="opt['placeholder']"
@@ -52,6 +57,5 @@ const preventNonNumericInput = (event: KeyboardEvent) => {
       @blur="snapMinMax"
       @keydown="preventNonNumericInput"
     />
-    <span class="label-text opacity-80">{{ opt.description }}</span>
   </label>
 </template>
