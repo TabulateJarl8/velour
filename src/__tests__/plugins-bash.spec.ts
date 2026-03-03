@@ -18,8 +18,11 @@ function getPossibleSuboptionVariants(suboption: SubOptionSchema): any[] {
       // every radio option selected once
       return suboption.options.map((opt) => opt.value)
     case 'text':
-      if (suboption.default) return [suboption.default]
-      return ['test_string']
+      // test for invalid input
+      const invalid_input = ['\\', '"']
+
+      if (suboption.default) return [suboption.default, ...invalid_input]
+      return ['test_string', ...invalid_input]
     case 'number':
       const possible: number[] = []
       if (suboption.default !== undefined) possible.push(suboption.default)
