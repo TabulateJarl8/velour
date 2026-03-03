@@ -24,6 +24,43 @@ function formatBash(snippet: string): string {
 }
 
 /**
+ * Generates the bash script block for a single plugin.
+ *
+ * @param plugin The plugin definition
+ * @param config The plugin's config
+ * @param hasError Whether or not the plugin has an error in its config
+ * @param quietMode Whether or not this script should produce output
+ * @returns A string containing the bash script for this specific plugin
+ */
+export function buildSinglePluginScript(
+  plugin: ConcretePluginDef,
+  config: ConcretePluginConfig,
+  hasError: boolean,
+  quietMode: boolean = false,
+): string {
+  let snippet = '# --- [Plugin] ${plugin.name} ---\n'
+
+  const pluginScript = formatBash(plugin.generate(config))
+
+  // show verbose output in non-quiet mode
+  if (!quietMode) {
+    snippet += `color_echo "yellow" "${plugin.preRunMessage}"\n`
+    snippet += pluginScript.trim()
+    if (plugin.postRunMessage) snippet += `\ncolor_echo "green" "${plugin.postRunMessage}"`
+  } else {
+    // dont show output in quiet mode
+    snippet += `{\n${pluginScript}\n}>/dev/null`
+  }
+
+  // if the plugin has errors, comment out that portion of the script
+  if (hasError) {
+    snippet = snippet.replace(/^/gm, '# ')
+  }
+
+  return snippet
+}
+
+/**
  * Generates a single bash block from the enabled plugins and their configs.
  *
  * This does not contain the script preamble or footer.
@@ -51,27 +88,9 @@ export function buildPluginScripts(
     // dependency plugins are not enabled in the UI, so we override it here
     const enabledConfig = configs[plugin.id] || {}
     const config = { ...enabledConfig, enabled: true }
-    let snippet = ''
+    const hasError = plugin.id in validationErrors
 
-    snippet += `# --- [Plugin] ${plugin.name} ---\n`
-
-    const pluginScript = formatBash(plugin.generate(config))
-
-    // show verbose output in non-quiet mode
-    if (!quietMode) {
-      snippet += `color_echo "yellow" "${plugin.preRunMessage}"\n`
-      snippet += pluginScript.trim()
-      if (plugin.postRunMessage) snippet += `\ncolor_echo "green" "${plugin.postRunMessage}"`
-    } else {
-      // dont show output in quiet mode
-      snippet += `{\n${pluginScript}\n}>/dev/null`
-    }
-
-    // if the plugin has errors, comment out that portion of the script
-    if (plugin.id in validationErrors) {
-      snippet = snippet.replace(/^/gm, '# ')
-    }
-
+    const snippet = buildSinglePluginScript(plugin, config, hasError, quietMode)
     pluginSnippets.push(snippet)
   }
 

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PluginLoader } from '@/core/loader'
-import type { SubOptionSchema } from '@/core/types'
+import { buildSinglePluginScript } from '@/core/scriptGenerator'
+import type { ConcretePluginConfig, SubOptionSchema } from '@/core/types'
 import { describe, expect, it } from 'vitest'
 
 /**
@@ -75,8 +76,23 @@ describe('Plugin Bash Validity', async () => {
       const configs = generatePermutations(plugin.options)
 
       it.each(configs)('valid bash with config: %j', (subOptions) => {
-        const config = { enabled: true, ...subOptions }
-        const output = plugin.generate(config)
+        const config = { enabled: true, ...subOptions } as ConcretePluginConfig
+
+        let hasError = false
+        for (const [key, opt] of Object.entries(plugin.options)) {
+          if (opt.validate) {
+            // WARN: this will break if the validate signature changes
+            // TODO: can i fulled type this
+            const validate = opt.validate as (value: any) => true | string | undefined
+            const result = validate(config[key])
+            if (typeof result === 'string') {
+              hasError = true
+              break
+            }
+          }
+        }
+
+        const output = buildSinglePluginScript(plugin, config, hasError, false)
         expect(output).toBeValidBash()
       })
     })
