@@ -12,6 +12,7 @@ const {
   categorizedPlugins,
   generatedScript,
   validationErrors,
+  downloadScript,
 } = usePlugins()
 const { highlightedScriptHtml } = useShiki(generatedScript)
 </script>
@@ -46,10 +47,10 @@ const { highlightedScriptHtml } = useShiki(generatedScript)
       </div>
 
       <!-- page content: show script -->
-      <!-- TODO: download button -->
       <ScriptPreview
         :highlighted-script-html="highlightedScriptHtml"
         :validation-errors="validationErrors"
+        @download="downloadScript"
       />
     </div>
 

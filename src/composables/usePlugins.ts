@@ -1,6 +1,6 @@
 import { resolveEnabledPlugins } from '@/core/dependencyResolver'
 import { PluginLoader } from '@/core/loader'
-import { buildPluginScripts } from '@/core/scriptGenerator'
+import { buildPluginScripts, generateFullScript } from '@/core/scriptGenerator'
 import {
   Categories,
   CategoryHeadingsData,
@@ -10,6 +10,8 @@ import {
   type ConcretePluginDef,
 } from '@/core/types'
 import { computed, onMounted, ref } from 'vue'
+
+const SCRIPT_DOWNLOAD_FILENAME = 'velour_fedora_setup.sh'
 
 export interface PluginGroup {
   heading: CategoryHeadings[keyof CategoryHeadings] | null
@@ -46,6 +48,33 @@ export function usePlugins() {
       quietMode.value,
     )
   })
+
+  const downloadScript = () => {
+    // dont download script is there are errors
+    if (Object.keys(validationErrors.value).length !== 0) return
+
+    const script = generateFullScript(
+      loadedPlugins.value,
+      pluginConfigs.value,
+      validationErrors.value,
+      quietMode.value,
+    )
+
+    // download script
+    const blob = new Blob([script], { type: 'text/x-shellscript' })
+    const url = window.URL.createObjectURL(blob)
+
+    const a = window.document.createElement('a')
+    a.href = url
+    a.style.display = 'none'
+    a.download = SCRIPT_DOWNLOAD_FILENAME
+
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+
+    window.URL.revokeObjectURL(url)
+  }
 
   // plugins in their categories
   const categorizedPlugins = computed<CategoryGroup[]>(() => {
@@ -166,5 +195,6 @@ export function usePlugins() {
     categorizedPlugins,
     generatedScript,
     validationErrors,
+    downloadScript,
   }
 }

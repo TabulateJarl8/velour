@@ -6,6 +6,10 @@ const props = defineProps<{
   validationErrors?: Record<string, string>
 }>()
 
+const emit = defineEmits<{
+  download: []
+}>()
+
 const hasValidationErrors = computed(() => {
   return props.validationErrors && Object.keys(props.validationErrors).length !== 0
 })
@@ -34,7 +38,9 @@ const hasValidationErrors = computed(() => {
           :class="{ tooltip: hasValidationErrors }"
           data-tip="Fix any configuration errors to download script"
         >
-          <button class="btn btn-primary" :disabled="hasValidationErrors">Download Script</button>
+          <button class="btn btn-primary" :disabled="hasValidationErrors" @click="emit('download')">
+            Download Script
+          </button>
         </div>
       </div>
 
