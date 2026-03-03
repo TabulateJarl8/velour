@@ -164,6 +164,7 @@ export function usePlugins() {
             break
           }
           case 'radio':
+          case 'dropdown':
           case 'checkbox': {
             break
           }
