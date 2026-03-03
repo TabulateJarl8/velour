@@ -6,6 +6,8 @@ import ConfigSidebar from './components/ConfigSidebar.vue'
 import { usePlugins } from './composables/usePlugins'
 
 import { version } from '../package.json'
+import ProjectDescription from './components/ProjectDescription.vue'
+import { ref } from 'vue'
 
 const {
   isLoading,
@@ -17,6 +19,12 @@ const {
   downloadScript,
 } = usePlugins()
 const { highlightedScriptHtml } = useShiki(generatedScript)
+
+// https://stackoverflow.com/a/71849133/11591238
+const aboutModal = ref<InstanceType<typeof ProjectDescription> | null>(null)
+const openAboutModal = () => {
+  aboutModal.value?.showModal()
+}
 </script>
 
 <template>
@@ -46,7 +54,8 @@ const { highlightedScriptHtml } = useShiki(generatedScript)
           </label>
         </div>
         <div class="mx-2 flex-1 px-2 text-xl font-bold">Velour v{{ version }}</div>
-        <div>
+        <div class="gap-2 mr-2">
+          <button class="btn btn-ghost btn-sm" @click="openAboutModal">About</button>
           <a
             href="https://github.com/TabulateJarl8/velour"
             target="_blank"
@@ -75,6 +84,8 @@ const { highlightedScriptHtml } = useShiki(generatedScript)
         :validation-errors="validationErrors"
         @download="downloadScript"
       />
+
+      <ProjectDescription ref="aboutModal" />
     </div>
 
     <ConfigSidebar
