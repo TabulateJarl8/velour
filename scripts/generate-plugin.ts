@@ -51,10 +51,10 @@ const nodeProvider: PluginDiscoveryProvider = async () => {
   const dir = path.join(process.cwd(), 'src/plugins')
   const files = await fs.readdir(dir, { recursive: true })
 
-  const mods: Record<string, () => Promise<PluginModule>> = {}
+  const mods: Record<string, PluginModule> = {}
   for (const file of files) {
     if (file.endsWith('.ts')) {
-      mods[file] = () => import(path.join(dir, file))
+      mods[file] = await import(path.join(dir, file))
     }
   }
   return mods
