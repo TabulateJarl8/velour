@@ -38,7 +38,7 @@ export function buildSinglePluginScript(
   hasError: boolean,
   quietMode: boolean = false,
 ): string {
-  let snippet = '# --- [Plugin] ${plugin.name} ---\n'
+  let snippet = `# --- [Plugin] ${plugin.name} ---\n`
 
   const pluginScript = formatBash(plugin.generate(config))
 
