@@ -10,10 +10,14 @@
     "test:unit": "vitest",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
-    "lint": "run-s lint:*",
-    "lint:oxlint": "oxlint . --fix",
-    "lint:eslint": "eslint . --fix --cache",
     "format": "prettier --write --experimental-cli src/",
+    "format:check": "prettier --check --experimental-cli src/",
+    "lint": "run-s lint:*",
+    "lint:oxlint": "oxlint .",
+    "lint:eslint": "eslint . --cache",
+    "fix": "run-s fix:*",
+    "fix:oxlint": "oxlint --fix .",
+    "fix:eslint": "eslint --fix . --cache",
     "gen:plugin": "tsx --tsconfig tsconfig.app.json scripts/generate-plugin.ts"
   },
   "dependencies": {

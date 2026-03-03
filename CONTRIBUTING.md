@@ -48,3 +48,15 @@ pnpm test:unit
 ```sh
 pnpm lint
 ```
+
+#### Automatically Fix Linting Errors
+
+```sh
+pnpm fix
+```
+
+### Formatting code with [Prettier](https://prettier.io/)
+
+```sh
+pnpm format
+```
