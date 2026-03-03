@@ -5,6 +5,8 @@ import ScriptPreview from './components/ScriptPreview.vue'
 import ConfigSidebar from './components/ConfigSidebar.vue'
 import { usePlugins } from './composables/usePlugins'
 
+import { version } from '../package.json'
+
 const {
   isLoading,
   pluginConfigs,
@@ -43,7 +45,7 @@ const { highlightedScriptHtml } = useShiki(generatedScript)
             </svg>
           </label>
         </div>
-        <div class="mx-2 flex-1 px-2 text-xl font-bold">Velour</div>
+        <div class="mx-2 flex-1 px-2 text-xl font-bold">Velour v{{ version }}</div>
       </div>
 
       <!-- page content: show script -->
