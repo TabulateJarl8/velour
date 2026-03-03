@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import type { TextSubOption } from '@/core/types'
+import { computed } from 'vue'
 
 const model = defineModel<string>({ required: true })
-defineProps<{
+const props = defineProps<{
   opt: TextSubOption
 }>()
+
+const validationError = computed(() => {
+  if (!props.opt.validate) return false
+  return typeof props.opt.validate(model.value) === 'string'
+})
 </script>
 
 <template>
@@ -22,6 +28,7 @@ defineProps<{
       type="text"
       required
       class="input input-sm validator"
+      :class="{ 'input-error': validationError }"
       v-model="model"
       :placeholder="opt.placeholder"
     />

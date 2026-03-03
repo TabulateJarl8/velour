@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import type { CheckboxSubOption } from '@/core/types'
+import { computed } from 'vue'
 
 const model = defineModel<boolean>({ required: true })
-defineProps<{
+const props = defineProps<{
   opt: CheckboxSubOption
 }>()
+
+const validationError = computed(() => {
+  if (!props.opt.validate) return false
+  return typeof props.opt.validate(model.value) === 'string'
+})
 </script>
 
 <template>
@@ -14,6 +20,7 @@ defineProps<{
       <span
         v-if="opt.description"
         class="label-text text-xs opacity-70 leading-4 whitespace-normal"
+        :class="{ 'input-error': validationError }"
       >
         {{ opt.description }}
       </span>

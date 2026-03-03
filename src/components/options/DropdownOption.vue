@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import type { DropdownSubOption } from '@/core/types'
+import { computed } from 'vue'
 
 const model = defineModel<string>({ required: true })
-defineProps<{
+const props = defineProps<{
   opt: DropdownSubOption
 }>()
+
+const validationError = computed(() => {
+  if (!props.opt.validate) return false
+  return typeof props.opt.validate(model.value) === 'string'
+})
 </script>
 
 <template>
@@ -19,7 +25,11 @@ defineProps<{
       </span>
     </div>
 
-    <select class="select select-sm select-bordered" v-model="model">
+    <select
+      class="select select-sm select-bordered"
+      :class="{ 'input-error': validationError }"
+      v-model="model"
+    >
       <option disabled value="">Select an option</option>
       <option v-for="choice in opt.options" :key="choice.value" :value="choice.value">
         {{ choice.label }}

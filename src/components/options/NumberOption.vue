@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { NumberSubOption } from '@/core/types'
+import { computed } from 'vue'
 
 // may be a string because of the page converting on invalid input
 const model = defineModel<number | string>({ required: true })
@@ -31,6 +32,13 @@ const preventNonNumericInput = (event: KeyboardEvent) => {
 
   if (!/^[0-9.-]$/.test(event.key)) event.preventDefault()
 }
+
+const validationError = computed(() => {
+  if (!props.opt.validate) return false
+  const parsedNum = Number(model.value)
+  if (Number.isNaN(parsedNum)) return true
+  return typeof props.opt.validate(parsedNum) === 'string'
+})
 </script>
 
 <template>
@@ -48,6 +56,7 @@ const preventNonNumericInput = (event: KeyboardEvent) => {
       type="number"
       required
       class="input input-sm validator text-center shrink-0"
+      :class="{ 'input-error': validationError }"
       :style="{ width: `${String(opt.max || opt.placeholder || 999).length + 5}ch` }"
       v-model="model"
       :placeholder="opt['placeholder']"

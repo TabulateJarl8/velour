@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import type { RadioSubOption } from '@/core/types'
+import { computed } from 'vue'
 
 const model = defineModel<string>({ required: true })
-defineProps<{
+const props = defineProps<{
   opt: RadioSubOption
 }>()
+
+const validationError = computed(() => {
+  if (!props.opt.validate) return false
+  return typeof props.opt.validate(model.value) === 'string'
+})
 </script>
 
 <template>
@@ -25,6 +31,7 @@ defineProps<{
       v-for="choice in opt.options"
       :key="choice.value"
       class="label cursor-pointer justify-start gap-4 hover:text-white transition-colors"
+      :class="{ 'input-error': validationError }"
     >
       <input
         type="radio"
