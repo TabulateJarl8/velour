@@ -8,16 +8,18 @@ export interface SubOptionTypeMap {
   text: string
   /** Radio buttons return the value of a selected option */
   radio: string
+  /** Dropdowns will return the one selected item */
+  dropdown: string
 }
 
 /** Aggregate type representing types that suboptions can be (checkbox, number, etc) */
 type SubOptionType = keyof SubOptionTypeMap
 
-/** Defines what each radio button in a group will consist of */
-export type RadioOptionChoice = {
-  /** The human-readable label of the radio button */
+/** Represents a "selected option" with a label and value. Used in dropdowns, ratio buttons, etc. */
+export type SelectedOption = {
+  /** The human-readable label */
   label: string
-  /** The value passed to the config when this button is selected */
+  /** The value passed to the config when this option is selected */
   value: string
 }
 
@@ -49,7 +51,7 @@ type BaseSubOption<K extends SubOptionType> = {
  */
 export interface RadioSubOption extends BaseSubOption<'radio'> {
   /** List of radio options */
-  options: RadioOptionChoice[]
+  options: SelectedOption[]
   /** Required default value */
   default: string
 }
@@ -96,8 +98,25 @@ export interface TextSubOption extends BaseSubOption<'text'> {
   default?: string
 }
 
+/**
+ * Dropdown list suboption schema definition
+ *
+ * @extends {BaseSubOption<'dropdown'>} Extends the base option fields with a type of dropdown
+ */
+export interface DropdownSubOption extends BaseSubOption<'dropdown'> {
+  /** List of available options */
+  options: SelectedOption[]
+  /** The option that is selected by default */
+  default: string
+}
+
 /** Aggregate type for a generic "suboption" of some type */
-export type SubOptionSchema = CheckboxSubOption | NumberSubOption | TextSubOption | RadioSubOption
+export type SubOptionSchema =
+  | CheckboxSubOption
+  | NumberSubOption
+  | TextSubOption
+  | RadioSubOption
+  | DropdownSubOption
 
 /** Default input values for each defined input type */
 export const SUB_OPTION_DEFAULTS: SubOptionTypeMap = {
@@ -106,4 +125,5 @@ export const SUB_OPTION_DEFAULTS: SubOptionTypeMap = {
   text: '',
   // radios are required to provide a default so this doesn't really matter
   radio: '',
+  dropdown: '',
 }

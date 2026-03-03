@@ -8,6 +8,15 @@ const plugin = createPlugin({
   description: 'Set the system hostname to uniquely identify the machine on the network',
   preRunMessage: 'Setting hostname...',
   options: {
+    select: {
+      type: 'dropdown',
+      label: 'dropdown test',
+      default: '1',
+      options: [
+        { label: 'opt1', value: '1' },
+        { label: 'op2', value: '2' },
+      ],
+    },
     hostname: {
       type: 'text',
       label: 'Enter the new hostname:',

@@ -4,6 +4,7 @@ import CheckboxOption from './options/CheckboxOption.vue'
 import TextOption from './options/TextOption.vue'
 import NumberOption from './options/NumberOption.vue'
 import RadioOption from './options/RadioOption.vue'
+import DropdownOption from './options/DropdownOption.vue'
 
 const model = defineModel<ConcretePluginConfig>({ required: true })
 const componentMap: Record<string, unknown> = {
@@ -11,6 +12,7 @@ const componentMap: Record<string, unknown> = {
   text: TextOption,
   number: NumberOption,
   radio: RadioOption,
+  dropdown: DropdownOption,
 }
 
 defineProps<{

@@ -15,8 +15,9 @@ function getPossibleSuboptionVariants(suboption: SubOptionSchema): any[] {
     case 'checkbox':
       // checkbox is true or false
       return [true, false]
+    case 'dropdown':
     case 'radio':
-      // every radio option selected once
+      // every radio or dropdown option selected once
       return suboption.options.map((opt) => opt.value)
     case 'text':
       // test for invalid input
