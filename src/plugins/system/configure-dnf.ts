@@ -33,13 +33,11 @@ const plugin = createPlugin({
   category: 'System Configuration',
 
   generate: (config) => {
-    let result = `echo "max_parallel_downloads=${config.maxParallelDownloads}" | tee -a /etc/dnf/dnf.conf > /dev/null\n`
+    let result = `echo "max_parallel_downloads=${config.maxParallelDownloads}" | tee -a /etc/dnf/dnf.conf\n`
 
-    if (config.fastestMirror)
-      result += 'echo "fastestmirror=True" | tee -a /etc/dnf/dnf.conf > /dev/null\n'
+    if (config.fastestMirror) result += 'echo "fastestmirror=True" | tee -a /etc/dnf/dnf.conf\n'
 
-    if (config.defaultYes)
-      result += 'echo "defaultyes=True" | tee -a /etc/dnf/dnf.conf > /dev/null\n'
+    if (config.defaultYes) result += 'echo "defaultyes=True" | tee -a /etc/dnf/dnf.conf\n'
 
     return result
   },
