@@ -33,6 +33,13 @@ type BaseSubOption<K extends SubOptionType> = {
   label: string
   /** An optional description for the suboption */
   description?: string
+  /**
+   * Optional input validation function.
+   *
+   * @param value The user's inputted value
+   * @returns True if valid, an error message if not
+   */
+  validate?: (value: SubOptionTypeMap[K]) => true | string | undefined
 }
 
 /**

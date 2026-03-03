@@ -91,6 +91,17 @@ export function usePlugins() {
       for (const [key, opt] of Object.entries(plugin.options)) {
         const val = config[key]
 
+        if (opt.validate) {
+          // any is safe here because val is derived from opt
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const validate = opt.validate as (value: any) => true | string | undefined
+          const isValid = validate(val)
+          if (typeof isValid === 'string') {
+            errors[plugin.id] = `Plugin "${plugin.name}": ${isValid}`
+            continue
+          }
+        }
+
         switch (opt.type) {
           case 'number': {
             if (val === undefined || val === null || String(val).trim() === '') {
