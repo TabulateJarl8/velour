@@ -2,8 +2,10 @@
 name: Deploy site to Pages
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
+  workflow_run:
+    workflows: ['Lint and Test']
+    types:
+      - completed
     branches: ['master']
 
   # Allows you to run this workflow manually from the Actions tab
@@ -29,6 +31,7 @@ defaults:
 jobs:
   # Build job
   build:
+    # if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     # temporarily disable while private
     if: ${{ false }}
     runs-on: ubuntu-latest
