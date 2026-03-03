@@ -1,5 +1,14 @@
 <script lang="ts" setup>
-defineProps<{ highlightedScriptHtml: string; validationErrors?: Record<string, string> }>()
+import { computed } from 'vue'
+
+const props = defineProps<{
+  highlightedScriptHtml: string
+  validationErrors?: Record<string, string>
+}>()
+
+const hasValidationErrors = computed(() => {
+  return props.validationErrors && Object.keys(props.validationErrors).length !== 0
+})
 </script>
 
 <style scoped>
@@ -20,6 +29,12 @@ defineProps<{ highlightedScriptHtml: string; validationErrors?: Record<string, s
         <div>
           <h2 class="text-base-content text-3xl font-extrabold">Generated Script</h2>
           <p class="text-base-content/70 mt-1">Copy or download your setup script below:</p>
+        </div>
+        <div
+          :class="{ tooltip: hasValidationErrors }"
+          data-tip="Fix any configuration errors to download script"
+        >
+          <button class="btn btn-primary" :disabled="hasValidationErrors">Download Script</button>
         </div>
       </div>
 
