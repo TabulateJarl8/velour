@@ -44,7 +44,7 @@ export function buildSinglePluginScript(
 
   // show verbose output in non-quiet mode
   if (!quietMode) {
-    snippet += `color_echo "yellow" "${plugin.preRunMessage}"\n`
+    snippet += `color_echo "yellow" "\\n${plugin.preRunMessage}"\ncolor_echo "yellow" "${'='.repeat(plugin.preRunMessage.length)}\\n"\n`
     snippet += pluginScript.trim()
     if (plugin.postRunMessage) snippet += `\ncolor_echo "green" "${plugin.postRunMessage}"`
   } else {

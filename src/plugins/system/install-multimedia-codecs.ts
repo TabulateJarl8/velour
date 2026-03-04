@@ -14,7 +14,7 @@ const plugin = createPlugin({
     return `
       dnf swap ffmpeg-free ffmpeg --allowerasing -y
       dnf update @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin -y
-      dnf update @sound-and-video -y
+      dnf group install -y sound-and-video
     `
   },
 })

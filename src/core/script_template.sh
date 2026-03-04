@@ -113,6 +113,7 @@ backup_file() {
     fi
 }
 
+clear
 # banner generated from the Pagga figlet font (this is exactly 80 chars wide)
 echo ""
 echo "╔══════════════════════════════════════════════════════════════════════════════╗"
@@ -133,6 +134,9 @@ echo ""
 color_echo "yellow" "Don't run this script if you didn't build it yourself or don't know what it does."
 echo ""
 read -r -p "Press Enter to continue or CTRL+C to cancel..."
+
+color_echo "blue" "Performing system upgrade... This may take a while..."
+dnf upgrade -y
 
 # {{script_body}}
 
