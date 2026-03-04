@@ -20,7 +20,7 @@ const plugin = createPlugin({
       label: 'Choose Discord installation type:',
     },
   },
-  dependencies: ['remove-fedora-flatpak-repos'],
+  dependencies: ['remove-fedora-flatpak-repos', 'enable-rpmfusion'],
   generate: (config) => {
     if (config.source === 'flatpak') {
       return 'flatpak install -y flathub com.discordapp.Discord'

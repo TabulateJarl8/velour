@@ -27,8 +27,6 @@ const plugin = createPlugin({
     }
 
     return `
-    rpm --import https://dl.google.com/linux/linux_signing_key.pub
-
     if command -v dnf4 &>/dev/null; then
       dnf4 config-manager --set-enabled google-chrome
     else
