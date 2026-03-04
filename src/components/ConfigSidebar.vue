@@ -3,6 +3,7 @@ import type { CategoryGroup } from '@/composables/usePlugins'
 import PluginOptionsCard from './PluginOptionsCard.vue'
 import type { ConcretePluginConfig } from '@/core/types'
 import { computed, ref } from 'vue'
+import { PluginLoader } from '@/core/loader'
 
 const props = defineProps<{ isLoading: boolean; categorizedPlugins: CategoryGroup[] }>()
 
@@ -13,7 +14,7 @@ const pluginConfigs = defineModel<Record<string, ConcretePluginConfig>>('pluginC
 
 const query = ref('')
 
-// TODO: should this be in a composable?
+// filter the plugins for the search query
 const filteredSearchPlugins = computed(() => {
   const normalizedQuery = query.value.toLowerCase().trim()
   if (!normalizedQuery) return props.categorizedPlugins
@@ -42,6 +43,18 @@ const filteredSearchPlugins = computed(() => {
 })
 
 const isSearching = computed(() => query.value.trim().length > 0)
+
+const clearOptions = () => {
+  if (window.confirm('This will reset all of the current configuration. Are you sure?')) {
+    query.value = ''
+    quietMode.value = false
+    for (const cat of props.categorizedPlugins)
+      for (const group of cat.pluginGroups)
+        for (const plugin of group.plugins)
+          if (pluginConfigs.value[plugin.id])
+            pluginConfigs.value[plugin.id] = PluginLoader.initializePluginConfig(plugin)
+  }
+}
 </script>
 
 <template>
@@ -111,7 +124,7 @@ const isSearching = computed(() => query.value.trim().length > 0)
             </div>
           </div>
 
-          <div class="mb-6">
+          <div class="mb-6 flex flex-1 flex-row justify-between gap-3">
             <label class="input input-bordered flex items-center gap-2">
               <svg
                 class="h-[1em] opacity-50"
@@ -134,6 +147,7 @@ const isSearching = computed(() => query.value.trim().length > 0)
               <!-- <kbd class="kbd kbd-sm">Ctrl</kbd>
               <kbd class="kbd kbd-sm">K</kbd> -->
             </label>
+            <button class="btn btn-soft btn-error" @click="clearOptions">Clear Options</button>
           </div>
 
           <div class="divider"></div>
