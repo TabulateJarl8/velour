@@ -17,7 +17,7 @@ const validationError = computed(() => {
   <label
     class="label cursor-pointer gap-3 mt-2 w-full flex flex-col sm:flex-row items-start sm:items-center"
   >
-    <div class="flex flex-col flex-1 hover:text-white transition-colors">
+    <div class="flex flex-col w-full sm:w-[50%] shrink-0 hover:text-white transition-colors">
       <span class="label-text font-semibold whitespace-normal">{{ opt.label }}</span>
       <span
         v-if="opt.description"

@@ -42,9 +42,7 @@ const validationError = computed(() => {
 </script>
 
 <template>
-  <label
-    class="label cursor-pointer gap-3 mt-2 w-full flex flex-col sm:flex-row items-start sm:items-center"
-  >
+  <label class="label cursor-pointer gap-3 items-center mt-2 w-full">
     <div class="flex flex-col flex-1 hover:text-white transition-colors">
       <span class="label-text font-semibold whitespace-normal">{{ opt.label }}</span>
       <span
