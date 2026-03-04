@@ -29,10 +29,10 @@ const hasValidationErrors = computed(() => {
 <template>
   <main class="flex flex-1 flex-col p-6 lg:p-12">
     <div class="mx-auto flex h-full w-full max-w-6xl flex-col gap-6">
-      <div class="flex items-center justify-between">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 class="text-base-content text-3xl font-extrabold">Generated Script</h2>
-          <p class="text-base-content/70 mt-1">Copy or download your setup script below:</p>
+          <p class="text-base-content/70 mt-1">View your setup script below:</p>
         </div>
         <div
           :class="{ tooltip: hasValidationErrors }"
