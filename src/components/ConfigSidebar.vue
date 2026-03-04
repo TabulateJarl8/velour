@@ -124,7 +124,10 @@ const clearOptions = () => {
             </div>
           </div>
 
-          <div class="mb-6 flex flex-1 flex-row justify-between gap-3">
+          <!-- TODO: does this look good -->
+          <div
+            class="flex flex-1 flex-row justify-between gap-3 sticky -top-4 z-10 bg-base-100 -mx-4 p-4"
+          >
             <label class="input input-bordered flex items-center gap-2">
               <svg
                 class="h-[1em] opacity-50"
