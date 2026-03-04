@@ -8,6 +8,7 @@ import { usePlugins } from './composables/usePlugins'
 import { version } from '../package.json'
 import ProjectDescription from './components/ProjectDescription.vue'
 import { ref } from 'vue'
+import { logger } from './core/logger'
 
 const {
   isLoading,
@@ -17,8 +18,26 @@ const {
   generatedScript,
   validationErrors,
   downloadScript,
+  generatePermalink,
 } = usePlugins()
 const { highlightedScriptHtml } = useShiki(generatedScript)
+
+const showCopySuccess = ref(false)
+
+// copy permalink to clipboard
+const copyPermalink = async () => {
+  try {
+    const url = await generatePermalink()
+    await navigator.clipboard.writeText(url)
+
+    showCopySuccess.value = true
+    setTimeout(() => {
+      showCopySuccess.value = false
+    }, 3000)
+  } catch (e) {
+    logger.error('Could not copy permalink: ', e)
+  }
+}
 
 // https://stackoverflow.com/a/71849133/11591238
 const aboutModal = ref<InstanceType<typeof ProjectDescription> | null>(null)
@@ -88,7 +107,10 @@ const openAboutModal = () => {
       <ScriptPreview
         :highlighted-script-html="highlightedScriptHtml"
         :validation-errors="validationErrors"
+        :is-loading="isLoading"
+        :show-copy-success="showCopySuccess"
         @download="downloadScript"
+        @copy-permalink="copyPermalink"
       />
 
       <ProjectDescription ref="aboutModal" />

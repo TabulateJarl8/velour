@@ -10,7 +10,7 @@ import {
   type ConcretePluginConfig,
   type ConcretePluginDef,
 } from '@/core/types'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 const SCRIPT_DOWNLOAD_FILENAME = 'velour_fedora_setup.sh'
 
@@ -176,6 +176,38 @@ export function usePlugins() {
     return errors
   })
 
+  // config storing in the URL fragment
+  const generatePermalink = async (): Promise<string> => {
+    if (isLoading.value) return window.location.href
+
+    // get a map of enabled configs
+    const activeConfigs: Record<string, ConcretePluginConfig> = {}
+    for (const [id, config] of Object.entries(pluginConfigs.value)) {
+      if (config.enabled) activeConfigs[id] = config
+    }
+
+    const saveState = { configs: activeConfigs, quietMode: quietMode.value }
+
+    // serialize and set URL fragment
+    const json = JSON.stringify(saveState)
+
+    // compress
+    const stream = new Blob([json]).stream()
+    const compressed = stream.pipeThrough(new CompressionStream('deflate-raw'))
+    const blob = await new Response(compressed).blob()
+    const arrayBuffer = await blob.arrayBuffer()
+
+    // encode
+    const byteArray = new Uint8Array(arrayBuffer)
+    const base64 = btoa(String.fromCharCode(...byteArray))
+    const serialized = encodeURIComponent(base64)
+
+    // set the fragment and return
+    const url = new URL(window.location.href)
+    url.hash = serialized
+    return url.toString()
+  }
+
   // when mounted, load the plugins and init their configs
   onMounted(async () => {
     await loader.loadPlugins()
@@ -216,39 +248,6 @@ export function usePlugins() {
 
     pluginConfigs.value = initConfigs
     isLoading.value = false
-
-    // automatic config storing in the URL fragment
-    watch(
-      [pluginConfigs, quietMode],
-      async ([newConfigs, newQuietMode]) => {
-        if (isLoading.value) return
-
-        // get a map of enabled configs
-        const activeConfigs: Record<string, ConcretePluginConfig> = {}
-        for (const [id, config] of Object.entries(newConfigs)) {
-          if (config.enabled) activeConfigs[id] = config
-        }
-
-        const saveState = { configs: activeConfigs, quietMode: newQuietMode }
-
-        // serialize and set URL fragment
-        const json = JSON.stringify(saveState)
-
-        // compress
-        const stream = new Blob([json]).stream()
-        const compressed = stream.pipeThrough(new CompressionStream('deflate-raw'))
-        const blob = await new Response(compressed).blob()
-        blob.arrayBuffer().then((arrayBuffer) => {
-          const byteArray = new Uint8Array(arrayBuffer)
-          const base64 = btoa(String.fromCharCode(...byteArray))
-          const serialized = encodeURIComponent(base64)
-
-          // set the fragment
-          window.history.replaceState(null, '', `#${serialized}`)
-        })
-      },
-      { deep: true },
-    )
   })
 
   return {
@@ -259,5 +258,6 @@ export function usePlugins() {
     generatedScript,
     validationErrors,
     downloadScript,
+    generatePermalink,
   }
 }

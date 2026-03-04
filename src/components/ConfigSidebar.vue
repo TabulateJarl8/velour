@@ -91,7 +91,6 @@ const clearOptions = () => {
       </header>
 
       <div class="flex-1 overflow-y-auto p-4 overflow-x-hidden">
-        <!-- TODO: would this look better as a daisyui skeleton -->
         <div v-if="isLoading" class="flex h-48 flex-col items-center justify-center gap-4">
           <span class="loading loading-ring loading-lg text-primary"></span>
           <span class="text-base-content/70">Loading plugins...</span>
