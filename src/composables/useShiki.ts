@@ -21,7 +21,7 @@ export function useShiki(bashScript: Ref<string>) {
       })
     } else {
       // fallback if highlighter isnt initialized for some reason
-      highlightedScriptHtml.value = `<pre><code>${bashScript.value}</code></pre>`
+      highlightedScriptHtml.value = `<pre class="shiki"><code>${bashScript.value}</code></pre>`
     }
   }
 
@@ -34,6 +34,9 @@ export function useShiki(bashScript: Ref<string>) {
       // engine: createOnigurumaEngine(import('shiki/wasm')),
       engine: createJavaScriptRegexEngine(),
     })
+
+    // highlight when the page is initially loaded (for if a fragment is injected)
+    highlight()
   })
 
   watch(
