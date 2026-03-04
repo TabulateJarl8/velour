@@ -53,7 +53,13 @@ const openAboutModal = () => {
             </svg>
           </label>
         </div>
-        <div class="mx-2 flex-1 px-2 text-xl font-bold">Velour v{{ version }}</div>
+        <div class="mx-2 flex-1 px-2 flex flex-col justify-center">
+          <div class="text-xl font-bold leading-tight">Velour</div>
+          <div class="text-[10px] sm:text-xs tracking-wider opacity-60 leading-tight">
+            v{{ version }}
+          </div>
+        </div>
+
         <div class="gap-2 mr-2">
           <button class="btn btn-ghost btn-sm" @click="openAboutModal">About</button>
           <a
