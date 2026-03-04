@@ -1,5 +1,6 @@
 import { resolveEnabledPlugins } from '@/core/dependencyResolver'
 import { PluginLoader } from '@/core/loader'
+import { logger } from '@/core/logger'
 import { buildPluginScripts, generateFullScript } from '@/core/scriptGenerator'
 import {
   Categories,
@@ -9,7 +10,7 @@ import {
   type ConcretePluginConfig,
   type ConcretePluginDef,
 } from '@/core/types'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 
 const SCRIPT_DOWNLOAD_FILENAME = 'velour_fedora_setup.sh'
 
@@ -185,8 +186,69 @@ export function usePlugins() {
       initConfigs[plugin.id] = PluginLoader.initializePluginConfig(plugin)
     }
 
+    // try and decode the URL fragment and restore the user's config
+    const fragment = window.location.hash.slice(1)
+    if (fragment) {
+      try {
+        const binary = atob(decodeURIComponent(fragment))
+        const byteArray = new Uint8Array(binary.length)
+
+        for (let i = 0; i < binary.length; i++) byteArray[i] = binary.charCodeAt(i)
+
+        // decompress and parse
+        const stream = new Blob([byteArray]).stream()
+        const decompressed = stream.pipeThrough(new DecompressionStream('deflate-raw'))
+        const data = JSON.parse(await new Response(decompressed).text())
+
+        // restore quiet mode setting
+        if (typeof data.quietMode === 'boolean') quietMode.value = data.quietMode
+
+        // restore plugin configs
+        if (data.configs) {
+          for (const [id, config] of Object.entries(data.configs)) {
+            if (initConfigs[id]) initConfigs[id] = { ...initConfigs[id], ...(config as object) }
+          }
+        }
+      } catch (e) {
+        logger.error('Failed to decompress or parse fragment data', e)
+      }
+    }
+
     pluginConfigs.value = initConfigs
     isLoading.value = false
+
+    // automatic config storing in the URL fragment
+    watch(
+      [pluginConfigs, quietMode],
+      async ([newConfigs, newQuietMode]) => {
+        if (isLoading.value) return
+
+        // get a map of enabled configs
+        const activeConfigs: Record<string, ConcretePluginConfig> = {}
+        for (const [id, config] of Object.entries(newConfigs)) {
+          if (config.enabled) activeConfigs[id] = config
+        }
+
+        const saveState = { configs: activeConfigs, quietMode: newQuietMode }
+
+        // serialize and set URL fragment
+        const json = JSON.stringify(saveState)
+
+        // compress
+        const stream = new Blob([json]).stream()
+        const compressed = stream.pipeThrough(new CompressionStream('deflate-raw'))
+        const blob = await new Response(compressed).blob()
+        blob.arrayBuffer().then((arrayBuffer) => {
+          const byteArray = new Uint8Array(arrayBuffer)
+          const base64 = btoa(String.fromCharCode(...byteArray))
+          const serialized = encodeURIComponent(base64)
+
+          // set the fragment
+          window.history.replaceState(null, '', `#${serialized}`)
+        })
+      },
+      { deep: true },
+    )
   })
 
   return {
