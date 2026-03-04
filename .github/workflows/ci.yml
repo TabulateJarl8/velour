@@ -68,6 +68,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Cache Shellcheck
+        uses: actions/cache@v5
+        with:
+          path: node_modules/shellcheck/bin/
+          key: shellcheck-${{ runner.os }}-${{ hashFiles('pnpm.lock.yaml') }}
+
       - name: Run Tests
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -76,6 +82,11 @@ jobs:
   build:
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: [lint, test]
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
