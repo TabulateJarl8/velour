@@ -72,7 +72,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: node_modules/shellcheck/bin/
-          key: shellcheck-${{ runner.os }}-${{ hashFiles('pnpm.lock.yaml') }}
+          key: shellcheck-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Run Tests
         env:
