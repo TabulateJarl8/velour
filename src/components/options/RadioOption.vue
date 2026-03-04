@@ -16,7 +16,7 @@ const validationError = computed(() => {
 <template>
   <label class="label cursor-pointer gap-3 items-center mt-2 w-full">
     <div class="flex flex-col flex-1">
-      <span class="label-text font-semibold">{{ opt.label }}</span>
+      <span class="label-text font-semibold whitespace-normal">{{ opt.label }}</span>
       <span
         v-if="opt.description"
         class="label-text text-xs opacity-70 leading-4 whitespace-normal"
@@ -30,12 +30,12 @@ const validationError = computed(() => {
     <label
       v-for="choice in opt.options"
       :key="choice.value"
-      class="label cursor-pointer justify-start gap-4 hover:text-white transition-colors"
-      :class="{ 'input-error': validationError }"
+      class="label cursor-pointer justify-start gap-4 hover:text-white transition-colors whitespace-normal"
     >
       <input
         type="radio"
         class="radio radio-sm radio-secondary"
+        :class="{ 'radio-error': validationError }"
         v-model="model"
         :value="choice.value"
       />
