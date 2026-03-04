@@ -48,11 +48,11 @@ const hasValidationErrors = computed(() => {
         class="mockup-code bg-neutral text-neutral-content max-h-[70vh] flex-1 flex flex-col shadow-xl"
       >
         <div class="overflow-y-auto flex-1 pb-4">
-          <template v-if="validationErrors">
+          <div v-if="hasValidationErrors" class="sticky left-0">
             <div
               v-for="(error, plugin) in validationErrors"
               :key="plugin"
-              class="alert alert-error alert-soft mx-10 mb-3 mt-2"
+              class="alert alert-error alert-soft mx-3 sm:mx-10 mb-3 mt-2 shadow-lg"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -69,17 +69,17 @@ const hasValidationErrors = computed(() => {
               </svg>
               <span><strong>Configuration Error:</strong> {{ error }}</span>
             </div>
+          </div>
 
-            <div class="px-6 pt-2 pb-4 select-none opacity-40 font-mono text-sm">
-              # --- Script Preamble Ends Here (setup & utility functions) ---
-            </div>
+          <div class="px-6 pt-2 pb-4 select-none opacity-40 font-mono text-sm text-nowrap">
+            # --- Script Preamble Ends Here (setup & utility functions) ---
+          </div>
 
-            <div v-html="highlightedScriptHtml" class="px-6 text-sm"></div>
+          <div v-html="highlightedScriptHtml" class="px-6 text-sm"></div>
 
-            <div class="px-6 pt-4 pb-2 select-none opacity-40 font-mono text-sm">
-              # --- Script Footer Begins Here (cleanup) ---
-            </div>
-          </template>
+          <div class="px-6 pt-4 pb-2 select-none opacity-40 font-mono text-sm text-nowrap">
+            # --- Script Footer Begins Here (cleanup) ---
+          </div>
         </div>
       </div>
     </div>
