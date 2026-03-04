@@ -113,6 +113,11 @@ backup_file() {
     fi
 }
 
+# always unmask packagekit if the program exits for any reason
+unmask_packagekit() {
+    systemctl unmask packagekit || true
+}
+
 clear
 # banner generated from the Pagga figlet font (this is exactly 80 chars wide)
 echo ""
@@ -138,6 +143,7 @@ read -r -p "Press Enter to continue or CTRL+C to cancel..."
 color_echo "blue" "Disabling PackageKit temporarily to prevent RPM lock collisions..."
 systemctl stop packagekit || true
 systemctl mask packagekit || true
+trap unmask_packagekit EXIT
 
 color_echo "blue" "Performing system upgrade... This may take a while..."
 dnf upgrade -y
@@ -146,8 +152,6 @@ dnf upgrade -y
 
 # Before finishing, cd back to the directory where this script was called
 cd "$INITIAL_DIR"
-
-systemctl unmask packagekit || true
 
 # Finish
 echo "";
