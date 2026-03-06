@@ -87,10 +87,35 @@ export function buildPluginScripts(
   for (const plugin of sortedPlugins) {
     // dependency plugins are not enabled in the UI, so we override it here
     const enabledConfig = configs[plugin.id] || {}
-    const config = { ...enabledConfig, enabled: true }
+    const config = { ...enabledConfig, enabled: true } as Record<string, unknown>
     const hasError = plugin.id in validationErrors
 
-    const snippet = buildSinglePluginScript(plugin, config, hasError, quietMode)
+    // override toString for Number to fix scientific notation issues. see #26
+    for (const [key, schema] of Object.entries(plugin.options)) {
+      if (schema.type === 'number' && typeof config[key] === 'number') {
+        const val = config[key]
+        const num = new Number(val)
+
+        num.toString = function () {
+          // https://stackoverflow.com/a/74537044/11591238
+          // we cant use BigInt since we need decimals
+          return val.toLocaleString('fullwide', {
+            useGrouping: false,
+            maximumFractionDigits: 20,
+          })
+        }
+
+        // override with our custom number
+        config[key] = num
+      }
+    }
+
+    const snippet = buildSinglePluginScript(
+      plugin,
+      config as ConcretePluginConfig,
+      hasError,
+      quietMode,
+    )
     pluginSnippets.push(snippet)
   }
 
