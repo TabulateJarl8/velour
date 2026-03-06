@@ -52,6 +52,7 @@ const validationError = computed(() => {
         {{ opt.description }}
       </span>
     </div>
+    <!-- note that numbers are limited to MIN and MAX SAFE_INTEGER values -->
     <input
       type="number"
       required
@@ -60,8 +61,8 @@ const validationError = computed(() => {
       :style="{ width: `${String(opt.max || opt.placeholder || 999).length + 5}ch` }"
       v-model="model"
       :placeholder="opt['placeholder']"
-      :min="opt['min']"
-      :max="opt['max']"
+      :min="Math.max(opt['min'] ?? Number.MIN_SAFE_INTEGER, Number.MIN_SAFE_INTEGER)"
+      :max="Math.min(opt['max'] ?? Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER)"
       :step="opt['step']"
       @blur="snapMinMax"
       @keydown="preventNonNumericInput"
