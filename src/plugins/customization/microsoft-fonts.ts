@@ -33,7 +33,7 @@ const plugin = createPlugin({
     if (config.installType === 'core') {
       return `
         dnf install -y curl cabextract xorg-x11-font-utils fontconfig
-        rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
+        rpm -i --nodigest https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
       `
     } else if (config.installType === 'windows') {
       return `
