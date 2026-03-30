@@ -11,6 +11,9 @@ export default mergeConfig(
       root: fileURLToPath(new URL('./', import.meta.url)),
       setupFiles: ['./tests/vitest.setup.ts'],
       globalSetup: ['./tests/vitest.global.ts'],
+      coverage: {
+        exclude: ['tests/**', '**/*.sh'],
+      },
     },
   }),
 )
