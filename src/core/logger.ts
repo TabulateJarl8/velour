@@ -1,6 +1,6 @@
 type LogLevel = 'info' | 'success' | 'warning' | 'error'
 
-const IsBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined'
+const IsBrowser = () => typeof window !== 'undefined' && typeof window.document !== 'undefined'
 
 const ANSI = {
   grey: '\x1b[1;30m',
@@ -40,7 +40,7 @@ function log(level: LogLevel, msg: string, args: unknown[]) {
   const now = new Date().toISOString()
   const config = LogLevelMap[level]
 
-  if (IsBrowser) {
+  if (IsBrowser()) {
     const format = `%c${now} %c[Velour] %c${config.label}`
     console.log(format, CSS.grey, CSS.cyan, CSS[config.color], msg, ...args)
   } else {
