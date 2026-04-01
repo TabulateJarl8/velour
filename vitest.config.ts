@@ -14,6 +14,7 @@ export default mergeConfig(
       coverage: {
         exclude: ['tests/**', '**/*.sh'],
       },
+      silent: 'passed-only',
     },
   }),
 )
