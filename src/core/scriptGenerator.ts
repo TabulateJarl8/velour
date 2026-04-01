@@ -86,7 +86,7 @@ export function buildPluginScripts(
 
   for (const plugin of sortedPlugins) {
     // dependency plugins are not enabled in the UI, so we override it here
-    const enabledConfig = configs[plugin.id] || {}
+    const enabledConfig = configs[plugin.id]
     const config = { ...enabledConfig, enabled: true } as Record<string, unknown>
     const hasError = plugin.id in validationErrors
 
