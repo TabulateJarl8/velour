@@ -122,9 +122,8 @@ export function usePlugins() {
         const val = config[key]
 
         if (opt.validate) {
-          // any is safe here because val is derived from opt
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const validate = opt.validate as (value: any) => true | string | undefined
+          // unknown is safe here because val is derived from opt
+          const validate = opt.validate as (value: unknown) => true | string | undefined
           const isValid = validate(val)
           if (typeof isValid === 'string') {
             errors[plugin.id] = `Plugin "${plugin.name}": ${isValid}`
