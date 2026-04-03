@@ -14,7 +14,7 @@ export function createMockPlugin(
   return {
     id,
     name: 'mock plugin',
-    description: 'mock plugin',
+    description: 'mock description',
     preRunMessage: 'Prerun...',
     category: 'System Configuration',
     options: {},
