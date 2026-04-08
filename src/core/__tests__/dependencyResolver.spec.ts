@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { ConcretePluginDef } from '../types'
 import { createMockPlugin } from '../../../tests/utils'
 import { resolveEnabledPlugins, sortPlugins } from '../dependencyResolver'
+import { logger } from '../logger'
 
 describe('dependencyResolver', () => {
   describe('resolveEnabledPlugins', () => {
@@ -20,6 +21,7 @@ describe('dependencyResolver', () => {
     })
 
     it('resolves circular dependencies', () => {
+      const spy = vi.spyOn(logger, 'warning').mockImplementation(() => {})
       const plugins: ConcretePluginDef[] = [
         createMockPlugin('mock-plugin', { dependencies: ['mock-dependency' as never] }),
         createMockPlugin('mock-dependency', { dependencies: ['mock-plugin' as never] }),
@@ -31,6 +33,8 @@ describe('dependencyResolver', () => {
       expect(enabledPlugins).toContain('mock-plugin')
       expect(enabledPlugins).toContain('mock-dependency')
       expect(enabledPlugins.size).toBe(2)
+
+      spy.mockRestore()
     })
 
     it('resolves with no dependencies', () => {
@@ -119,6 +123,7 @@ describe('dependencyResolver', () => {
     })
 
     it('works with circular dependencies', () => {
+      const spy = vi.spyOn(logger, 'warning').mockImplementation(() => {})
       const plugins: ConcretePluginDef[] = [
         createMockPlugin('a', { dependencies: ['b' as never] }),
         createMockPlugin('b', { dependencies: ['c' as never] }),
@@ -132,6 +137,8 @@ describe('dependencyResolver', () => {
       expect(sorted[0]!.id).toBe('c')
       expect(sorted[1]!.id).toBe('b')
       expect(sorted[2]!.id).toBe('a')
+
+      spy.mockRestore()
     })
 
     it('keeps the order with no dependencies', () => {

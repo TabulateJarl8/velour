@@ -85,6 +85,9 @@ describe('NumberOption', () => {
   })
 
   it('doesnt emit with bad input on blur', async () => {
+    // make vue be quiet
+    const spy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
     for (const bad of [undefined, null, '', 'bad']) {
       const wrapper = mount(NumberOption, {
         props: { modelValue: bad as unknown as number, opt: baseOptions },
@@ -95,6 +98,8 @@ describe('NumberOption', () => {
       const event = wrapper.emitted('update:modelValue')
       expect(event).toBeUndefined()
     }
+
+    spy.mockRestore()
   })
 
   it('doesnt snap on blur with no min or max', async () => {
