@@ -100,25 +100,29 @@ const clearOptions = () => {
           <div class="card bg-base-200 mb-6 shadow-sm">
             <div class="card-body">
               <h3 class="card-title text-sm font-bold opacity-70">Script Output Mode</h3>
-              <div class="flex flex-col gap-2 mt-2">
-                <label class="label cursor-pointer justify-start gap-4">
-                  <input
-                    type="radio"
-                    class="radio radio-primary"
-                    :checked="!quietMode"
-                    @change="quietMode = false"
-                  />
-                  <span class="label-text font-medium">Verbose</span>
-                </label>
-                <label class="label cursor-pointer justify-start gap-4">
-                  <input
-                    type="radio"
-                    class="radio radio-primary"
-                    :checked="quietMode"
-                    @change="quietMode = true"
-                  />
-                  <span class="label-text font-medium">Quiet</span>
-                </label>
+              <div class="join bg-base-300/50 p-1 rounded-box w-full mt-2">
+                <input
+                  class="join-item btn btn-sm flex-1 border-none shadow-none font-medium"
+                  :class="{
+                    'bg-base-100 shadow-sm text-base-content': !quietMode,
+                    'bg-transparent text-base-content/60 hover:bg-base-300': quietMode,
+                  }"
+                  type="radio"
+                  aria-label="Verbose"
+                  :checked="!quietMode"
+                  @change="quietMode = false"
+                />
+                <input
+                  class="join-item btn btn-sm flex-1 border-none shadow-none font-medium"
+                  :class="{
+                    'bg-base-100 shadow-sm text-base-content': quietMode,
+                    'bg-transparent text-base-content/60 hover:bg-base-300': !quietMode,
+                  }"
+                  type="radio"
+                  aria-label="Quiet"
+                  :checked="quietMode"
+                  @change="quietMode = true"
+                />
               </div>
             </div>
           </div>
