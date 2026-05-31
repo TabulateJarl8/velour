@@ -25,10 +25,10 @@
     "@shikijs/langs": "^4.1.0",
     "@shikijs/themes": "^4.1.0",
     "shiki": "^4.1.0",
-    "vue": "^3.5.34"
+    "vue": "^3.5.35"
   },
   "devDependencies": {
-    "@inquirer/prompts": "^8.5.0",
+    "@inquirer/prompts": "^8.5.1",
     "@tailwindcss/vite": "^4.3.0",
     "@tsconfig/node24": "^24.0.4",
     "@types/jsdom": "^28.0.3",
@@ -40,34 +40,29 @@
     "@vue/test-utils": "^2.4.10",
     "@vue/tsconfig": "^0.9.1",
     "autoprefixer": "^10.5.0",
-    "commander": "^14.0.3",
+    "commander": "^15.0.0",
     "daisyui": "^5.5.20",
-    "eslint": "^10.4.0",
+    "eslint": "^10.4.1",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-jsdoc": "^62.9.0",
-    "eslint-plugin-oxlint": "~1.57.0",
-    "eslint-plugin-vue": "~10.8.0",
+    "eslint-plugin-jsdoc": "^63.0.0",
+    "eslint-plugin-oxlint": "~1.67.0",
+    "eslint-plugin-vue": "~10.9.1",
     "jiti": "^2.7.0",
     "jsdom": "^29.1.1",
-    "npm-run-all2": "^8.0.4",
-    "oxlint": "~1.57.0",
-    "prettier": "3.8.1",
-    "prettier-plugin-jsdoc": "^1.8.0",
+    "npm-run-all2": "^9.0.1",
+    "oxlint": "~1.67.0",
+    "prettier": "3.8.3",
+    "prettier-plugin-jsdoc": "^1.8.1",
     "shellcheck": "^4.1.0",
     "tailwindcss": "^4.3.0",
     "tsx": "^4.22.3",
-    "typescript": "~5.9.3",
-    "vite": "^7.3.3",
+    "typescript": "~6.0.3",
+    "vite": "^8.0.14",
     "vite-plugin-vue-devtools": "^8.1.2",
     "vitest": "^4.1.7",
-    "vue-tsc": "^3.3.2"
+    "vue-tsc": "^3.3.3"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "file-type@<=20.5.0": "^21.0.0"
-    }
   }
 }
