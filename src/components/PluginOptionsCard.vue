@@ -34,25 +34,33 @@ const alertClasses: Record<string, string> = {
 </script>
 
 <template>
-  <div class="border-base-300 bg-base-100 rounded-box collapse mb-4 border">
+  <div
+    class="border-base-300 bg-base-200 collapse border outline-none hover:border-primary/40 has-focus-visible:ring-primary/70 has-focus-visible:ring-2"
+  >
     <input type="checkbox" v-model="model.enabled" />
 
-    <div class="collapse-title flex items-center gap-4">
+    <div class="collapse-title flex items-start gap-4 p-4">
       <input
         type="checkbox"
         :checked="model.enabled"
-        class="checkbox checkbox-primary pointer-events-none"
+        class="checkbox checkbox-sm checkbox-primary pointer-events-none mt-0.75"
         tabindex="-1"
       />
       <div>
-        <h3 class="text-lg leading-tight font-bold">{{ plugin.name }}</h3>
-        <p class="text-sm opacity-70">{{ plugin.description }}</p>
+        <h3 class="text-sm font-semibold leading-tight" :class="{ 'text-primary': model.enabled }">
+          {{ plugin.name }}
+        </h3>
+        <p class="text-xs text-base-content/60 mt-1 leading-relaxed">
+          {{ plugin.description }}
+        </p>
       </div>
     </div>
 
-    <div v-if="Object.keys(plugin.options).length !== 0" class="collapse-content bg-base-200/50">
-      <div class="flex flex-col pt-4">
-        <div v-for="(opt, key) in plugin.options" :key="key" class="form-control w-full max-w-md">
+    <div v-if="Object.keys(plugin.options).length !== 0 || alert" class="collapse-content">
+      <div class="divider mb-1 mt-0"></div>
+
+      <div v-if="Object.keys(plugin.options).length !== 0" class="flex flex-col gap-1">
+        <div v-for="(opt, key) in plugin.options" :key="key" class="form-control">
           <component
             :is="componentMap[opt.type]"
             v-model="model[key as keyof ConcretePluginConfig]!"
@@ -64,10 +72,22 @@ const alertClasses: Record<string, string> = {
       <div
         v-if="alert"
         role="alert"
-        class="alert alert-soft mt-3"
+        class="alert alert-soft mt-4 text-xs flex items-start gap-3"
         :class="alertClasses[alert.type]"
       >
-        <span>{{ alert.message }}</span>
+        <i-heroicons-exclamation-triangle
+          v-if="alert.type === 'warning'"
+          class="size-5 shrink-0 stroke-current mt-0.75"
+        />
+        <i-heroicons-exclamation-circle
+          v-else-if="alert.type === 'error'"
+          class="size-5 shrink-0 stroke-current mt-0.5"
+        />
+        <i-heroicons-information-circle
+          v-else-if="alert.type === 'info'"
+          class="size-5 shrink-0 stroke-current mt-0.5"
+        />
+        <span class="leading-relaxed">{{ alert.message }}</span>
       </div>
     </div>
   </div>

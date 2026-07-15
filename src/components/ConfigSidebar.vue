@@ -45,7 +45,9 @@ const filteredSearchPlugins = computed(() => {
 const isSearching = computed(() => query.value.trim().length > 0)
 
 const clearOptions = () => {
-  if (window.confirm('This will reset all of the current configuration. Are you sure?')) {
+  if (
+    window.confirm('This will reset all of the current configuration to its default. Are you sure?')
+  ) {
     query.value = ''
     quietMode.value = false
     for (const cat of props.categorizedPlugins)
@@ -63,30 +65,51 @@ const clearOptions = () => {
     <!-- from daisyui: click outside of drawer content to close it on smaller screens where it doesn't fill the full viewport width -->
     <label for="config-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
 
-    <div class="bg-base-100 border-base-300 flex h-full w-full flex-col border-r sm:w-lg">
+    <div class="bg-base-200 border-base-300 flex h-full w-full flex-col border-r sm:w-md">
       <!-- make the sticky header have a higher z index so that the content "scrolls" underneath it instead of on top of it -->
       <header
-        class="border-base-300 bg-base-100 sticky top-0 z-10 flex items-center justify-between border-b p-6"
+        class="border-base-300 bg-base-200/80 sticky top-0 z-10 flex flex-col gap-4 border-b p-6"
       >
-        <div>
-          <h1 class="text-primary text-2xl font-black">Velour Script Configuration</h1>
-          <p class="mt-1 text-sm opacity-70">Browse and enable options and apps</p>
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex flex-1 items-center justify-between">
+            <div>
+              <h1 class="text-xl font-bold tracking-tight">Script Configuration</h1>
+              <p class="mt-0.5 text-xs text-base-content/60">Browse and enable options and apps</p>
+            </div>
+
+            <button
+              class="hidden lg:inline-flex btn btn-sm btn-outline btn-error opacity-70 hover:opacity-100"
+              @click="clearOptions"
+              title="Reset all script configuration to defaults"
+            >
+              Reset All
+            </button>
+          </div>
+
+          <div class="flex-none lg:hidden">
+            <label
+              for="config-drawer"
+              aria-label="close sidebar"
+              class="btn btn-sm btn-square btn-ghost"
+            >
+              <i-heroicons-x-mark class="size-4 [&>path]:stroke-3" />
+            </label>
+          </div>
         </div>
 
-        <div class="flex-none lg:hidden">
-          <label for="config-drawer" aria-label="close sidebar" class="btn btn-square btn-ghost">
-            <!-- TODO: is there a better icon than an X -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-6"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
+        <div class="flex gap-2">
+          <label class="input input-bordered flex-1">
+            <i-heroicons-magnifying-glass-20-solid class="h-4 w-4 opacity-50" />
+            <input v-model="query" type="text" class="grow" placeholder="Search options..." />
           </label>
+
+          <button
+            class="lg:hidden btn btn-sm btn-outline btn-error opacity-70 hover:opacity-100 h-full"
+            @click="clearOptions"
+            title="Reset all script configuration to defaults"
+          >
+            Reset All
+          </button>
         </div>
       </header>
 
@@ -97,95 +120,59 @@ const clearOptions = () => {
         </div>
 
         <div v-else>
-          <div class="card bg-base-200 mb-6 shadow-sm">
-            <div class="card-body">
-              <h3 class="card-title text-sm font-bold opacity-70">Script Output Mode</h3>
-              <div class="join bg-base-300/50 p-1 rounded-box w-full mt-2">
-                <input
-                  class="join-item btn btn-sm flex-1 border-none shadow-none font-medium"
-                  :class="{
-                    'bg-base-100 shadow-sm text-base-content': !quietMode,
-                    'bg-transparent text-base-content/60 hover:bg-base-300': quietMode,
-                  }"
-                  type="radio"
-                  aria-label="Verbose"
-                  :checked="!quietMode"
-                  @change="quietMode = false"
-                />
-                <input
-                  class="join-item btn btn-sm flex-1 border-none shadow-none font-medium"
-                  :class="{
-                    'bg-base-100 shadow-sm text-base-content': quietMode,
-                    'bg-transparent text-base-content/60 hover:bg-base-300': !quietMode,
-                  }"
-                  type="radio"
-                  aria-label="Quiet"
-                  :checked="quietMode"
-                  @change="quietMode = true"
-                />
+          <div
+            class="border-base-300 bg-base-200 collapse border outline-none hover:border-primary/40 has-focus-visible:ring-primary/70 has-focus-visible:ring-2 mb-6"
+          >
+            <input type="checkbox" v-model="quietMode" />
+
+            <div class="collapse-title flex items-start gap-4 p-4">
+              <input
+                type="checkbox"
+                :checked="quietMode"
+                class="checkbox checkbox-sm checkbox-primary pointer-events-none mt-0.75"
+                tabindex="-1"
+              />
+              <div>
+                <h3
+                  class="text-sm font-semibold leading-tight"
+                  :class="{ 'text-primary': quietMode }"
+                >
+                  Quiet Mode
+                </h3>
+                <p class="text-xs text-base-content/60 mt-1 leading-relaxed">
+                  Suppress the script output while it is running
+                </p>
               </div>
             </div>
           </div>
 
-          <!-- TODO: does this look good -->
-          <div
-            class="flex flex-1 flex-row justify-between gap-3 sticky -top-4 z-10 bg-base-100 -mx-4 p-4"
-          >
-            <label class="input input-bordered flex items-center gap-2">
-              <svg
-                class="h-[1em] opacity-50"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <g
-                  stroke-linejoin="round"
-                  stroke-linecap="round"
-                  stroke-width="2.5"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path>
-                </g>
-              </svg>
-              <input v-model="query" type="text" class="grow" placeholder="Search options..." />
-              <!-- TODO: do i want this -->
-              <!-- <kbd class="kbd kbd-sm">Ctrl</kbd>
-              <kbd class="kbd kbd-sm">K</kbd> -->
-            </label>
-            <button class="btn btn-soft btn-error" @click="clearOptions">Clear Options</button>
-          </div>
-
-          <div class="divider"></div>
-
           <div
             v-if="filteredSearchPlugins.length === 0"
-            class="text-center py-10 opacity-50 break-all"
+            class="text-center py-10 text-base-content/50 break-all text-sm"
           >
-            No options found matching "{{ query }}"
+            No options found matching "<span class="text-base-content">{{ query }}</span
+            >"
           </div>
 
           <div
             v-for="category in filteredSearchPlugins"
             :key="category.name"
-            class="collapse collapse-arrow bg-base-200 mb-4"
+            class="collapse collapse-arrow bg-base-100 border border-base-300 shadow-sm mb-4"
           >
             <input type="checkbox" :checked="isSearching ? true : undefined" />
-            <div class="collapse-title text-xl font-bold">
+            <div class="collapse-title text-base font-bold flex items-center">
               {{ category.name }}
-              <!-- TODO: can this be positioned better -->
-              <span v-if="isSearching" class="badge badge-primary badge-sm ml-2">
+              <span v-if="isSearching" class="badge badge-primary badge-soft badge-sm ml-auto">
                 {{ category.pluginGroups.reduce((acc, group) => acc + group.plugins.length, 0) }}
                 matches
               </span>
             </div>
-            <div class="collapse-content bg-base-300">
-              <div class="flex flex-col gap-2 pt-4">
+            <div class="collapse-content bg-base-100/50">
+              <div class="flex flex-col gap-3">
                 <template v-for="group in category.pluginGroups" :key="group.heading || 'default'">
-                  <!-- TODO: can i style this text/border better -->
                   <h4
                     v-if="group.heading"
-                    class="border-neutral-500 text-base-content/80 mb-1 mt-2 first:mt-0 border-b pb-2 text-lg font-bold"
+                    class="border-base-200 text-primary/80 mt-4 first:mt-0 border-b pb-2 uppercase tracking-wider text-xs font-bold"
                   >
                     {{ group.heading }}
                   </h4>
