@@ -59,9 +59,13 @@ const openAboutModal = () => {
             <i-heroicons-bars-3-solid class="inline-block h-6 w-6 stroke-current" />
           </label>
         </div>
-        <div class="mx-2 flex-1 px-2 flex items-center gap-3">
+        <div
+          class="mx-2 flex-1 px-2 flex flex-col items-start sm:flex-row sm:items-center gap-1 sm:gap-3"
+        >
           <div class="text-xl font-extrabold tracking-tight">Velour</div>
-          <div class="badge badge-primary badge-sm badge-soft font-mono">v{{ version }}</div>
+          <div class="badge badge-primary badge-sm badge-soft font-mono shrink-0 text-nowrap">
+            v{{ version }}
+          </div>
         </div>
 
         <div class="gap-2 mr-2">
