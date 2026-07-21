@@ -15,6 +15,7 @@ declare module 'vue' {
     ConfigSidebar: typeof import('./src/components/ConfigSidebar.vue')['default']
     DropdownOption: typeof import('./src/components/options/DropdownOption.vue')['default']
     IHeroiconsArrowDownTray20Solid: typeof import('~icons/heroicons/arrow-down-tray20-solid')['default']
+    IHeroiconsArrowUpTray20Solid: typeof import('~icons/heroicons/arrow-up-tray20-solid')['default']
     IHeroiconsBars3Solid: typeof import('~icons/heroicons/bars3-solid')['default']
     IHeroiconsCheck20Solid: typeof import('~icons/heroicons/check20-solid')['default']
     IHeroiconsExclamationCircle: typeof import('~icons/heroicons/exclamation-circle')['default']

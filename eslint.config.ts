@@ -26,6 +26,7 @@ export default defineConfigWithVueTs(
     files: ['**/*.{vue,ts,mts}'],
     rules: {
       '@typescript-eslint/switch-exhaustiveness-check': 'error',
+      'require-unicode-regexp': ['error', { requireFlag: 'v' }],
     },
   },
 

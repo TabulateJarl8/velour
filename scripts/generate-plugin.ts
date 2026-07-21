@@ -61,7 +61,7 @@ const nodeProvider: PluginDiscoveryProvider = async () => {
 }
 
 const escape = (str: string): string => {
-  return str.replace(/'/g, "\\'")
+  return str.replace(/'/gv, "\\'")
 }
 
 async function getPluginContext(): Promise<PluginContext> {
@@ -73,12 +73,7 @@ async function getPluginContext(): Promise<PluginContext> {
 
   const subfolders = dirents
     .filter((e) => e.isDirectory())
-    .map((e) =>
-      path
-        .join(e.parentPath, e.name)
-        .replace(pluginsDir, '')
-        .replace(/^[\\/]/, ''),
-    )
+    .map((e) => path.join(e.parentPath, e.name).replace(pluginsDir, '').replace(/^[\/]/v, ''))
 
   const folderChoices = [
     { name: '(root) plugins/', value: '' },
@@ -113,7 +108,7 @@ async function promptMetadata(
     }),
   )
 
-  const nameNormalized = name.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+  const nameNormalized = name.toLowerCase().replace(/[^a-z0-9]+/gv, '-')
   const idSuggestion = pluginType === 'app' ? `install-app-${nameNormalized}` : nameNormalized
 
   const id = await input({
@@ -122,7 +117,7 @@ async function promptMetadata(
     default: idSuggestion,
     validate: (val) => {
       if (context.existingPlugins.has(val)) return `The ID ${val} is taken`
-      if (!/^[a-z0-9-]+$/.test(val)) return 'ID must be lowercase, numbers, or dashes'
+      if (!/^[a-z0-9\-]+$/v.test(val)) return 'ID must be lowercase, numbers, or dashes'
       return true
     },
   })
@@ -172,7 +167,7 @@ async function generateAppPlugin(meta: PluginMeta, category: PluginCategory): Pr
     flatpakPackage = await input({
       message: 'Flatpak Package Name (leave empty if none): ',
       validate: (val) => {
-        if ((val.match(/\./g) || []).length < 2)
+        if ((val.match(/\./gv) || []).length < 2)
           return 'Flatpak package names require at least 2 dots'
         return true
       },
@@ -263,7 +258,7 @@ async function generateGenericPlugin(meta: PluginMeta, category: PluginCategory)
         message: 'Pre run message (like "Setting hostname..."): ',
         required: true,
       }),
-    ).replace(/\.*$/, '') + '...'
+    ).replace(/\.*$/v, '') + '...'
 
   return `
 import { createPlugin } from '@/core/types'

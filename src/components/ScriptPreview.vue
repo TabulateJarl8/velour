@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const props = defineProps<{
   highlightedScriptHtml: string
@@ -11,11 +11,29 @@ const props = defineProps<{
 const emit = defineEmits<{
   download: []
   copyPermalink: []
+  importScript: [file: File]
 }>()
 
 const hasValidationErrors = computed(() => {
   return props.validationErrors && Object.keys(props.validationErrors).length !== 0
 })
+
+const fileInput = ref<HTMLInputElement | null>(null)
+
+const handleFileUpload = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  if (target.files && target.files.length > 0) {
+    const confirmed = window.confirm(
+      'Importing a script will overwrite all of your current config. Are you sure?',
+    )
+
+    if (confirmed) {
+      emit('importScript', target.files[0])
+    }
+
+    target.value = ''
+  }
+}
 </script>
 
 <style scoped>
@@ -68,9 +86,28 @@ const hasValidationErrors = computed(() => {
           </p>
         </div>
 
-        <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+        <div class="flex gap-3 flex-wrap justify-end w-full xl:w-auto">
+          <input
+            type="file"
+            ref="fileInput"
+            accept=".sh,.bash"
+            class="hidden"
+            @change="handleFileUpload"
+          />
+
+          <div class="tooltip grow xl:grow-0" data-tip="Import Configuration From Script">
+            <button
+              class="btn btn-outline btn-secondary w-full shrink-0 text-nowrap"
+              :disabled="isLoading"
+              @click="fileInput?.click()"
+            >
+              <i-heroicons-arrow-up-tray-20-solid class="size-4 shrink-0" />
+              <span class="xl:hidden">Import Script</span>
+            </button>
+          </div>
+
           <button
-            class="btn w-full sm:w-56 shrink-0"
+            class="btn grow xl:grow-0 xl:w-56 shrink-0"
             :class="showCopySuccess ? 'btn-success' : 'btn-soft border-info btn-info'"
             @click="emit('copyPermalink')"
             :disabled="isLoading"
@@ -84,12 +121,12 @@ const hasValidationErrors = computed(() => {
           </button>
 
           <div
-            class="shrink-0 w-full sm:w-auto"
+            class="grow xl:grow-0"
             :class="{ 'tooltip tooltip-top': hasValidationErrors }"
             :data-tip="hasValidationErrors ? 'Fix configuration errors to download script' : null"
           >
             <button
-              class="btn btn-primary w-full sm:w-auto shrink-0 text-nowrap"
+              class="btn btn-primary w-full shrink-0 text-nowrap"
               :disabled="hasValidationErrors || isLoading"
               @click="emit('download')"
             >

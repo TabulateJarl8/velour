@@ -11,7 +11,7 @@ import { version } from '../../package.json'
  */
 function formatBash(snippet: string): string {
   // find each leading whitespace before the first non-whitespace character on every line
-  const match = snippet.match(/^[ \t]*(?=\S)/gm)
+  const match = snippet.match(/^[ \t]*(?=\S)/gmv)
   if (!match) return snippet.trim()
 
   // find smallest indentation level across every line
@@ -19,7 +19,7 @@ function formatBash(snippet: string): string {
 
   // remove minIndent amount of whitespace from the beginning of each line
   // TODO: is this the best way to accomplish formatting? it kind of feels hacky
-  const regex = new RegExp(`^[ \\t]{${minIndent}}`, 'gm')
+  const regex = new RegExp(`^[ \\t]{${minIndent}}`, 'gmv')
   return snippet.replace(regex, '').trim()
 }
 
@@ -54,7 +54,7 @@ export function buildSinglePluginScript(
 
   // if the plugin has errors, comment out that portion of the script
   if (hasError) {
-    snippet = snippet.replace(/^/gm, '# ')
+    snippet = snippet.replace(/^/gmv, '# ')
   }
 
   return snippet
@@ -129,6 +129,7 @@ export function buildPluginScripts(
  * @param configs The list of the plugin's configs
  * @param validationErrors Any validation errors from the plugin configurations
  * @param quietMode Whether or not this script should produce output
+ * @param payload The serialized velour script configuration save state
  * @returns The full script as a string
  */
 export function generateFullScript(
@@ -136,6 +137,7 @@ export function generateFullScript(
   configs: Record<string, ConcretePluginConfig>,
   validationErrors: Record<string, string>,
   quietMode: boolean = false,
+  payload?: string,
 ): string {
   let pluginsBash = buildPluginScripts(plugins, configs, validationErrors, quietMode)
 
@@ -156,8 +158,12 @@ export function generateFullScript(
     pluginsBash = warning + pluginsBash
   }
 
-  const finalScript = scriptTemplate
+  let finalScript = scriptTemplate
     .replace('# {{script_body}}', pluginsBash)
     .replace('__VELOUR_VERSION__', version)
+    .trim()
+
+  if (payload) finalScript += `\n\n# VELOUR_CONFIG_STATE=${payload}`
+
   return finalScript.trim()
 }

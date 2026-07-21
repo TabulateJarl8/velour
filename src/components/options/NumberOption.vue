@@ -30,7 +30,7 @@ const preventNonNumericInput = (event: KeyboardEvent) => {
   // allow special keyboard input
   if (event.key.length > 1 || event.ctrlKey || event.metaKey) return
 
-  if (!/^[0-9.-]$/.test(event.key)) event.preventDefault()
+  if (!/^[0-9.\-]$/v.test(event.key)) event.preventDefault()
 }
 
 const validationError = computed(() => {

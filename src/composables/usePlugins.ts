@@ -1,3 +1,9 @@
+import {
+  deserializeConfig,
+  extractPayloadFromScript,
+  serializeConfig,
+  type SaveState,
+} from '@/core/configSerde'
 import { resolveEnabledPlugins } from '@/core/dependencyResolver'
 import { PluginLoader } from '@/core/loader'
 import { logger } from '@/core/logger'
@@ -50,15 +56,18 @@ export function usePlugins() {
     )
   })
 
-  const downloadScript = () => {
+  const downloadScript = async () => {
     // dont download script is there are errors
     if (Object.keys(validationErrors.value).length !== 0) return
+
+    const payload = await serializeConfig(loadedPlugins.value, pluginConfigs.value, quietMode.value)
 
     const script = generateFullScript(
       loadedPlugins.value,
       pluginConfigs.value,
       validationErrors.value,
       quietMode.value,
+      payload,
     )
 
     // download script
@@ -175,30 +184,30 @@ export function usePlugins() {
     return errors
   })
 
+  const _applySaveState = (saveState: SaveState) => {
+    const initConfigs: Record<string, ConcretePluginConfig> = {}
+    for (const plugin of loadedPlugins.value) {
+      initConfigs[plugin.id] = PluginLoader.initializePluginConfig(plugin)
+    }
+
+    // restore quiet mode setting
+    quietMode.value = typeof saveState.quietMode === 'boolean' ? saveState.quietMode : false
+
+    // restore plugin configs
+    if (saveState.configs) {
+      for (const [id, config] of Object.entries(saveState.configs)) {
+        if (initConfigs[id]) initConfigs[id] = { ...initConfigs[id], ...(config as object) }
+      }
+    }
+
+    pluginConfigs.value = initConfigs
+  }
+
   // config storing in the URL fragment
   const generatePermalink = async (): Promise<string> => {
     if (isLoading.value) return window.location.href
 
-    // get a map of enabled configs
-    const activeConfigs: Record<string, ConcretePluginConfig> = {}
-    for (const [id, config] of Object.entries(pluginConfigs.value)) {
-      if (config.enabled) activeConfigs[id] = config
-    }
-
-    const saveState = { configs: activeConfigs, quietMode: quietMode.value }
-
-    // serialize and set URL fragment
-    const json = JSON.stringify(saveState)
-
-    // compress
-    const stream = new Blob([json]).stream()
-    const compressed = stream.pipeThrough(new CompressionStream('deflate-raw'))
-    const blob = await new Response(compressed).blob()
-    const arrayBuffer = await blob.arrayBuffer()
-
-    // encode
-    const byteArray = new Uint8Array(arrayBuffer)
-    const base64 = btoa(String.fromCharCode(...byteArray))
+    const base64 = await serializeConfig(loadedPlugins.value, pluginConfigs.value, quietMode.value)
     const serialized = encodeURIComponent(base64)
 
     // set the fragment and return
@@ -207,45 +216,39 @@ export function usePlugins() {
     return url.toString()
   }
 
+  const importScript = async (file: File) => {
+    try {
+      const payload = extractPayloadFromScript(await file.text())
+      if (!payload) {
+        window.alert('No Velour configuration was found in this script')
+        return
+      }
+
+      const data = await deserializeConfig(payload)
+      _applySaveState(data)
+    } catch (e) {
+      logger.error('Failed to parse uploaded script: ', e)
+      window.alert('Invalid or corrupted script configuration')
+    }
+  }
+
   // when mounted, load the plugins and init their configs
   onMounted(async () => {
     await loader.loadPlugins()
     loadedPlugins.value = loader.getPlugins()
-
-    const initConfigs: Record<string, ConcretePluginConfig> = {}
-    for (const plugin of loadedPlugins.value) {
-      initConfigs[plugin.id] = PluginLoader.initializePluginConfig(plugin)
-    }
+    let saveState = { configs: {} }
 
     // try and decode the URL fragment and restore the user's config
     const fragment = window.location.hash.slice(1)
     if (fragment) {
       try {
-        const binary = atob(decodeURIComponent(fragment))
-        const byteArray = new Uint8Array(binary.length)
-
-        for (let i = 0; i < binary.length; i++) byteArray[i] = binary.charCodeAt(i)
-
-        // decompress and parse
-        const stream = new Blob([byteArray]).stream()
-        const decompressed = stream.pipeThrough(new DecompressionStream('deflate-raw'))
-        const data = JSON.parse(await new Response(decompressed).text())
-
-        // restore quiet mode setting
-        if (typeof data.quietMode === 'boolean') quietMode.value = data.quietMode
-
-        // restore plugin configs
-        if (data.configs) {
-          for (const [id, config] of Object.entries(data.configs)) {
-            if (initConfigs[id]) initConfigs[id] = { ...initConfigs[id], ...(config as object) }
-          }
-        }
+        saveState = await deserializeConfig(decodeURIComponent(fragment))
       } catch (e) {
         logger.error('Failed to decompress or parse fragment data', e)
       }
     }
 
-    pluginConfigs.value = initConfigs
+    _applySaveState(saveState)
     isLoading.value = false
   })
 
@@ -258,5 +261,6 @@ export function usePlugins() {
     validationErrors,
     downloadScript,
     generatePermalink,
+    importScript,
   }
 }

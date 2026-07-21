@@ -19,7 +19,9 @@ const {
   validationErrors,
   downloadScript,
   generatePermalink,
+  importScript,
 } = usePlugins()
+
 const { highlightedScriptHtml } = useShiki(generatedScript)
 
 const showCopySuccess = ref(false)
@@ -87,6 +89,7 @@ const openAboutModal = () => {
         :show-copy-success="showCopySuccess"
         @download="downloadScript"
         @copy-permalink="copyPermalink"
+        @import-script="importScript"
       />
 
       <ProjectDescription ref="aboutModal" />

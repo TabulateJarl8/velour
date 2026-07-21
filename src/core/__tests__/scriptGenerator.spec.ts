@@ -36,7 +36,7 @@ describe('scriptGenerator', () => {
       const plugin = createMockPlugin('mock', { generate: () => 'echo test' })
       const script = buildSinglePluginScript(plugin, { enabled: true }, true, false)
 
-      expect(script).toMatch(/^# echo test/m)
+      expect(script).toMatch(/^# echo test/mv)
     })
 
     it('trims the script if plugin only generates whitespace', () => {
