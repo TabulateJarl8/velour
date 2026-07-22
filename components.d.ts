@@ -18,6 +18,7 @@ declare module 'vue' {
     IHeroiconsArrowUpTray20Solid: typeof import('~icons/heroicons/arrow-up-tray20-solid')['default']
     IHeroiconsBars3Solid: typeof import('~icons/heroicons/bars3-solid')['default']
     IHeroiconsCheck20Solid: typeof import('~icons/heroicons/check20-solid')['default']
+    IHeroiconsCheckBadge: typeof import('~icons/heroicons/check-badge')['default']
     IHeroiconsExclamationCircle: typeof import('~icons/heroicons/exclamation-circle')['default']
     IHeroiconsExclamationTriangle: typeof import('~icons/heroicons/exclamation-triangle')['default']
     IHeroiconsInformationCircle: typeof import('~icons/heroicons/information-circle')['default']

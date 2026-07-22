@@ -145,5 +145,11 @@ describe('scriptGenerator', () => {
       // should fall back to plugin id
       expect(script).toContain(' - not-real')
     })
+
+    it('appends a payload to the end of the script when provided', () => {
+      const payloadString = Math.random().toString(36).substring(2, 13)
+      const generated = generateFullScript([], {}, {}, false, payloadString)
+      expect(generated).toContain(`# VELOUR_CONFIG_STATE=${payloadString}`)
+    })
   })
 })

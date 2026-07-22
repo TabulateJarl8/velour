@@ -87,6 +87,7 @@ const alertClasses: Record<string, string> = {
           v-else-if="alert.type === 'info'"
           class="size-5 shrink-0 stroke-current mt-0.5"
         />
+        <i-heroicons-check-badge v-else class="size-5 shrink-0 stroke-current mt-0.5" />
         <span class="leading-relaxed">{{ alert.message }}</span>
       </div>
     </div>

@@ -64,7 +64,7 @@ describe('PluginOptionsCard', () => {
     expect(options).toHaveLength(0)
   })
 
-  it('renders alerts properly', () => {
+  it('renders error alerts properly', () => {
     const wrapper = getWrapper({
       alerts: vi.fn(() => ({ type: 'error', message: 'bad' })),
     })
@@ -73,5 +73,38 @@ describe('PluginOptionsCard', () => {
 
     expect(alert.text()).toContain('bad')
     expect(alert.classes()).toContain('alert-error')
+  })
+
+  it('renders warning alerts properly', () => {
+    const wrapper = getWrapper({
+      alerts: vi.fn(() => ({ type: 'warning', message: 'bad' })),
+    })
+
+    const alert = wrapper.find('[role="alert"]')
+
+    expect(alert.text()).toContain('bad')
+    expect(alert.classes()).toContain('alert-warning')
+  })
+
+  it('renders info alerts properly', () => {
+    const wrapper = getWrapper({
+      alerts: vi.fn(() => ({ type: 'info', message: 'bad' })),
+    })
+
+    const alert = wrapper.find('[role="alert"]')
+
+    expect(alert.text()).toContain('bad')
+    expect(alert.classes()).toContain('alert-info')
+  })
+
+  it('renders success alerts properly', () => {
+    const wrapper = getWrapper({
+      alerts: vi.fn(() => ({ type: 'success', message: 'bad' })),
+    })
+
+    const alert = wrapper.find('[role="alert"]')
+
+    expect(alert.text()).toContain('bad')
+    expect(alert.classes()).toContain('alert-success')
   })
 })

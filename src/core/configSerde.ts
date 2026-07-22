@@ -77,8 +77,6 @@ export const deserializeConfig = async (base64: string): Promise<SaveState> => {
 
 export const extractPayloadFromScript = (script: string): string | null => {
   const lines = script.trim().split('\n')
-  if (lines.length === 0) return null
-
   const match = lines[lines.length - 1].match(/^# VELOUR_CONFIG_STATE=(.*)/v)
   return match && match[1] ? match[1] : null
 }
