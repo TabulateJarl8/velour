@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { useFileDialog } from '@vueuse/core'
+import { computed } from 'vue'
 
 const props = defineProps<{
   highlightedScriptHtml: string
@@ -18,22 +19,22 @@ const hasValidationErrors = computed(() => {
   return props.validationErrors && Object.keys(props.validationErrors).length !== 0
 })
 
-const fileInput = ref<HTMLInputElement | null>(null)
+const { open: handleFileUpload, onChange: onFileDialog } = useFileDialog({
+  accept: '.sh,.bash',
+  multiple: false,
+})
 
-const handleFileUpload = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  if (target.files && target.files.length > 0) {
+onFileDialog((files) => {
+  if (files && files.length > 0) {
     const confirmed = window.confirm(
       'Importing a script will overwrite all of your current config. Are you sure?',
     )
 
     if (confirmed) {
-      emit('importScript', target.files[0])
+      emit('importScript', files[0])
     }
-
-    target.value = ''
   }
-}
+})
 </script>
 
 <style scoped>
@@ -87,19 +88,11 @@ const handleFileUpload = (event: Event) => {
         </div>
 
         <div class="flex gap-3 flex-wrap justify-end w-full xl:w-auto">
-          <input
-            type="file"
-            ref="fileInput"
-            accept=".sh,.bash"
-            class="hidden"
-            @change="handleFileUpload"
-          />
-
           <div class="tooltip grow xl:grow-0" data-tip="Import Configuration From Script">
             <button
               class="btn btn-outline btn-secondary w-full shrink-0 text-nowrap"
               :disabled="isLoading"
-              @click="fileInput?.click()"
+              @click="handleFileUpload()"
             >
               <i-heroicons-arrow-up-tray-20-solid class="size-4 shrink-0" />
               <span class="xl:hidden">Import Script</span>

@@ -9,6 +9,7 @@ import { version } from '../package.json'
 import ProjectDescription from './components/ProjectDescription.vue'
 import { ref } from 'vue'
 import { logger } from './core/logger'
+import { useClipboard } from '@vueuse/core'
 
 const {
   isLoading,
@@ -24,18 +25,13 @@ const {
 
 const { highlightedScriptHtml } = useShiki(generatedScript)
 
-const showCopySuccess = ref(false)
+const { copy, copied: showCopySuccess } = useClipboard({ copiedDuring: 3000 })
 
 // copy permalink to clipboard
 const copyPermalink = async () => {
   try {
     const url = await generatePermalink()
-    await navigator.clipboard.writeText(url)
-
-    showCopySuccess.value = true
-    setTimeout(() => {
-      showCopySuccess.value = false
-    }, 3000)
+    await copy(url)
   } catch (e) {
     logger.error('Could not copy permalink: ', e)
   }
