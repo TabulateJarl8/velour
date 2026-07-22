@@ -74,11 +74,11 @@ const clearOptions = () => {
           <div class="flex flex-1 items-center justify-between">
             <div>
               <h1 class="text-xl font-bold tracking-tight">Script Configuration</h1>
-              <p class="mt-0.5 text-xs text-base-content/60">Browse and enable options and apps</p>
+              <p class="text-base-content/60 mt-0.5 text-xs">Browse and enable options and apps</p>
             </div>
 
             <button
-              class="hidden lg:inline-flex btn btn-sm btn-outline btn-error opacity-70 hover:opacity-100"
+              class="btn btn-sm btn-outline btn-error hidden opacity-70 hover:opacity-100 lg:inline-flex"
               @click="clearOptions"
               title="Reset all script configuration to defaults"
             >
@@ -104,7 +104,7 @@ const clearOptions = () => {
           </label>
 
           <button
-            class="lg:hidden btn btn-sm btn-outline btn-error opacity-70 hover:opacity-100 h-full"
+            class="btn btn-sm btn-outline btn-error h-full opacity-70 hover:opacity-100 lg:hidden"
             @click="clearOptions"
             title="Reset all script configuration to defaults"
           >
@@ -113,7 +113,7 @@ const clearOptions = () => {
         </div>
       </header>
 
-      <div class="flex-1 overflow-y-auto p-4 overflow-x-hidden">
+      <div class="flex-1 overflow-x-hidden overflow-y-auto p-4">
         <div v-if="isLoading" class="flex h-48 flex-col items-center justify-center gap-4">
           <span class="loading loading-ring loading-lg text-primary"></span>
           <span class="text-base-content/70">Loading plugins...</span>
@@ -121,7 +121,7 @@ const clearOptions = () => {
 
         <div v-else>
           <div
-            class="border-base-300 bg-base-200 collapse border outline-none hover:border-primary/40 has-focus-visible:ring-primary/70 has-focus-visible:ring-2 mb-6"
+            class="border-base-300 bg-base-200 hover:border-primary/40 has-focus-visible:ring-primary/70 collapse mb-6 border outline-none has-focus-visible:ring-2"
           >
             <input type="checkbox" v-model="quietMode" />
 
@@ -134,12 +134,12 @@ const clearOptions = () => {
               />
               <div>
                 <h3
-                  class="text-sm font-semibold leading-tight"
+                  class="text-sm leading-tight font-semibold"
                   :class="{ 'text-primary': quietMode }"
                 >
                   Quiet Mode
                 </h3>
-                <p class="text-xs text-base-content/60 mt-1 leading-relaxed">
+                <p class="text-base-content/60 mt-1 text-xs leading-relaxed">
                   Suppress the script output while it is running
                 </p>
               </div>
@@ -148,7 +148,7 @@ const clearOptions = () => {
 
           <div
             v-if="filteredSearchPlugins.length === 0"
-            class="text-center py-10 text-base-content/50 break-all text-sm"
+            class="text-base-content/50 py-10 text-center text-sm break-all"
           >
             No options found matching "<span class="text-base-content">{{ query }}</span
             >"
@@ -157,10 +157,10 @@ const clearOptions = () => {
           <div
             v-for="category in filteredSearchPlugins"
             :key="category.name"
-            class="collapse collapse-arrow bg-base-100 border border-base-300 shadow-sm mb-4"
+            class="collapse-arrow bg-base-100 border-base-300 collapse mb-4 border shadow-sm"
           >
             <input type="checkbox" :checked="isSearching ? true : undefined" />
-            <div class="collapse-title text-base font-bold flex items-center">
+            <div class="collapse-title flex items-center text-base font-bold">
               {{ category.name }}
               <span v-if="isSearching" class="badge badge-primary badge-soft badge-sm ml-auto">
                 {{ category.pluginGroups.reduce((acc, group) => acc + group.plugins.length, 0) }}
@@ -172,7 +172,7 @@ const clearOptions = () => {
                 <template v-for="group in category.pluginGroups" :key="group.heading || 'default'">
                   <h4
                     v-if="group.heading"
-                    class="border-base-200 text-primary/80 mt-4 first:mt-0 border-b pb-2 uppercase tracking-wider text-xs font-bold"
+                    class="border-base-200 text-primary/80 mt-4 border-b pb-2 text-xs font-bold tracking-wider uppercase first:mt-0"
                   >
                     {{ group.heading }}
                   </h4>

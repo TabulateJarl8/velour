@@ -55,18 +55,18 @@ onFileDialog((files) => {
 }
 
 .mockup-code-custom {
-  @apply bg-base-300 border border-base-300/50 shadow-2xl text-slate-300;
-  @apply rounded-2xl relative flex-1 flex flex-col overflow-hidden max-h-[70vh] min-h-0;
+  @apply bg-base-300 border-base-300/50 border text-slate-300 shadow-2xl;
+  @apply relative flex max-h-[70vh] min-h-0 flex-1 flex-col overflow-hidden rounded-2xl;
 }
 
 .mockup-title-bar {
-  @apply relative py-3 flex items-center justify-center shrink-0;
-  @apply text-xs font-mono text-slate-500 font-medium tracking-wide;
+  @apply relative flex shrink-0 items-center justify-center py-3;
+  @apply font-mono text-xs font-medium tracking-wide text-slate-500;
   @apply bg-base-200 border-b border-white/5;
 }
 
 .mockup-title-bar::before {
-  @apply absolute top-1/2 -translate-y-1/2 left-4 h-3 w-3 rounded-full;
+  @apply absolute top-1/2 left-4 h-3 w-3 -translate-y-1/2 rounded-full;
 
   content: '';
   background-color: theme('colors.error');
@@ -79,15 +79,15 @@ onFileDialog((files) => {
 <template>
   <main class="flex flex-1 flex-col p-4 sm:p-8 lg:p-12">
     <div class="mx-auto flex h-full w-full max-w-5xl flex-col gap-6">
-      <div class="flex flex-col xl:flex-row xl:items-end justify-between gap-4">
+      <div class="flex flex-col justify-between gap-4 xl:flex-row xl:items-end">
         <div class="flex-1">
           <h2 class="text-base-content text-2xl font-bold tracking-tight">Your Setup Script</h2>
-          <p class="text-sm text-base-content/60 mt-1">
+          <p class="text-base-content/60 mt-1 text-sm">
             Review the generated code below before downloading or sharing:
           </p>
         </div>
 
-        <div class="flex gap-3 flex-wrap justify-end w-full xl:w-auto">
+        <div class="flex w-full flex-wrap justify-end gap-3 xl:w-auto">
           <div class="tooltip grow xl:grow-0" data-tip="Import Configuration From Script">
             <button
               class="btn btn-outline btn-secondary w-full shrink-0 text-nowrap"
@@ -100,7 +100,7 @@ onFileDialog((files) => {
           </div>
 
           <button
-            class="btn grow xl:grow-0 xl:w-56 shrink-0"
+            class="btn shrink-0 grow xl:w-56 xl:grow-0"
             :class="showCopySuccess ? 'btn-success' : 'btn-soft border-info btn-info'"
             @click="emit('copyPermalink')"
             :disabled="isLoading"
@@ -133,23 +133,23 @@ onFileDialog((files) => {
       <div class="mockup-code-custom">
         <div class="mockup-title-bar">velour_fedora_setup.sh</div>
 
-        <div class="overflow-auto flex-1 w-full">
+        <div class="w-full flex-1 overflow-auto">
           <div
             v-if="hasValidationErrors"
-            class="sticky top-0 left-0 z-10 w-full px-6 pt-4 pb-2 pointer-events-none"
+            class="pointer-events-none sticky top-0 left-0 z-10 w-full px-6 pt-4 pb-2"
           >
             <div
               v-for="(error, plugin) in validationErrors"
               :key="plugin"
-              class="alert alert-error alert-soft mx-1 py-3 mb-2 backdrop-blur-lg pointer-events-auto shadow-lg"
+              class="alert alert-error alert-soft pointer-events-auto mx-1 mb-2 py-3 shadow-lg backdrop-blur-lg"
             >
               <i-heroicons-x-circle class="h-5 w-5 shrink-0 stroke-current" />
               <span><span class="font-bold">Configuration Error:</span> {{ error }}</span>
             </div>
           </div>
 
-          <div class="min-w-max px-6 pt-4 pb-6 pointer-events-auto font-mono">
-            <div class="pb-3 select-none text-slate-500/70 text-xs italic text-nowrap">
+          <div class="pointer-events-auto min-w-max px-6 pt-4 pb-6 font-mono">
+            <div class="pb-3 text-xs text-nowrap text-slate-500/70 italic select-none">
               # --- Script Preamble Ends Here (setup & utility functions) ---
             </div>
 

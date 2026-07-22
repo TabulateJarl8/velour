@@ -15,8 +15,8 @@ defineExpose({ showModal })
 <template>
   <dialog ref="modalRef" class="modal">
     <div class="modal-box">
-      <h3 class="font-bold text-xl mb-4 text-primary">About Velour</h3>
-      <p class="py-2 text-sm text-base-content/80 leading-relaxed">
+      <h3 class="text-primary mb-4 text-xl font-bold">About Velour</h3>
+      <p class="text-base-content/80 py-2 text-sm leading-relaxed">
         Velour is a web-based utility which generates customized, post-installation setup scripts
         for Fedora Linux. It provides a large selection of system tweaks/improvements, application
         installations, and other various configurations. The generated scripts are designed to be

@@ -15,18 +15,18 @@ const validationError = computed(() => {
 
 <template>
   <label
-    class="label cursor-pointer gap-3 mt-2 w-full flex flex-col sm:flex-row items-start sm:items-center"
+    class="label mt-2 flex w-full cursor-pointer flex-col items-start gap-3 sm:flex-row sm:items-center"
   >
-    <div class="flex flex-col flex-1 hover:text-white transition-colors">
+    <div class="flex flex-1 flex-col transition-colors hover:text-white">
       <span
         class="label-text whitespace-normal"
-        :class="opt.description ? 'font-semibold text-base' : 'font-medium text-sm'"
+        :class="opt.description ? 'text-base font-semibold' : 'text-sm font-medium'"
       >
         {{ opt.label }}
       </span>
       <span
         v-if="opt.description"
-        class="label-text text-xs opacity-70 leading-4 whitespace-normal"
+        class="label-text text-xs leading-4 whitespace-normal opacity-70"
       >
         {{ opt.description }}
       </span>

@@ -35,7 +35,7 @@ const alertClasses: Record<string, string> = {
 
 <template>
   <div
-    class="border-base-300 bg-base-200 collapse border outline-none hover:border-primary/40 has-focus-visible:ring-primary/70 has-focus-visible:ring-2"
+    class="border-base-300 bg-base-200 hover:border-primary/40 has-focus-visible:ring-primary/70 collapse border outline-none has-focus-visible:ring-2"
   >
     <input type="checkbox" v-model="model.enabled" />
 
@@ -47,17 +47,17 @@ const alertClasses: Record<string, string> = {
         tabindex="-1"
       />
       <div>
-        <h3 class="text-sm font-semibold leading-tight" :class="{ 'text-primary': model.enabled }">
+        <h3 class="text-sm leading-tight font-semibold" :class="{ 'text-primary': model.enabled }">
           {{ plugin.name }}
         </h3>
-        <p class="text-xs text-base-content/60 mt-1 leading-relaxed">
+        <p class="text-base-content/60 mt-1 text-xs leading-relaxed">
           {{ plugin.description }}
         </p>
       </div>
     </div>
 
     <div v-if="Object.keys(plugin.options).length !== 0 || alert" class="collapse-content">
-      <div class="divider mb-1 mt-0"></div>
+      <div class="divider mt-0 mb-1"></div>
 
       <div v-if="Object.keys(plugin.options).length !== 0" class="flex flex-col gap-1">
         <div v-for="(opt, key) in plugin.options" :key="key" class="form-control">
@@ -72,22 +72,22 @@ const alertClasses: Record<string, string> = {
       <div
         v-if="alert"
         role="alert"
-        class="alert alert-soft mt-4 text-xs flex items-start gap-3"
+        class="alert alert-soft mt-4 flex items-start gap-3 text-xs"
         :class="alertClasses[alert.type]"
       >
         <i-heroicons-exclamation-triangle
           v-if="alert.type === 'warning'"
-          class="size-5 shrink-0 stroke-current mt-0.75"
+          class="mt-0.75 size-5 shrink-0 stroke-current"
         />
         <i-heroicons-exclamation-circle
           v-else-if="alert.type === 'error'"
-          class="size-5 shrink-0 stroke-current mt-0.5"
+          class="mt-0.5 size-5 shrink-0 stroke-current"
         />
         <i-heroicons-information-circle
           v-else-if="alert.type === 'info'"
-          class="size-5 shrink-0 stroke-current mt-0.5"
+          class="mt-0.5 size-5 shrink-0 stroke-current"
         />
-        <i-heroicons-check-badge v-else class="size-5 shrink-0 stroke-current mt-0.5" />
+        <i-heroicons-check-badge v-else class="mt-0.5 size-5 shrink-0 stroke-current" />
         <span class="leading-relaxed">{{ alert.message }}</span>
       </div>
     </div>

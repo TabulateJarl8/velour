@@ -46,27 +46,27 @@ const openAboutModal = () => {
 
 <template>
   <!-- mostly stolen from https://daisyui.com/components/drawer/?lang=en#navbar-menu-for-desktop--sidebar-drawer-for-mobile -->
-  <div class="drawer lg:drawer-open h-dvh overflow-hidden bg-base-100 text-base-content">
+  <div class="drawer lg:drawer-open bg-base-100 text-base-content h-dvh overflow-hidden">
     <input id="config-drawer" type="checkbox" class="drawer-toggle" />
 
-    <div class="drawer-content flex flex-col h-full">
+    <div class="drawer-content flex h-full flex-col">
       <!-- navbar starts here -->
-      <div class="navbar bg-base-100/70 border-b border-base-300/50 w-full shadow-sm">
+      <div class="navbar bg-base-100/70 border-base-300/50 w-full border-b shadow-sm">
         <div class="flex-none lg:hidden">
           <label for="config-drawer" aria-label="open sidebar" class="btn btn-square btn-ghost">
             <i-heroicons-bars-3-solid class="inline-block h-6 w-6 stroke-current" />
           </label>
         </div>
         <div
-          class="mx-2 flex-1 px-2 flex flex-col items-start sm:flex-row sm:items-center gap-1 sm:gap-3"
+          class="mx-2 flex flex-1 flex-col items-start gap-1 px-2 sm:flex-row sm:items-center sm:gap-3"
         >
           <div class="text-xl font-extrabold tracking-tight">Velour</div>
-          <div class="badge badge-primary badge-sm badge-soft font-mono shrink-0 text-nowrap">
+          <div class="badge badge-primary badge-sm badge-soft shrink-0 font-mono text-nowrap">
             v{{ version }}
           </div>
         </div>
 
-        <div class="gap-2 mr-2">
+        <div class="mr-2 gap-2">
           <button class="btn btn-ghost btn-sm" @click="openAboutModal">About</button>
           <a
             href="https://github.com/TabulateJarl8/velour"

@@ -42,17 +42,17 @@ const validationError = computed(() => {
 </script>
 
 <template>
-  <label class="label cursor-pointer gap-3 items-center mt-2 w-full">
-    <div class="flex flex-col flex-1 hover:text-white transition-colors">
+  <label class="label mt-2 w-full cursor-pointer items-center gap-3">
+    <div class="flex flex-1 flex-col transition-colors hover:text-white">
       <span
         class="label-text whitespace-normal"
-        :class="opt.description ? 'font-semibold text-base' : 'font-medium text-sm'"
+        :class="opt.description ? 'text-base font-semibold' : 'text-sm font-medium'"
       >
         {{ opt.label }}
       </span>
       <span
         v-if="opt.description"
-        class="label-text text-xs opacity-70 leading-4 whitespace-normal"
+        class="label-text text-xs leading-4 whitespace-normal opacity-70"
       >
         {{ opt.description }}
       </span>
@@ -61,7 +61,7 @@ const validationError = computed(() => {
     <input
       type="number"
       required
-      class="input input-sm validator text-center shrink-0"
+      class="input input-sm validator shrink-0 text-center"
       :class="{ 'input-error': validationError }"
       :style="{ width: `${String(opt.max || opt.placeholder || 999).length + 5}ch` }"
       v-model="model"

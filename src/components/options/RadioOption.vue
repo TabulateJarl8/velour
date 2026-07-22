@@ -14,17 +14,17 @@ const validationError = computed(() => {
 </script>
 
 <template>
-  <label class="label cursor-pointer gap-3 items-center mt-2 w-full">
-    <div class="flex flex-col flex-1">
+  <label class="label mt-2 w-full cursor-pointer items-center gap-3">
+    <div class="flex flex-1 flex-col">
       <span
         class="label-text whitespace-normal"
-        :class="opt.description ? 'font-semibold text-base' : 'font-medium text-sm'"
+        :class="opt.description ? 'text-base font-semibold' : 'text-sm font-medium'"
       >
         {{ opt.label }}
       </span>
       <span
         v-if="opt.description"
-        class="label-text text-xs opacity-70 leading-4 whitespace-normal"
+        class="label-text text-xs leading-4 whitespace-normal opacity-70"
       >
         {{ opt.description }}
       </span>
@@ -35,7 +35,7 @@ const validationError = computed(() => {
     <label
       v-for="choice in opt.options"
       :key="choice.value"
-      class="label cursor-pointer justify-start gap-4 hover:text-white transition-colors whitespace-normal"
+      class="label cursor-pointer justify-start gap-4 whitespace-normal transition-colors hover:text-white"
     >
       <input
         type="radio"
