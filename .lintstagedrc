@@ -1,0 +1,4 @@
+{
+  "*.{vue,js,ts,jsx,tsx}": ["oxlint", "eslint --cache", "prettier --check --experimental-cli"],
+  "*.{css,scss,html,json,md}": ["prettier --check --experimental-cli"]
+}

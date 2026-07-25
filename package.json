@@ -19,7 +19,8 @@
     "fix": "run-s fix:*",
     "fix:oxlint": "oxlint --fix .",
     "fix:eslint": "eslint --fix . --cache",
-    "gen:plugin": "tsx --tsconfig tsconfig.app.json scripts/generate-plugin.ts"
+    "gen:plugin": "tsx --tsconfig tsconfig.app.json scripts/generate-plugin.ts",
+    "prepare": "husky"
   },
   "dependencies": {
     "@shikijs/langs": "^4.3.1",
@@ -50,8 +51,10 @@
     "eslint-plugin-oxlint": "~1.75.0",
     "eslint-plugin-simple-import-sort": "^14.0.0",
     "eslint-plugin-vue": "~10.10.0",
+    "husky": "^9.1.7",
     "jiti": "^2.7.0",
     "jsdom": "^29.1.1",
+    "lint-staged": "^17.2.0",
     "npm-run-all2": "^9.0.2",
     "oxlint": "~1.75.0",
     "prettier": "3.8.3",
