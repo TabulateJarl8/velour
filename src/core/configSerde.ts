@@ -1,4 +1,4 @@
-import { type ConcretePluginConfig, type ConcretePluginDef,SUB_OPTION_DEFAULTS } from './types'
+import { type ConcretePluginConfig, type ConcretePluginDef, SUB_OPTION_DEFAULTS } from './types'
 
 export interface SaveState {
   configs: Record<string, ConcretePluginConfig>

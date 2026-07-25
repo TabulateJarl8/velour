@@ -1,6 +1,6 @@
 import { flushPromises, mount } from '@vue/test-utils'
 import { createHighlighterCore, type HighlighterCore } from 'shiki/core'
-import { beforeEach, describe, expect,it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { defineComponent, ref } from 'vue'
 
 import { useShiki } from '../useShiki'

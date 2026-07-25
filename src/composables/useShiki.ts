@@ -1,6 +1,6 @@
 import { createHighlighterCore, type HighlighterCore } from 'shiki/core'
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
-import { onMounted, type Ref,ref, watch } from 'vue'
+import { onMounted, type Ref, ref, watch } from 'vue'
 
 /**
  * Composable for highlighting a bash script with shiki
