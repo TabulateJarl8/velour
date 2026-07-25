@@ -1,5 +1,5 @@
-import type { Category, CategoryHeadings } from './categories'
 import type { PluginRegistry } from '../registry'
+import type { Category, CategoryHeadings } from './categories'
 import type { SubOptionSchema, SubOptionTypeMap } from './options'
 
 // the typescript type engine will bend to my will and become rust whether it wants to or not

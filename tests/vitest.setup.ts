@@ -1,8 +1,9 @@
-import { config as shellcheckConfig } from 'shellcheck/build/configs/config.js'
-import { spawnSync } from 'node:child_process'
-import { expect, vi } from 'vitest'
 import { Blob } from 'node:buffer'
+import { spawnSync } from 'node:child_process'
 import { CompressionStream, DecompressionStream } from 'node:stream/web'
+
+import { config as shellcheckConfig } from 'shellcheck/build/configs/config.js'
+import { expect, vi } from 'vitest'
 
 vi.stubGlobal('Blob', Blob)
 vi.stubGlobal('CompressionStream', CompressionStream)

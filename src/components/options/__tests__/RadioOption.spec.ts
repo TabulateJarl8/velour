@@ -1,6 +1,8 @@
-import type { RadioSubOption } from '@/core/types'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
+
+import type { RadioSubOption } from '@/core/types'
+
 import RadioOption from '../RadioOption.vue'
 
 describe('RadioOption', () => {

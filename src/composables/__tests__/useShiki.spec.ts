@@ -1,8 +1,9 @@
-import { beforeEach, it, describe, vi, expect } from 'vitest'
-import { defineComponent, ref } from 'vue'
 import { flushPromises, mount } from '@vue/test-utils'
-import { useShiki } from '../useShiki'
 import { createHighlighterCore, type HighlighterCore } from 'shiki/core'
+import { beforeEach, describe, expect,it, vi } from 'vitest'
+import { defineComponent, ref } from 'vue'
+
+import { useShiki } from '../useShiki'
 
 vi.mock('shiki/core', () => ({
   createHighlighterCore: vi.fn(),

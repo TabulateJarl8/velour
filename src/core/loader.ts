@@ -1,9 +1,9 @@
 import { logger } from './logger'
 import {
-  SUB_OPTION_DEFAULTS,
   type ConcretePluginConfig,
   type ConcretePluginDef,
   type PluginModule,
+  SUB_OPTION_DEFAULTS,
 } from './types'
 
 /** Class used to dynamically load plugins from `src/plugins` at compile time */

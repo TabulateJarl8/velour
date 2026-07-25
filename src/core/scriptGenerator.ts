@@ -1,7 +1,7 @@
-import { resolveEnabledPlugins, sortPlugins } from './dependencyResolver'
-import type { ConcretePluginConfig, ConcretePluginDef } from './types'
-import scriptTemplate from './script_template.sh?raw'
 import { version } from '../../package.json'
+import { resolveEnabledPlugins, sortPlugins } from './dependencyResolver'
+import scriptTemplate from './script_template.sh?raw'
+import type { ConcretePluginConfig, ConcretePluginDef } from './types'
 
 /**
  * Function to fix indentation of a plugin's generated bash snippet.

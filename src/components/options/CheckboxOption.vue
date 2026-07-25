@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { CheckboxSubOption } from '@/core/types'
 import { computed } from 'vue'
+
+import type { CheckboxSubOption } from '@/core/types'
 
 const model = defineModel<boolean>({ required: true })
 const props = defineProps<{

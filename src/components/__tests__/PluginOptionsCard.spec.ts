@@ -1,8 +1,10 @@
-import { describe, expect, it, vi } from 'vitest'
-import PluginOptionsCard from '../PluginOptionsCard.vue'
-import { createMockPlugin } from '../../../tests/utils'
-import type { ConcretePluginConfig } from '@/core/types'
 import { mount } from '@vue/test-utils'
+import { describe, expect, it, vi } from 'vitest'
+
+import type { ConcretePluginConfig } from '@/core/types'
+
+import { createMockPlugin } from '../../../tests/utils'
+import PluginOptionsCard from '../PluginOptionsCard.vue'
 
 describe('PluginOptionsCard', () => {
   const getWrapper = (plugin = {}, config = {}) => {

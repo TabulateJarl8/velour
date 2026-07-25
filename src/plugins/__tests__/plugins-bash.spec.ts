@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { describe, expect, it } from 'vitest'
+
 import { PluginLoader } from '@/core/loader'
 import { buildSinglePluginScript } from '@/core/scriptGenerator'
 import type { ConcretePluginConfig, SubOptionSchema } from '@/core/types'
-import { describe, expect, it } from 'vitest'
 
 /**
  * Given a suboption, generate the possible variants of it

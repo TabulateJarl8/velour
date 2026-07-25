@@ -1,8 +1,10 @@
+import { computed, onMounted, ref } from 'vue'
+
 import {
   deserializeConfig,
   extractPayloadFromScript,
-  serializeConfig,
   type SaveState,
+  serializeConfig,
 } from '@/core/configSerde'
 import { resolveEnabledPlugins } from '@/core/dependencyResolver'
 import { PluginLoader } from '@/core/loader'
@@ -10,13 +12,12 @@ import { logger } from '@/core/logger'
 import { buildPluginScripts, generateFullScript } from '@/core/scriptGenerator'
 import {
   Categories,
-  CategoryHeadingsData,
   type Category,
   type CategoryHeadings,
+  CategoryHeadingsData,
   type ConcretePluginConfig,
   type ConcretePluginDef,
 } from '@/core/types'
-import { computed, onMounted, ref } from 'vue'
 
 const SCRIPT_DOWNLOAD_FILENAME = 'velour_fedora_setup.sh'
 

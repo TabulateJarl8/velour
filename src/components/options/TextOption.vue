@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { TextSubOption } from '@/core/types'
 import { computed } from 'vue'
+
+import type { TextSubOption } from '@/core/types'
 
 const model = defineModel<string>({ required: true })
 const props = defineProps<{

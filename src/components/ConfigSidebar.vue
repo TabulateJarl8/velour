@@ -1,9 +1,11 @@
 <script lang="ts" setup>
-import type { CategoryGroup } from '@/composables/usePlugins'
-import PluginOptionsCard from './PluginOptionsCard.vue'
-import type { ConcretePluginConfig } from '@/core/types'
 import { computed, ref } from 'vue'
+
+import type { CategoryGroup } from '@/composables/usePlugins'
 import { PluginLoader } from '@/core/loader'
+import type { ConcretePluginConfig } from '@/core/types'
+
+import PluginOptionsCard from './PluginOptionsCard.vue'
 
 const props = defineProps<{ isLoading: boolean; categorizedPlugins: CategoryGroup[] }>()
 

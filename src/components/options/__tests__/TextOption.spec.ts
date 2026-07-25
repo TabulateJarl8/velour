@@ -1,6 +1,8 @@
-import type { TextSubOption } from '@/core/types'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
+
+import type { TextSubOption } from '@/core/types'
+
 import TextOption from '../TextOption.vue'
 
 describe('TextOption', () => {

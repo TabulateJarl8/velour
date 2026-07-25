@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { NumberSubOption } from '@/core/types'
 import { computed } from 'vue'
+
+import type { NumberSubOption } from '@/core/types'
 
 // may be a string because of the page converting on invalid input
 const model = defineModel<number | string>({ required: true })

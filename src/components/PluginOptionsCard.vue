@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
 import type { ConcretePluginConfig, ConcretePluginDef, PluginAlert } from '@/core/types'
+
 import CheckboxOption from './options/CheckboxOption.vue'
-import TextOption from './options/TextOption.vue'
+import DropdownOption from './options/DropdownOption.vue'
 import NumberOption from './options/NumberOption.vue'
 import RadioOption from './options/RadioOption.vue'
-import DropdownOption from './options/DropdownOption.vue'
-import { computed } from 'vue'
+import TextOption from './options/TextOption.vue'
 
 const model = defineModel<ConcretePluginConfig>({ required: true })
 const componentMap: Record<string, unknown> = {

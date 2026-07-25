@@ -1,16 +1,17 @@
 /* eslint-disable jsdoc/require-jsdoc */
-import { input, select, confirm } from '@inquirer/prompts'
-import { PluginDiscoveryProvider, PluginLoader } from '../src/core/loader'
-import path from 'path'
-import fs from 'fs/promises'
-import {
-  CategoryHeadingsData,
-  PluginModule,
-  Categories,
-  ConcretePluginDef,
-} from '../src/core/types'
-import { logger } from '../src/core/logger'
+import { confirm,input, select } from '@inquirer/prompts'
 import { program } from 'commander'
+import fs from 'fs/promises'
+import path from 'path'
+
+import { PluginDiscoveryProvider, PluginLoader } from '../src/core/loader'
+import { logger } from '../src/core/logger'
+import {
+  Categories,
+  CategoryHeadingsData,
+  ConcretePluginDef,
+  PluginModule,
+} from '../src/core/types'
 
 type CLIArgs = {
   template?: 'app' | 'generic'

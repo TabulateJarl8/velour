@@ -1,6 +1,8 @@
-import type { DropdownSubOption } from '@/core/types'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
+
+import type { DropdownSubOption } from '@/core/types'
+
 import DropdownOption from '../DropdownOption.vue'
 
 describe('DropdownOption', () => {

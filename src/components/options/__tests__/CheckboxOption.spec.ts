@@ -1,6 +1,8 @@
-import type { CheckboxSubOption } from '@/core/types'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
+
+import type { CheckboxSubOption } from '@/core/types'
+
 import CheckboxOption from '../CheckboxOption.vue'
 
 describe('CheckboxOption', () => {

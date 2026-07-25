@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
 import ProjectDescription from '../ProjectDescription.vue'
 
 describe('ProjectDescription', () => {

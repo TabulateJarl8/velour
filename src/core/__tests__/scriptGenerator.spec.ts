@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { buildPluginScripts, buildSinglePluginScript, generateFullScript } from '../scriptGenerator'
+
 import { version } from '../../../package.json'
 import { createMockPlugin } from '../../../tests/utils'
+import { buildPluginScripts, buildSinglePluginScript, generateFullScript } from '../scriptGenerator'
 
 describe('scriptGenerator', () => {
   describe('buildSinglePluginScript', () => {

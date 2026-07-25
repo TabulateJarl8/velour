@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { RadioSubOption } from '@/core/types'
 import { computed } from 'vue'
+
+import type { RadioSubOption } from '@/core/types'
 
 const model = defineModel<string>({ required: true })
 const props = defineProps<{

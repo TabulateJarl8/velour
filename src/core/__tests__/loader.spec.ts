@@ -1,7 +1,8 @@
-import { PluginLoader } from '../loader'
 import { expect, it, vi } from 'vitest'
 import { describe } from 'vitest'
+
 import { createMockPlugin } from '../../../tests/utils'
+import { PluginLoader } from '../loader'
 import { logger } from '../logger'
 
 describe('PluginLoader', () => {

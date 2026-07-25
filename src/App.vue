@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { useShiki } from './composables/useShiki'
-
-import ScriptPreview from './components/ScriptPreview.vue'
-import ConfigSidebar from './components/ConfigSidebar.vue'
-import { usePlugins } from './composables/usePlugins'
+import { useClipboard } from '@vueuse/core'
+import { ref } from 'vue'
 
 import { version } from '../package.json'
+import ConfigSidebar from './components/ConfigSidebar.vue'
 import ProjectDescription from './components/ProjectDescription.vue'
-import { ref } from 'vue'
+import ScriptPreview from './components/ScriptPreview.vue'
+import { usePlugins } from './composables/usePlugins'
+import { useShiki } from './composables/useShiki'
 import { logger } from './core/logger'
-import { useClipboard } from '@vueuse/core'
 
 const {
   isLoading,

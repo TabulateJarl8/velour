@@ -1,6 +1,7 @@
+import { describe, expect, it } from 'vitest'
+
 import { createMockPlugin } from '../../../tests/utils'
 import { deserializeConfig, extractPayloadFromScript, serializeConfig } from './../configSerde'
-import { describe, expect, it } from 'vitest'
 
 describe('configSerde', () => {
   describe('serde', () => {

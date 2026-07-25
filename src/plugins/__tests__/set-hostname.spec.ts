@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+
 import plugin from '../system/set-hostname'
 
 describe('set-hostname', () => {

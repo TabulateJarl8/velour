@@ -1,6 +1,8 @@
-import type { NumberSubOption } from '@/core/types'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
+
+import type { NumberSubOption } from '@/core/types'
+
 import NumberOption from '../NumberOption.vue'
 
 describe('NumberOption', () => {

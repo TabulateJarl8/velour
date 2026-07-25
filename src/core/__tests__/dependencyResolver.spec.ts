@@ -1,8 +1,9 @@
 import { describe, expect, it, vi } from 'vitest'
-import type { ConcretePluginDef } from '../types'
+
 import { createMockPlugin } from '../../../tests/utils'
 import { resolveEnabledPlugins, sortPlugins } from '../dependencyResolver'
 import { logger } from '../logger'
+import type { ConcretePluginDef } from '../types'
 
 describe('dependencyResolver', () => {
   describe('resolveEnabledPlugins', () => {
