@@ -2,8 +2,8 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="512mm"
-   height="512mm"
+   width="512"
+   height="512"
    viewBox="0 0 512 512"
    version="1.1"
    id="svg1"
@@ -22,10 +22,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="mm"
-     inkscape:zoom="0.35355339"
-     inkscape:cx="1255.8216"
-     inkscape:cy="780.64588"
+     inkscape:document-units="px"
+     inkscape:zoom="0.5"
+     inkscape:cx="665"
+     inkscape:cy="262"
      inkscape:window-width="1920"
      inkscape:window-height="1052"
      inkscape:window-x="0"
@@ -137,49 +137,8 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <g
-       id="g24">
-      <path
-         id="path23"
-         style="fill:#cba6f7;fill-opacity:1;stroke:none;stroke-width:1.85208;paint-order:markers fill stroke"
-         d="M 335.17644 128.52859 L 216.4395 383.16059 L 304.70957 383.16059 L 423.4465 128.52859 L 335.17644 128.52859 z " />
-      <path
-         id="path24"
-         style="fill:#89b4fa;fill-opacity:1;stroke:none;stroke-width:1.85208;paint-order:markers fill stroke"
-         d="M 88.553768 128.52859 L 207.29071 383.16059 L 295.56077 383.16059 L 176.82383 128.52859 L 88.553768 128.52859 z " />
-    </g>
-    <g
-       id="g22">
-      <path
-         id="path21"
-         style="fill:#cba6f7;fill-opacity:1;stroke:none;stroke-width:1.85208;paint-order:markers fill stroke"
-         d="M 335.17644 128.52859 L 216.4395 383.16059 L 304.70957 383.16059 L 423.4465 128.52859 L 335.17644 128.52859 z " />
-      <path
-         id="path22"
-         style="fill:#89b4fa;fill-opacity:1;stroke:none;stroke-width:1.85208;paint-order:markers fill stroke"
-         d="M 88.553768 128.52859 L 207.29071 383.16059 L 295.56077 383.16059 L 176.82383 128.52859 L 88.553768 128.52859 z " />
-    </g>
-    <path
-       id="path19"
-       style="fill:#cba6f7;fill-opacity:1;stroke:none;stroke-width:1.85208;paint-order:markers fill stroke"
-       d="M 335.17644 128.52859 L 216.4395 383.16059 L 304.70957 383.16059 L 423.4465 128.52859 L 335.17644 128.52859 z " />
-    <path
-       id="path20"
-       style="fill:#89b4fa;fill-opacity:1;stroke:none;stroke-width:1.85208;paint-order:markers fill stroke"
-       d="M 88.553768 128.52859 L 207.29071 383.16059 L 295.56077 383.16059 L 176.82383 128.52859 L 88.553768 128.52859 z " />
-    <g
-       id="g18">
-      <path
-         id="path17"
-         style="fill:#cba6f7;fill-opacity:1;stroke:none;stroke-width:1.85208;paint-order:markers fill stroke"
-         d="M 335.17644 128.52859 L 216.4395 383.16059 L 304.70957 383.16059 L 423.4465 128.52859 L 335.17644 128.52859 z " />
-      <path
-         id="path18"
-         style="fill:#89b4fa;fill-opacity:1;stroke:none;stroke-width:1.85208;paint-order:markers fill stroke"
-         d="M 88.553768 128.52859 L 207.29071 383.16059 L 295.56077 383.16059 L 176.82383 128.52859 L 88.553768 128.52859 z " />
-    </g>
     <rect
-       style="fill:#181825;stroke:none;stroke-width:1.85208;paint-order:markers fill stroke;fill-opacity:1"
+       style="fill:#181825;fill-opacity:1;stroke:none;stroke-width:1.85208;paint-order:markers fill stroke"
        id="rect1"
        width="512"
        height="512"
@@ -189,15 +148,15 @@
        ry="120" />
     <g
        id="g26"
-       style="filter:url(#filter26);opacity:0.93597953">
+       style="opacity:0.93598;filter:url(#filter26)">
       <path
          id="path25"
          style="fill:#cba6f7;fill-opacity:1;stroke:none;stroke-width:1.85208;paint-order:markers fill stroke"
-         d="M 335.17644 128.52859 L 216.4395 383.16059 L 304.70957 383.16059 L 423.4465 128.52859 L 335.17644 128.52859 z " />
+         d="m 335.17644,128.52859 -118.73694,254.632 h 88.27007 l 118.73693,-254.632 z" />
       <path
          id="path26"
          style="fill:#89b4fa;fill-opacity:1;stroke:none;stroke-width:1.85208;paint-order:markers fill stroke"
-         d="M 88.553768 128.52859 L 207.29071 383.16059 L 295.56077 383.16059 L 176.82383 128.52859 L 88.553768 128.52859 z " />
+         d="m 88.553768,128.52859 118.736942,254.632 h 88.27006 l -118.73694,-254.632 z" />
     </g>
     <path
        id="path16"
