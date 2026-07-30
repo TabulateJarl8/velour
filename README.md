@@ -37,7 +37,15 @@ Velour is a web-based utility which generates customized, post-installation setu
 
 Velour is built to be a serverless, strongly-typed, and robust alternative to an existing Fedora setup script generator. By switching to a fully frontend (with TypeScript) model, Velour is able to provide a smoother experience that is easier to maintain, all while not relying on third-party server dependencies and being heavily tested and validated. Learn more on the [Architecture & Motivation Wiki Page](https://github.com/TabulateJarl8/velour/wiki/Architecture-&-Motivation).
 
-<!-- TODO: tech stack? -->
+## Tech Stack
+
+[![TypeScript](https://img.shields.io/badge/typescript-3178C6.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vue.js](https://img.shields.io/badge/Vue.js-1a1a1a?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D)](https://vuejs.org/)
+[![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev/)
+[![daisyUI](https://img.shields.io/badge/daisyUI-1D232A?style=for-the-badge&logo=daisyUI&logoColor=FFC63A)](https://daisyui.com/?lang=en)
+[![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Vitest](https://img.shields.io/badge/-Vitest-252529?style=for-the-badge&logo=vitest&logoColor=FCC72B)](https://vitest.dev/)
+[![PNPM](https://img.shields.io/badge/pnpm-%234a4a4a.svg?style=for-the-badge&logo=pnpm&logoColor=f69220)](https://pnpm.io/)
 
 <!-- TODO: contributing -->
 
