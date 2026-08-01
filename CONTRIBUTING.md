@@ -1,4 +1,23 @@
-<!-- TODO: project architecture (structure, what are plugins, etc.) -->
+## Documentation and Guides
+
+Most important documentation is kept in the [GitHub Wiki](https://github.com/TabulateJarl8/velour/wiki). Important pages include:
+
+- Architecture & Motivation
+- Adding a New Configuration Option Type
+
+## AI Policy
+
+Please review the [AI Policy](./AI_POLICY.md) before contributing.
+
+## Create a New Plugin - Quickstart
+
+Adding a new setup script option or app installer is pretty easy, you can run the following command to scaffold the plugin for you:
+
+```sh
+pnpm gen:plugin
+```
+
+This will launch an interactive script will prompt you for the plugin's details and automatically generate the TypeScript file for you in the correct directory.
 
 ## Recommended IDE Setup
 
@@ -43,6 +62,7 @@ pnpm build
 
 ```sh
 pnpm test:unit
+pnpm test:unit:coverage
 ```
 
 ### Lint with [ESLint](https://eslint.org/)
@@ -62,3 +82,12 @@ pnpm fix
 ```sh
 pnpm format
 ```
+
+## Opening a Pull Request
+
+1. Check existing issues/PRs for discussion related to your contributed feature
+2. Fork the repo and create a feature branch off of `master`
+3. **IMPORTANT:** make sure to review our [AI Policy](./AI_POLICY.md) before making any changes.
+4. Ensure any new plugins or components are fully tested at 100% code coverage. If you're modifying existing code, ensure that any relevant unit tests are updated and that the component remains at 100% coverage. You can run `pnpm test:unit:coverage` to see code coverage.
+5. Our husky `pre-commit` hook checks code formatting and linting before allowing you to commit, but you can manually perform formatting and linting with `pnpm format` and `pnpm lint`/`pnpm fix`
+6. Submit your PR with a clear description of the changes and what issue it resolves

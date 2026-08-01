@@ -47,7 +47,9 @@ Velour is built to be a serverless, strongly-typed, and robust alternative to an
 [![Vitest](https://img.shields.io/badge/-Vitest-252529?style=for-the-badge&logo=vitest&logoColor=FCC72B)](https://vitest.dev/)
 [![PNPM](https://img.shields.io/badge/pnpm-%234a4a4a.svg?style=for-the-badge&logo=pnpm&logoColor=f69220)](https://pnpm.io/)
 
-<!-- TODO: contributing -->
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on contributing to this project.
 
 ## Acknowledgements
 
