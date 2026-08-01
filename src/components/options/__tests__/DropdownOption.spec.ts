@@ -45,7 +45,7 @@ describe('DropdownOption', () => {
     expect(event?.[0]).toEqual(['opt2'])
   })
 
-  it('becomes errored on failed validation', async () => {
+  it('becomes errored on failed validation', () => {
     const wrapper = mount(DropdownOption, {
       props: {
         modelValue: 'opt1',

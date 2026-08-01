@@ -28,6 +28,7 @@ export default defineConfigWithVueTs(
     rules: {
       '@typescript-eslint/switch-exhaustiveness-check': 'error',
       'require-unicode-regexp': ['error', { requireFlag: 'v' }],
+      'require-await': 'error',
     },
   },
 

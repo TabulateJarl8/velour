@@ -49,7 +49,7 @@ describe('TextOption', () => {
     expect(event?.[0]).toEqual(['cool'])
   })
 
-  it('becomes errored on failed validation', async () => {
+  it('becomes errored on failed validation', () => {
     const wrapper = mount(TextOption, {
       props: {
         modelValue: '',

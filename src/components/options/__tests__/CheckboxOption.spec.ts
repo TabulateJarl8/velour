@@ -40,7 +40,7 @@ describe('CheckboxOption', () => {
     expect(event?.[0]).toEqual([true])
   })
 
-  it('becomes errored on failed validation', async () => {
+  it('becomes errored on failed validation', () => {
     const wrapper = mount(CheckboxOption, {
       props: {
         modelValue: false,

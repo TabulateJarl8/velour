@@ -42,7 +42,7 @@ describe('NumberOption', () => {
     expect(event?.[0]).toEqual([5])
   })
 
-  it('becomes errored on failed validation', async () => {
+  it('becomes errored on failed validation', () => {
     const wrapper = mount(NumberOption, {
       props: {
         modelValue: 1,
@@ -56,7 +56,7 @@ describe('NumberOption', () => {
     expect(wrapper.find('input').classes()).toContain('input-error')
   })
 
-  it('becomes errored if input fails to parse as number (hypothetical)', async () => {
+  it('becomes errored if input fails to parse as number (hypothetical)', () => {
     const wrapper = mount(NumberOption, {
       props: {
         modelValue: 'u',

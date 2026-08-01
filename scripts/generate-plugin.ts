@@ -1,5 +1,5 @@
 /* eslint-disable jsdoc/require-jsdoc */
-import { confirm,input, select } from '@inquirer/prompts'
+import { confirm, input, select } from '@inquirer/prompts'
 import { program } from 'commander'
 import fs from 'fs/promises'
 import path from 'path'
@@ -86,7 +86,10 @@ async function getPluginContext(): Promise<PluginContext> {
 
 async function promptLocation(context: PluginContext, cliValue?: string): Promise<string> {
   if (cliValue !== undefined) return cliValue
-  return select({ message: 'Where should the plugin be created?', choices: context.folderChoices })
+  return await select({
+    message: 'Where should the plugin be created?',
+    choices: context.folderChoices,
+  })
 }
 
 async function promptMetadata(

@@ -45,7 +45,7 @@ describe('RadioOption', () => {
     expect(event?.[0]).toEqual(['opt2'])
   })
 
-  it('becomes errored on failed validation', async () => {
+  it('becomes errored on failed validation', () => {
     const wrapper = mount(RadioOption, {
       props: {
         modelValue: 'opt1',
