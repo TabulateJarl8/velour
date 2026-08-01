@@ -44,12 +44,22 @@ vi.mock('@vueuse/core', async (importOriginal) => {
 })
 
 describe('App', () => {
+  const mountOpts = {
+    global: {
+      stubs: {
+        ConfigSidebar: true,
+        ScriptPreview: true,
+        ProjectDescription: true,
+      },
+    },
+  }
+
   beforeEach(() => {
     vi.clearAllMocks()
   })
 
   it('mounts the proper components', () => {
-    const wrapper = mount(App)
+    const wrapper = mount(App, mountOpts)
 
     const sidebar = wrapper.findComponent(ConfigSidebar)
     const preview = wrapper.findComponent(ScriptPreview)
@@ -59,7 +69,7 @@ describe('App', () => {
   })
 
   it('copies permalink to clipboard', async () => {
-    const wrapper = mount(App)
+    const wrapper = mount(App, mountOpts)
 
     wrapper.findComponent(ScriptPreview).vm.$emit('copy-permalink')
     await flushPromises()
@@ -72,7 +82,7 @@ describe('App', () => {
     const error = new Error()
     generatePermalink.mockRejectedValueOnce(error)
 
-    const wrapper = mount(App)
+    const wrapper = mount(App, mountOpts)
 
     wrapper.findComponent(ScriptPreview).vm.$emit('copy-permalink')
     await flushPromises()
@@ -87,6 +97,7 @@ describe('App', () => {
     const wrapper = mount(App, {
       global: {
         stubs: {
+          ...mountOpts.global.stubs,
           ProjectDescription: {
             template: '<div></div>',
             methods: { showModal },
@@ -104,7 +115,7 @@ describe('App', () => {
   })
 
   it('updates quietMode on v-model update', async () => {
-    const wrapper = mount(App)
+    const wrapper = mount(App, mountOpts)
 
     const sidebar = wrapper.findComponent(ConfigSidebar)
 
@@ -117,7 +128,7 @@ describe('App', () => {
   })
 
   it('updates pluginConfigs on v-model update', async () => {
-    const wrapper = mount(App)
+    const wrapper = mount(App, mountOpts)
 
     const sidebar = wrapper.findComponent(ConfigSidebar)
 
