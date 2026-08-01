@@ -5,7 +5,7 @@
 
   <p align="center">
 
-[![GitHub Release](https://img.shields.io/github/v/release/TabulateJarl8/velour)](https://github.com/TabulateJarl8/velour/releases/latest) ![Project License](https://img.shields.io/github/license/TabulateJarl8/velour) [![GitHub Sponsors](https://img.shields.io/badge/Sponsor-%40TabulateJarl8-ea4aaa?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/TabulateJarl8)
+[![GitHub Release](https://img.shields.io/github/v/release/TabulateJarl8/velour)](https://github.com/TabulateJarl8/velour/releases/latest) ![Project License](https://img.shields.io/github/license/TabulateJarl8/velour) [![codecov](https://codecov.io/gh/TabulateJarl8/velour/graph/badge.svg?token=5OKCZXOZIP)](https://codecov.io/gh/TabulateJarl8/velour) [![GitHub Sponsors](https://img.shields.io/badge/Sponsor-%40TabulateJarl8-ea4aaa?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/TabulateJarl8)
 
   </p>
 </div>
