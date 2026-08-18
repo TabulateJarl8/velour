@@ -23,10 +23,10 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@shikijs/langs": "^4.4.2",
-    "@shikijs/themes": "^4.4.2",
+    "@shikijs/langs": "^4.4.3",
+    "@shikijs/themes": "^4.4.3",
     "@vueuse/core": "^14.4.0",
-    "shiki": "^4.4.2",
+    "shiki": "^4.4.3",
     "vue": "^3.5.41"
   },
   "devDependencies": {
@@ -34,18 +34,18 @@
     "@iconify-json/simple-icons": "^1.2.93",
     "@inquirer/prompts": "^8.5.2",
     "@tailwindcss/vite": "^4.3.3",
-    "@tsconfig/node24": "^24.0.4",
+    "@tsconfig/node24": "^24.0.5",
     "@types/jsdom": "^28.0.3",
-    "@types/node": "^26.1.2",
+    "@types/node": "^26.2.0",
     "@vitejs/plugin-vue": "^6.0.8",
     "@vitest/coverage-v8": "^4.1.10",
-    "@vitest/eslint-plugin": "^1.6.26",
+    "@vitest/eslint-plugin": "^1.6.27",
     "@vue/eslint-config-typescript": "^14.9.0",
     "@vue/test-utils": "^2.4.11",
     "@vue/tsconfig": "^0.9.1",
     "commander": "^15.0.0",
-    "daisyui": "^5.7.16",
-    "eslint": "^10.8.0",
+    "daisyui": "^5.7.17",
+    "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsdoc": "^63.3.3",
     "eslint-plugin-oxlint": "~1.75.0",
@@ -62,14 +62,14 @@
     "prettier-plugin-tailwindcss": "^0.8.1",
     "shellcheck": "^4.1.0",
     "tailwindcss": "^4.3.3",
-    "tsx": "^4.23.9",
+    "tsx": "^4.23.12",
     "typescript": "~6.0.3",
     "unplugin-icons": "^23.0.1",
     "unplugin-vue-components": "^32.1.0",
     "vite": "^8.2.1",
     "vite-plugin-vue-devtools": "^8.2.1",
     "vitest": "^4.1.10",
-    "vue-tsc": "^3.3.9"
+    "vue-tsc": "^3.3.10"
   },
   "engines": {
     "node": ">=24.0.0"
